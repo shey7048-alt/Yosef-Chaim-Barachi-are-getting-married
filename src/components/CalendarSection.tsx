@@ -69,18 +69,10 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
   // Calendar System Mode - toggle between Hebrew Calendar structure (default) and standard Gregorian
   const [calendarMode, setCalendarMode] = useState<'hebrew' | 'gregorian'>('hebrew');
 
-  // Interactive Virtual Date Simulation
-  const [useVirtualDate, setUseVirtualDate] = useState(false);
-  const [simulatedTodayStr, setSimulatedTodayStr] = useState("2026-06-20");
-
   const today = useMemo(() => {
-    if (useVirtualDate) {
-      const parts = simulatedTodayStr.split('-');
-      return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-    }
     // High-precision server offset computed dynamically
     return new Date(Date.now() + timeOffset);
-  }, [useVirtualDate, simulatedTodayStr, timeOffset]);
+  }, [timeOffset]);
 
   // Selected Month Focus
   const [hebrewMonthIndex, setHebrewMonthIndex] = useState(2); // Initially focus "אב" (Aug Index 2)
@@ -364,47 +356,19 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
         </div>
       </div>
 
-      {/* PROGRESSION SIMULATOR WITH SYSTEM TIME SYNC */}
-      <div className="mb-8 p-4 rounded-2xl bg-white/60 border border-gold-200/20 backdrop-blur-md shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+      {/* Elegant real-time synchronization tracker and month progress */}
+      <div className="mb-8 p-4 rounded-2xl bg-white/60 border border-gold-200/20 backdrop-blur-md shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2.5">
-          <input 
-            type="checkbox" 
-            id="virtual-date"
-            checked={useVirtualDate} 
-            onChange={(e) => {
-              setUseVirtualDate(e.target.checked);
-              setSelectedDay(null);
-            }}
-            className="w-4 h-4 text-gold-650 focus:ring-gold-500 border-stone-300 rounded cursor-pointer"
-          />
-          <label htmlFor="virtual-date" className="text-xs font-bold text-stone-700 cursor-pointer">
-            סנכרון מדומה / בדיקת התקדמות הלוח (סימולטור)
-          </label>
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span className="text-xs text-stone-600 font-bold font-sans">
+            סנכרון תאריך ושעה רציף מול שעון ירושלים הרשמי
+          </span>
         </div>
 
-        {useVirtualDate ? (
-          <div className="flex items-center gap-2 animate-in fade-in slide-in-from-top-1 duration-200">
-            <span className="text-xs text-stone-500">תאריך סימולציה:</span>
-            <input 
-              type="date" 
-              value={simulatedTodayStr}
-              onChange={(e) => {
-                setSimulatedTodayStr(e.target.value);
-                setSelectedDay(null);
-              }}
-              className="px-2.5 py-1 text-xs border border-gold-200 bg-white rounded-lg focus:outline-none focus:ring-1 focus:ring-gold-500 font-mono text-stone-700"
-              min="2026-05-01"
-              max="2026-09-01"
-            />
-          </div>
-        ) : (
-          <div className="text-xs text-stone-500 flex items-center gap-1">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-            <span>סנכרון חי מול שעון המערכת והמשתמש פעיל</span>
-          </div>
-        )}
-
-        <div className="text-xs font-bold text-gold-900 bg-gold-100/50 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+        <div className="text-xs font-bold text-gold-900 bg-gold-100/50 px-4 py-2 rounded-full flex items-center gap-2 border border-gold-200/40">
           <CheckCircle2 className="w-3.5 h-3.5 text-gold-650" />
           <span>
             {passedDaysCount} מתוך {totalCurrentGridDays} ימים עברו כבר במחזור הנוכחי

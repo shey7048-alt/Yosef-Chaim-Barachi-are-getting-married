@@ -19,53 +19,65 @@ export default function App() {
     
     const fetchExactTime = async () => {
       try {
-        // Primary Attempt: WorldTimeAPI (Jerusalem time)
-        const res = await fetch('https://worldtimeapi.org/api/timezone/Asia/Jerusalem');
-        if (!res.ok) throw new Error('WorldTimeAPI response not OK');
-        const data = await res.json();
-        
-        if (data && typeof data.unixtime === 'number') {
-          const apiTimeMs = data.unixtime * 1000;
-          const localTimeMs = Date.now();
-          const offset = apiTimeMs - localTimeMs;
-          
-          if (active) {
-            setTimeOffset(offset);
-            setSyncStatus('synced');
-            console.log(`[TimeSync] Successfully synced with Jerusalem standard time via WorldTimeAPI. Offset: ${offset}ms`);
-            return;
+        // Fallback 1: Query site itself for the high-precision Server Date Header
+        const selfRes = await fetch(window.location.origin + '/index.html', { method: 'HEAD' });
+        const serverDateHeader = selfRes.headers.get('Date');
+        if (serverDateHeader) {
+          const apiTimeMs = new Date(serverDateHeader).getTime();
+          if (!isNaN(apiTimeMs) && apiTimeMs > 1600000000000) {
+            const offset = apiTimeMs - Date.now();
+            // Sanity check: Ensure the offset doesn't drift time by more than a few days unless user clock is extremely broken
+            if (Math.abs(offset) < 10 * 24 * 60 * 60 * 1000 && active) {
+              setTimeOffset(offset);
+              setSyncStatus('synced');
+              console.log(`[TimeSync] Cleanly synced via own Server Date Header. Offset: ${offset}ms`);
+              return;
+            }
+          }
+        }
+      } catch (errSelf) {
+        console.warn('[TimeSync] Own self-check failed, trying external APIs...', errSelf);
+      }
+
+      try {
+        // Secondary: TimeAPI.io (using full dateTime string to avoid invalid millisecond attributes)
+        const res = await fetch('https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jerusalem');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.dateTime) {
+            const apiTimeMs = new Date(data.dateTime).getTime();
+            if (!isNaN(apiTimeMs) && apiTimeMs > 1600000000000) {
+              const offset = apiTimeMs - Date.now();
+              if (active) {
+                setTimeOffset(offset);
+                setSyncStatus('synced');
+                console.log(`[TimeSync] Synced via TimeAPI.io. Offset: ${offset}ms`);
+                return;
+              }
+            }
           }
         }
       } catch (err) {
-        console.warn('[TimeSync] WorldTimeAPI failed, trying fallback API...', err);
+        console.warn('[TimeSync] TimeAPI.io failed, trying WorldTimeAPI...', err);
         
         try {
-          // Secondary Attempt: TimeAPI.io
-          const res = await fetch('https://timeapi.io/api/Time/current/zone?timeZone=Asia/Jerusalem');
-          if (!res.ok) throw new Error('TimeAPI fallback not OK');
-          const data = await res.json();
-          
-          if (data && data.milliSeconds) { // check fallback properties
-            const apiTimeMs = data.milliSeconds;
-            const offset = apiTimeMs - Date.now();
-            if (active) {
-              setTimeOffset(offset);
-              setSyncStatus('synced');
-              console.log(`[TimeSync] Synced via TimeAPI fallback. Offset: ${offset}ms`);
-              return;
-            }
-          } else if (data && data.dateTime) {
-            const apiTimeMs = new Date(data.dateTime).getTime();
-            const offset = apiTimeMs - Date.now();
-            if (active) {
-              setTimeOffset(offset);
-              setSyncStatus('synced');
-              console.log(`[TimeSync] Synced via TimeAPI (dateTime) fallback. Offset: ${offset}ms`);
-              return;
+          // Tertiary: WorldTimeAPI (Jerusalem standard time)
+          const res = await fetch('https://worldtimeapi.org/api/timezone/Asia/Jerusalem');
+          if (res.ok) {
+            const data = await res.json();
+            if (data && typeof data.unixtime === 'number') {
+              const apiTimeMs = data.unixtime * 1000;
+              const offset = apiTimeMs - Date.now();
+              if (active) {
+                setTimeOffset(offset);
+                setSyncStatus('synced');
+                console.log(`[TimeSync] Synced via WorldTimeAPI. Offset: ${offset}ms`);
+                return;
+              }
             }
           }
         } catch (errFallback) {
-          console.error('[TimeSync] All time API attempts failed. Falling back gracefully to client clock.', errFallback);
+          console.error('[TimeSync] All accurate timezone API attempts failed. Using device clock.', errFallback);
           if (active) {
             setSyncStatus('local');
           }
