@@ -5,8 +5,8 @@ import HeroSection from './components/HeroSection';
 import CalendarSection from './components/CalendarSection';
 
 export default function App() {
-  // Target Wedding Date: August 10, 2026, at 7:00 PM (19:00:00)
-  const weddingDate = new Date('2026-08-10T19:00:00');
+  // Target Wedding Date: April 10, 2026, at 7:00 PM (19:00:00)
+  const weddingDate = new Date('2026-04-10T19:00:00');
   
   const calendarRef = useRef<HTMLDivElement>(null);
 
