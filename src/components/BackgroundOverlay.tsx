@@ -5,22 +5,39 @@ interface BackgroundOverlayProps {
 }
 
 export default function BackgroundOverlay({ children }: BackgroundOverlayProps) {
+  const chuppahImage = '/src/assets/images/wedding_chuppah_1781997597704.jpg';
+  
   // Lock to a beautiful elegant default champagne gradient and soft watercolor circles
   const defaultBackgroundStyle = {
-    backgroundImage: `radial-gradient(circle at top right, rgba(238, 216, 171, 0.4) 0%, transparent 40%),
+    backgroundImage: `radial-gradient(circle at top right, rgba(238, 216, 171, 0.4) 0%, transparent 45%),
                       radial-gradient(circle at bottom left, rgba(200, 157, 85, 0.25) 0%, transparent 50%),
                       radial-gradient(circle at 50% 50%, rgba(254, 252, 248, 1) 0%, rgba(251, 246, 234, 0.95) 100%)`,
   };
 
   return (
     <div 
-      className="relative min-h-screen champagne-gradient transition-all duration-700 ease-in-out"
+      className="relative min-h-screen transition-all duration-700 ease-in-out"
       dir="rtl" // Right-to-Left Hebrew alignment
     >
-      {/* Background layer: Locked to exquisite elegant defaults */}
+      {/* Background layer: Base elegant watercolor gradient */}
       <div 
         className="fixed inset-0 bg-cover bg-center transition-all duration-500 z-0" 
         style={defaultBackgroundStyle}
+      />
+
+      {/* The mystical, deeply romantic chuppah image - integrated as a fixed background */}
+      <div 
+        className="fixed inset-0 z-0 bg-cover bg-center pointer-events-none opacity-[0.24] transition-all duration-1000 transform scale-[1.01]" 
+        style={{ 
+          backgroundImage: `url(${chuppahImage})`,
+          backgroundAttachment: 'fixed',
+          mixBlendMode: 'multiply'
+        }}
+      />
+
+      {/* Subtle additional luxury glaze to perfectly blend the image margins and keep content readable */}
+      <div 
+        className="fixed inset-0 z-0 pointer-events-none bg-gradient-to-b from-white/10 via-transparent to-stone-50/20 backdrop-blur-[0.5px]"
       />
 
       {/* Decorative premium floral watermark patterns underneath the main UI */}
