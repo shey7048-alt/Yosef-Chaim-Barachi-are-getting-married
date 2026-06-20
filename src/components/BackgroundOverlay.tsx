@@ -1,7 +1,7 @@
 import React from 'react';
 
 // @ts-expect-error - image import declaration handled by Vite bundler
-import chuppahImage from '../assets/images/wedding_chuppah_1781997597704.jpg';
+import chuppahImage from '../assets/images/empty_chuppah_bg_1781998791525.jpg';
 
 interface BackgroundOverlayProps {
   children: React.ReactNode;
