@@ -132,18 +132,6 @@ export default function HeroSection({ weddingDate, timeOffset = 0, onScrollToCal
               <span className="h-[1px] w-10 bg-gold-300"></span>
             </div>
           </motion.div>
-          {/* Core Date, Hebrew Date & Time Header */}
-          <motion.div variants={itemVariants} className="inline-flex flex-col items-center justify-center py-4 px-8 rounded-3xl bg-white/60 border border-gold-300/30 backdrop-blur-md shadow-sm space-y-1">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-stone-500 font-bold">
-              תאריך החתונה הרשמי
-            </span>
-            <div className="text-xl sm:text-2xl md:text-3xl font-mono font-bold tracking-wider text-stone-900">
-              2026 . 08 . 10 &nbsp;|&nbsp; 19 : 00 : 00
-            </div>
-            <div className="text-xs text-gold-800 font-serif font-bold font-sans">
-              כ"ז באב ה'תשפ"ו &nbsp;•&nbsp; חופה בשעה 19:00
-            </div>
-          </motion.div>
 
           {/* Clean text display required by customer: "עוד X ימים לחתונה!" */}
           <motion.div variants={itemVariants}>
@@ -208,7 +196,7 @@ export default function HeroSection({ weddingDate, timeOffset = 0, onScrollToCal
                   <div className="text-[10px] uppercase tracking-[0.25em] text-stone-500 font-bold mb-3 md:mb-5 text-center">
                     הזמן הנותר לחתונה המרגשת
                   </div>
-                  <div className="grid grid-cols-4 gap-2.5 sm:gap-4 text-center">
+                  <div dir="ltr" className="grid grid-cols-4 gap-2.5 sm:gap-4 text-center">
                     {/* Days */}
                     <div className="bg-white/60 p-3 sm:p-5 rounded-2xl border border-gold-100/60 shadow-xs">
                       <span className="text-stone-900 font-mono text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight block">
