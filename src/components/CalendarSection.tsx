@@ -18,32 +18,39 @@ interface HebrewMonthData {
 
 const HEBREW_MONTHS: HebrewMonthData[] = [
   {
-    name: "ינואר",
-    year: "2026",
-    startGregorian: new Date('2026-01-01T00:00:00'),
-    daysCount: 31,
-    startDayOfWeek: 4, // January 1, 2026 is Thursday
+    name: "אייר",
+    year: "ה'תשפ\"ו",
+    startGregorian: new Date('2026-04-18T00:00:00'),
+    daysCount: 29,
+    startDayOfWeek: 6, // April 18, 2026 is Saturday
   },
   {
-    name: "פברואר",
-    year: "2026",
-    startGregorian: new Date('2026-02-01T00:00:00'),
-    daysCount: 28,
-    startDayOfWeek: 0, // February 1, 2026 is Sunday
-  },
-  {
-    name: "מרץ",
-    year: "2026",
-    startGregorian: new Date('2026-03-01T00:00:00'),
-    daysCount: 31,
-    startDayOfWeek: 0, // March 1, 2026 is Sunday
-  },
-  {
-    name: "אפריל (חודש החתונה)",
-    year: "2026",
-    startGregorian: new Date('2026-04-01T00:00:00'),
+    name: "סיוון",
+    year: "ה'תשפ\"ו",
+    startGregorian: new Date('2026-05-17T00:00:00'),
     daysCount: 30,
-    startDayOfWeek: 3, // April 1, 2026 is Wednesday
+    startDayOfWeek: 0, // May 17, 2026 is Sunday
+  },
+  {
+    name: "תמוז",
+    year: "ה'תשפ\"ו",
+    startGregorian: new Date('2026-06-16T00:00:00'),
+    daysCount: 29,
+    startDayOfWeek: 2, // June 16, 2026 is Tuesday
+  },
+  {
+    name: "אב (חודש החתונה)",
+    year: "ה'תשפ\"ו",
+    startGregorian: new Date('2026-07-15T00:00:00'),
+    daysCount: 30,
+    startDayOfWeek: 3, // July 15, 2026 is Wednesday
+  },
+  {
+    name: "אלול",
+    year: "ה'תשפ\"ו",
+    startGregorian: new Date('2026-08-14T00:00:00'),
+    daysCount: 29,
+    startDayOfWeek: 5, // August 14, 2026 is Friday
   }
 ];
 
@@ -77,12 +84,16 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
   // Selected Month Focus - dynamically default to current month
   const [hebrewMonthIndex, setHebrewMonthIndex] = useState(() => {
     const defaultDate = new Date(Date.now() + timeOffset);
-    const m = defaultDate.getMonth();
-    const y = defaultDate.getFullYear();
-    if (y === 2026 && m >= 0 && m <= 3) {
-      return m;
+    const time = defaultDate.getTime();
+    for (let i = 0; i < HEBREW_MONTHS.length; i++) {
+      const m = HEBREW_MONTHS[i];
+      const start = m.startGregorian.getTime();
+      const end = start + (m.daysCount * 24 * 60 * 60 * 1000);
+      if (time >= start && time < end) {
+        return i;
+      }
     }
-    return 3; // Default to April (Wedding Month)
+    return 3; // Default to index 3 (Av - wedding month)
   });
   const [gregorianMonth, setGregorianMonth] = useState(() => {
     return new Date(Date.now() + timeOffset).getMonth();
@@ -301,13 +312,13 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
   const detailNoteText = useMemo(() => {
     if (!selectedDay) return '';
     
-    // Check if the selected date is January 1st, 2026
-    const isJan1 = selectedDay.date.getFullYear() === 2026 && 
-                   selectedDay.date.getMonth() === 0 && 
-                   selectedDay.date.getDate() === 1;
+    // Check if the selected date is the Engagement Date: May 6, 2026
+    const isEngagement = selectedDay.date.getFullYear() === 2026 && 
+                        selectedDay.date.getMonth() === 4 && 
+                        selectedDay.date.getDate() === 6;
 
-    if (isJan1) {
-      return "1 בינואר 2026 - יום השינוי המשמעותי! בתאריך זה התקבלה ההחלטה על השינוי ומעבר להכנות הרשמיות לחתונה המרגשת של יוסף חיים & ברכי.";
+    if (isEngagement) {
+      return "יום האירוסין המרגש של יוסף חיים וברכי! שנחגג ברוב פאר והדר ביום רביעי, י\"ט באייר ה'תשפ\"ו (6 במאי 2026).";
     }
 
     if (selectedDay.isWedding) {
@@ -395,10 +406,10 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
         {calendarMode === 'hebrew' ? (
           <div className="flex flex-col space-y-4 mb-8">
             {/* Quick Lunar tabs */}
-            <div className="grid grid-cols-4 gap-1.5 md:gap-3">
+            <div className="grid grid-cols-5 gap-1.5 md:gap-3">
               {HEBREW_MONTHS.map((m, idx) => {
                 const isActive = hebrewMonthIndex === idx;
-                const isWeddingMonth = idx === 2; // אב
+                const isWeddingMonth = m.name.includes("אב");
                 return (
                   <button
                     key={m.name}
@@ -512,16 +523,16 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
           {calendarMode === 'hebrew' ? (
             hebrewGridDays.map((day, idx) => {
               const isSelected = selectedDay && day.date.toDateString() === selectedDay.date.toDateString();
-              const isJan1 = day.date.getFullYear() === 2026 && 
-                             day.date.getMonth() === 0 && 
-                             day.date.getDate() === 1;
+              const isEngagement = day.date.getFullYear() === 2026 && 
+                                   day.date.getMonth() === 4 && 
+                                   day.date.getDate() === 6;
               
               return (
                 <div
                   key={`${day.date.toDateString()}-${idx}`}
                   onClick={() => setSelectedDay({
                     date: day.date,
-                    hebrewLabel: isJan1 ? "1 בינואר - יום השינוי המבורך" : `${day.hebrewDayLetter} ב${HEBREW_MONTHS[hebrewMonthIndex].name.split(' ')[0]}`,
+                    hebrewLabel: isEngagement ? "י\"ט באייר - יום האירוסין" : `${day.hebrewDayLetter} ב${HEBREW_MONTHS[hebrewMonthIndex].name.split(' ')[0]}`,
                     dayNumHebrew: day.hebrewDayNum,
                     isWedding: day.isWeddingDay
                   })}
@@ -529,7 +540,7 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
                     relative aspect-square rounded-xl md:rounded-2xl flex flex-col justify-between p-1.5 md:p-3 cursor-pointer select-none transition-all duration-300 border
                     ${day.isCurrentMonth ? 'bg-white/40' : 'bg-stone-50/10 text-stone-300 opacity-20'}
                     ${day.isToday ? 'ring-2 ring-gold-500 bg-gold-50/20' : ''}
-                    ${isJan1 ? 'ring-2 ring-amber-500 bg-amber-50/20 border-amber-400' : ''}
+                    ${isEngagement ? 'ring-2 ring-amber-500 bg-amber-50/20 border-amber-400' : ''}
                     ${isSelected ? 'border-gold-500 scale-[1.03] shadow-md bg-gold-50/10' : 'border-stone-100 hover:border-gold-200 hover:bg-gold-50/10'}
                   `}
                 >
@@ -547,7 +558,7 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
                       text-xs md:text-sm font-bold tracking-tight
                       ${day.isPassed ? 'text-stone-300 line-through decoration-transparent' : 'text-stone-850'}
                       ${day.isWeddingDay ? 'text-red-600 font-extrabold' : ''}
-                      ${isJan1 ? 'text-amber-700 font-extrabold' : ''}
+                      ${isEngagement ? 'text-amber-700 font-extrabold' : ''}
                       ${day.isToday ? 'text-gold-950 font-black' : ''}
                     `}>
                       {day.hebrewDayLetter}
@@ -563,13 +574,13 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
                       </motion.div>
                     )}
 
-                    {isJan1 && (
+                    {isEngagement && (
                       <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
                         className="shrink-0"
                       >
-                        <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-amber-500 fill-amber-200" />
+                        <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-amber-500 fill-amber-300" />
                       </motion.div>
                     )}
                   </div>
@@ -579,9 +590,9 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
                     text-[9px] md:text-[10px] text-right font-mono font-medium
                     ${day.isPassed ? 'text-stone-300' : 'text-stone-500'}
                     ${isSelected ? 'text-gold-950' : ''}
-                    ${isJan1 ? 'text-amber-800' : ''}
+                    ${isEngagement ? 'text-amber-800' : ''}
                   `}>
-                    {isJan1 ? "1 בינואר" : formatGregorianDaySimple(day.date)}
+                    {isEngagement ? "6 במאי" : formatGregorianDaySimple(day.date)}
                   </span>
 
                   {day.isToday && (
@@ -590,9 +601,9 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
                     </span>
                   )}
 
-                  {isJan1 && (
+                  {isEngagement && (
                     <span className="absolute bottom-1 left-1 pointer-events-none font-sans text-[6px] md:text-[8px] bg-amber-600 text-white font-bold rounded px-1 transform scale-90 origin-bottom-left">
-                      יום השינוי
+                      אירוסין
                     </span>
                   )}
                 </div>
@@ -602,24 +613,24 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
             /* GREGORIAN INTERACTIVE GRID */
             gregorianGridDays.map((day, idx) => {
               const isSelected = selectedDay && day.date.toDateString() === selectedDay.date.toDateString();
-              const isJan1 = day.date.getFullYear() === 2026 && 
-                             day.date.getMonth() === 0 && 
-                             day.date.getDate() === 1;
+              const isEngagement = day.date.getFullYear() === 2026 && 
+                                   day.date.getMonth() === 4 && 
+                                   day.date.getDate() === 6;
               
               return (
                 <div
                   key={`${day.date.toDateString()}-${idx}`}
                   onClick={() => setSelectedDay({
                     date: day.date,
-                    hebrewLabel: isJan1 ? "1 בינואר - יום השינוי המבורך" : (day.formattedHebrewDate || ''),
-                    dayNumHebrew: isJan1 ? 1 : parseInt(day.formattedHebrewDate?.split(' ')[0] || '1'),
+                    hebrewLabel: isEngagement ? "י\"ט באייר - יום האירוסין" : (day.formattedHebrewDate || ''),
+                    dayNumHebrew: isEngagement ? 19 : parseInt(day.formattedHebrewDate?.split(' ')[0] || '1'),
                     isWedding: day.isWeddingDay
                   })}
                   className={`
                     relative aspect-square rounded-xl md:rounded-2xl flex flex-col justify-between p-1.5 md:p-3 cursor-pointer select-none transition-all duration-300 border
                     ${day.isCurrentMonth ? 'bg-white/40' : 'bg-stone-50/10 text-stone-300 opacity-20'}
                     ${day.isToday ? 'ring-2 ring-gold-500 bg-gold-50/20' : ''}
-                    ${isJan1 ? 'ring-2 ring-amber-500 bg-amber-50/20 border-amber-400' : ''}
+                    ${isEngagement ? 'ring-2 ring-amber-500 bg-amber-50/20 border-amber-400' : ''}
                     ${isSelected ? 'border-gold-500 scale-[1.03] shadow-md bg-gold-50/10' : 'border-stone-100 hover:border-gold-200 hover:bg-gold-50/10'}
                   `}
                 >
@@ -636,7 +647,7 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
                       text-sm md:text-lg font-mono font-medium tracking-tight
                       ${day.isPassed ? 'text-stone-300 line-through' : 'text-stone-800'}
                       ${day.isWeddingDay ? 'text-gold-950 font-bold' : ''}
-                      ${isJan1 ? 'text-amber-700 font-extrabold' : ''}
+                      ${isEngagement ? 'text-amber-700 font-extrabold' : ''}
                       ${day.isToday ? 'text-gold-950 font-black' : ''}
                     `}>
                       {day.dayNumber}
@@ -652,13 +663,13 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
                       </motion.div>
                     )}
 
-                    {isJan1 && (
+                    {isEngagement && (
                       <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
                         className="shrink-0"
                       >
-                        <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-amber-500 fill-amber-200" />
+                        <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-amber-500 fill-amber-300" />
                       </motion.div>
                     )}
                   </div>
@@ -668,7 +679,7 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
                     ${day.isPassed ? 'text-stone-300' : 'text-gold-800'}
                     ${isSelected ? 'text-stone-900' : ''}
                   `}>
-                    {isJan1 ? "יום השינוי" : (day.formattedHebrewDate?.split(' ')[0])}
+                    {isEngagement ? "יום האירוסין" : (day.formattedHebrewDate?.split(' ')[0])}
                   </span>
 
                   {day.isToday && (
@@ -677,9 +688,9 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
                     </span>
                   )}
 
-                  {isJan1 && (
+                  {isEngagement && (
                     <span className="absolute bottom-1 left-1 pointer-events-none font-sans text-[6px] md:text-[8px] bg-amber-600 text-white font-bold rounded px-1 scale-90">
-                      שינוי
+                      אירוסין
                     </span>
                   )}
                 </div>

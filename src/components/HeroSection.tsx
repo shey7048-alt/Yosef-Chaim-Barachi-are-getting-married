@@ -11,8 +11,6 @@ interface HeroSectionProps {
 
 export default function HeroSection({ weddingDate, timeOffset = 0, onScrollToCalendar }: HeroSectionProps) {
   const [timeLeft, setTimeLeft] = useState<CountdownTime>({
-    years: 0,
-    months: 0,
     days: 0,
     hours: 0,
     minutes: 0,
@@ -32,9 +30,9 @@ export default function HeroSection({ weddingDate, timeOffset = 0, onScrollToCal
       
       // Determine if it's the wedding day
       const isSameDate = 
-        now.getFullYear() === weddingDate.getFullYear() &&
-        now.getMonth() === weddingDate.getMonth() &&
-        now.getDate() === weddingDate.getDate();
+         now.getFullYear() === weddingDate.getFullYear() &&
+         now.getMonth() === weddingDate.getMonth() &&
+         now.getDate() === weddingDate.getDate();
 
       const isAfterWedding = differenceMs < 0 && !isSameDate;
 
@@ -45,8 +43,6 @@ export default function HeroSection({ weddingDate, timeOffset = 0, onScrollToCal
 
       if (differenceMs <= 0) {
         setTimeLeft({
-          years: 0,
-          months: 0,
           days: 0,
           hours: 0,
           minutes: 0,
@@ -58,44 +54,18 @@ export default function HeroSection({ weddingDate, timeOffset = 0, onScrollToCal
         return;
       }
 
-      // Calculate Chronological Year, Month, Day, Hour, Minute, Second values exactly
-      let temp = new Date(now.getTime());
-      let years = weddingDate.getFullYear() - temp.getFullYear();
-      let months = weddingDate.getMonth() - temp.getMonth();
-      let days = weddingDate.getDate() - temp.getDate();
-      let hours = weddingDate.getHours() - temp.getHours();
-      let minutes = weddingDate.getMinutes() - temp.getMinutes();
-      let seconds = weddingDate.getSeconds() - temp.getSeconds();
-
-      if (seconds < 0) {
-        seconds += 60;
-        minutes--;
-      }
-      if (minutes < 0) {
-        minutes += 60;
-        hours--;
-      }
-      if (hours < 0) {
-        hours += 24;
-        days--;
-      }
-      if (days < 0) {
-        const prevMonthDate = new Date(weddingDate.getFullYear(), weddingDate.getMonth(), 0);
-        days += prevMonthDate.getDate();
-        months--;
-      }
-      if (months < 0) {
-        months += 12;
-        years--;
-      }
+      // Calculate Day, Hour, Minute, Second values exactly
+      const totalSeconds = Math.floor(differenceMs / 1000);
+      const days = Math.floor(totalSeconds / (3600 * 24));
+      const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
 
       setTimeLeft({
-        years: Math.max(0, years),
-        months: Math.max(0, months),
-        days: Math.max(0, days),
-        hours: Math.max(0, hours),
-        minutes: Math.max(0, minutes),
-        seconds: Math.max(0, seconds),
+        days,
+        hours,
+        minutes,
+        seconds,
         totalMs: differenceMs,
         isWeddingDay: false,
         isAfterWedding: false,
@@ -162,16 +132,16 @@ export default function HeroSection({ weddingDate, timeOffset = 0, onScrollToCal
               <span className="h-[1px] w-10 bg-gold-300"></span>
             </div>
           </motion.div>
-          {/* Core Date, Hebrew Date & Time Header (Perfect integration of Heb details in continuous format) */}
+          {/* Core Date, Hebrew Date & Time Header */}
           <motion.div variants={itemVariants} className="inline-flex flex-col items-center justify-center py-4 px-8 rounded-3xl bg-white/60 border border-gold-300/30 backdrop-blur-md shadow-sm space-y-1">
             <span className="text-[10px] uppercase tracking-[0.25em] text-stone-500 font-bold">
-              תאריך החתונה הכרונולוגי הרציף
+              תאריך החתונה הרשמי
             </span>
             <div className="text-xl sm:text-2xl md:text-3xl font-mono font-bold tracking-wider text-stone-900">
-              2026 . 04 . 10 &nbsp;|&nbsp; 19 : 00 : 00
+              2026 . 08 . 10 &nbsp;|&nbsp; 19 : 00 : 00
             </div>
-            <div className="text-xs text-gold-800 font-serif font-bold">
-              כ"ב בניסן ה'תשפ"ו &nbsp;•&nbsp; חופה בשעה 19:00
+            <div className="text-xs text-gold-800 font-serif font-bold font-sans">
+              כ"ז באב ה'תשפ"ו &nbsp;•&nbsp; חופה בשעה 19:00
             </div>
           </motion.div>
 
@@ -233,40 +203,50 @@ export default function HeroSection({ weddingDate, timeOffset = 0, onScrollToCal
               ) : (
                 <div 
                   className="max-w-3xl mx-auto p-4 sm:p-6 rounded-3xl luxury-glass shadow-lg bg-white/80 border border-gold-200/30"
-                  id="countdown-continuous-row"
+                  id="countdown-container"
                 >
-                  <div className="text-[10px] uppercase tracking-[0.25em] text-stone-500 font-bold mb-3 md:mb-4 text-center">
-                    זמן נותר לחתונה (מבנה כרונולוגי רציף משמאל לימין)
+                  <div className="text-[10px] uppercase tracking-[0.25em] text-stone-500 font-bold mb-3 md:mb-5 text-center">
+                    הזמן הנותר לחתונה המרגשת
                   </div>
-                  <div className="font-mono text-xl sm:text-2xl md:text-3xl font-bold tracking-wider text-stone-900 leading-none select-all flex flex-wrap items-center justify-center gap-y-2">
-                    <div>
-                      <span className="text-gold-650 text-[10px] md:text-xs font-sans font-bold block mb-1">שנים</span>
-                      <span className="bg-stone-100/50 px-2 sm:px-3 py-1.5 rounded-lg border border-stone-200/40 text-2xl sm:text-3xl">{String(timeLeft.years).padStart(2, '0')}</span>
+                  <div className="grid grid-cols-4 gap-2.5 sm:gap-4 text-center">
+                    {/* Days */}
+                    <div className="bg-white/60 p-3 sm:p-5 rounded-2xl border border-gold-100/60 shadow-xs">
+                      <span className="text-stone-900 font-mono text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight block">
+                        {String(timeLeft.days).padStart(2, '0')}
+                      </span>
+                      <span className="text-[10px] sm:text-xs text-stone-500 font-extrabold uppercase mt-1 block">
+                        ימים
+                      </span>
                     </div>
-                    <span className="mx-1 sm:mx-3 text-gold-300 text-lg sm:text-xl relative -bottom-1">/</span>
-                    <div>
-                      <span className="text-gold-650 text-[10px] md:text-xs font-sans font-bold block mb-1">חודשים</span>
-                      <span className="bg-stone-100/50 px-2 sm:px-3 py-1.5 rounded-lg border border-stone-200/40 text-2xl sm:text-3xl">{String(timeLeft.months).padStart(2, '0')}</span>
+
+                    {/* Hours */}
+                    <div className="bg-white/60 p-3 sm:p-5 rounded-2xl border border-gold-100/60 shadow-xs">
+                      <span className="text-stone-900 font-mono text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight block">
+                        {String(timeLeft.hours).padStart(2, '0')}
+                      </span>
+                      <span className="text-[10px] sm:text-xs text-stone-500 font-extrabold uppercase mt-1 block">
+                        שעות
+                      </span>
                     </div>
-                    <span className="mx-1 sm:mx-3 text-gold-300 text-lg sm:text-xl relative -bottom-1">/</span>
-                    <div>
-                      <span className="text-gold-650 text-[10px] md:text-xs font-sans font-bold block mb-1">ימים</span>
-                      <span className="bg-stone-100/50 px-2 sm:px-3 py-1.5 rounded-lg border border-stone-200/40 text-2xl sm:text-3xl">{String(timeLeft.days).padStart(2, '0')}</span>
+
+                    {/* Minutes */}
+                    <div className="bg-white/60 p-3 sm:p-5 rounded-2xl border border-gold-100/60 shadow-xs">
+                      <span className="text-stone-900 font-mono text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight block">
+                        {String(timeLeft.minutes).padStart(2, '0')}
+                      </span>
+                      <span className="text-[10px] sm:text-xs text-stone-500 font-extrabold uppercase mt-1 block">
+                        דקות
+                      </span>
                     </div>
-                    <span className="mx-1 sm:mx-3 text-gold-300 text-lg sm:text-xl relative -bottom-1">/</span>
-                    <div>
-                      <span className="text-gold-650 text-[10px] md:text-xs font-sans font-bold block mb-1">שעות</span>
-                      <span className="bg-stone-100/50 px-2 sm:px-3 py-1.5 rounded-lg border border-stone-200/40 text-2xl sm:text-3xl">{String(timeLeft.hours).padStart(2, '0')}</span>
-                    </div>
-                    <span className="mx-1 sm:mx-3 text-gold-300 text-lg sm:text-xl relative -bottom-1">/</span>
-                    <div>
-                      <span className="text-gold-650 text-[10px] md:text-xs font-sans font-bold block mb-1">דקות</span>
-                      <span className="bg-stone-100/50 px-2 sm:px-3 py-1.5 rounded-lg border border-stone-200/40 text-2xl sm:text-3xl">{String(timeLeft.minutes).padStart(2, '0')}</span>
-                    </div>
-                    <span className="mx-1 sm:mx-3 text-gold-300 text-lg sm:text-xl relative -bottom-1">/</span>
-                    <div>
-                      <span className="text-gold-650 text-[10px] md:text-xs font-sans font-bold block mb-1">שניות</span>
-                      <span className="bg-stone-100/50 px-2 sm:px-3 py-1.5 rounded-lg border border-stone-200/40 text-2xl sm:text-3xl text-emerald-600 font-extrabold">{String(timeLeft.seconds).padStart(2, '0')}</span>
+
+                    {/* Seconds */}
+                    <div className="bg-white/60 p-3 sm:p-5 rounded-2xl border border-gold-100/60 bg-emerald-50/10 shadow-xs">
+                      <span className="text-emerald-600 font-mono text-2xl sm:text-4xl md:text-5xl font-black tracking-tight block">
+                        {String(timeLeft.seconds).padStart(2, '0')}
+                      </span>
+                      <span className="text-[10px] sm:text-xs text-emerald-700 font-extrabold uppercase mt-1 block">
+                        שניות
+                      </span>
                     </div>
                   </div>
                 </div>
