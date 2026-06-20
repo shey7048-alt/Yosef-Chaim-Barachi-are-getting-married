@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronLeft, ChevronRight, Calendar, Heart, ShieldAlert, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Heart, Sparkles, CheckCircle2 } from 'lucide-react';
 import { DayInfo } from '../types';
 
 interface CalendarSectionProps {
@@ -131,15 +131,15 @@ const getHebrewDateLabel = (date: Date): string => {
   return '';
 };
 
-const MONTH_NAMES = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+const MONTH_NAMES_HEBREW = [
+  "ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני",
+  "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"
 ];
 
-const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const WEEKDAYS = ["א'", "ב'", "ג'", "ד'", "ה'", "ו'", "ש'"];
 
 export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
-  // Current virtual date state to allow testing of progression (defaults to June 20, 2026, as specified in prompt metadata)
+  // Current virtual date state to allow testing of progression (defaults to June 20, 2026)
   const [useVirtualDate, setUseVirtualDate] = useState(false);
   const [simulatedTodayStr, setSimulatedTodayStr] = useState("2026-06-20");
   
@@ -177,7 +177,6 @@ export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
                         d.getMonth() === weddingDate.getMonth() &&
                         d.getDate() === weddingDate.getDate();
       
-      // Determine if this date is strictly before "today" (passed)
       const isPassed = d.getTime() < today.setHours(0, 0, 0, 0);
 
       days.push({
@@ -278,18 +277,20 @@ export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
                                selectedDay.getMonth() === weddingDate.getMonth() &&
                                selectedDay.getDate() === weddingDate.getDate();
     if (isWeddingSelection) {
-      return "The Golden Day! Yosef Chaim & Brachi's Chuppah ceremony is scheduled for 7:00 PM (כ\"ז באב תשפ\"ו). Live beautiful memories!";
+      return "היום המאושר בחייהם! טקס החופה המקודש של יוסף חיים וברכי יחל לשמחת כולנו בשעה 19:00 (כ\"ז באב ה'תשפ\"ו).";
     }
 
-    const diffTime = selectedDay.getTime() - weddingDate.getTime();
+    const tToday = new Date(selectedDay.getFullYear(), selectedDay.getMonth(), selectedDay.getDate());
+    const tWedding = new Date(weddingDate.getFullYear(), weddingDate.getMonth(), weddingDate.getDate());
+    const diffTime = tToday.getTime() - tWedding.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
     if (diffDays === 0) {
-      return "Wedding day!";
+      return "יום החתונה המרגש של יוסף חיים & ברכי!";
     } else if (diffDays < 0) {
-      return `${Math.abs(diffDays)} days remaining before Yosef Chaim and Brachi stand under the Chuppah. Every day brings us closer!`;
+      return `עוד ${Math.abs(diffDays)} ימים נותרו לחתונה הגדולה של יוסף חיים וברכי. כל יום מקרב אותנו לרגע המרגש תחת החופה!`;
     } else {
-      return `${diffDays} days after the wedding celebration. A beautiful chapter of eternal joy has started!`;
+      return `עברו כבר ${diffDays} ימים מאז יום הנישואין המרגש והיפה. מאחלים לזוג היקר ברכה, הצלחה ושפע שמחות תמיד!`;
     }
   }, [selectedDay, weddingDate]);
 
@@ -302,15 +303,15 @@ export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
         <div className="inline-flex p-2 bg-gold-50 text-gold-600 rounded-full border border-gold-200">
           <Calendar className="w-5 h-5 text-gold-600" />
         </div>
-        <h2 className="text-3xl md:text-4xl font-serif text-slate-900 font-light">
-          Wedding Progression Calendar
+        <h2 className="text-3xl md:text-4xl font-serif text-stone-900 font-light">
+          לוח הימים המרגש
         </h2>
         <p className="text-stone-500 max-w-lg mx-auto text-sm italic">
-          Keep track of the remaining steps as our days counting down are visually crossed off, pointing gracefully towards August 10.
+          עקבו אחר התקדמות הימים. הימים שעברו נמחקים ונסגרים באופן אוטומטי, ומסמנים את הדרך המהירה אל החתונה המאושרת ב-10 באוגוסט.
         </p>
       </div>
 
-      {/* Date progression simulation bar (Great visual touch for demonstrating how days are crossed off!) */}
+      {/* Date progression simulation bar (Completely in Hebrew) */}
       <div className="mb-8 p-4 rounded-2xl bg-white/50 border border-gold-200/20 backdrop-blur-sm shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2.5">
           <input 
@@ -320,14 +321,14 @@ export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
             onChange={(e) => setUseVirtualDate(e.target.checked)}
             className="w-4 h-4 text-gold-600 focus:ring-gold-500 border-gold-300 rounded cursor-pointer"
           />
-          <label htmlFor="virtual-date" className="text-xs font-semibold text-stone-700 cursor-pointer">
-            Activate Calendar Progression Simulator
+          <label htmlFor="virtual-date" className="text-xs font-bold text-stone-700 cursor-pointer">
+            הפעל סימולטור התקדמות ימים (לבדיקה מהירה)
           </label>
         </div>
 
         {useVirtualDate && (
           <div className="flex items-center gap-2.5 animate-in fade-in slide-in-from-top-1 duration-200">
-            <span className="text-xs text-stone-500">Set Simulated Today:</span>
+            <span className="text-xs text-stone-500">בחר תאריך מדומה:</span>
             <input 
               type="date" 
               value={simulatedTodayStr}
@@ -339,16 +340,16 @@ export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
           </div>
         )}
 
-        <div className="text-xs font-medium text-stone-500 bg-gold-100/50 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+        <div className="text-xs font-semibold text-stone-600 bg-gold-100/50 px-3 py-1.5 rounded-full flex items-center gap-1.5">
           <CheckCircle2 className="w-3.5 h-3.5 text-gold-600" />
           <span>
-            {passedDaysCountMemo} of {totalCurrentMonthDays} days passed in this month grid
+            {passedDaysCountMemo} מתוך {totalCurrentMonthDays} ימים עברו בחודש הנוכחי
           </span>
         </div>
       </div>
 
       {/* Calendar visual container */}
-      <div className="bg-white/80 rounded-3xl shadow-xl border border-gold-100/40 p-5 md:p-8 backdrop-blur-lg">
+      <div className="bg-white/80 rounded-3xl shadow-xl border border-gold-100/40 p-5 md:p-8 backdrop-blur-md">
         {/* Calendar Nav Headers */}
         <div className="flex items-center justify-between mb-8 pb-4 border-b border-stone-100">
           <div className="flex items-center gap-1.5">
@@ -357,20 +358,20 @@ export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
               className="p-2 hover:bg-gold-50 text-stone-600 hover:text-gold-800 rounded-full transition-colors cursor-pointer"
               aria-label="Previous Month"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronRight className="w-5 h-5" />
             </button>
             <button 
               onClick={handleNextMonth}
               className="p-2 hover:bg-gold-50 text-stone-600 hover:text-gold-800 rounded-full transition-colors cursor-pointer"
               aria-label="Next Month"
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronLeft className="w-5 h-5" />
             </button>
           </div>
 
-          <div className="text-center">
-            <h3 className="text-xl md:text-2xl font-serif text-slate-900 font-bold">
-              {MONTH_NAMES[currentMonth]} {currentYear}
+          <div className="text-center font-bold">
+            <h3 className="text-xl md:text-2xl font-serif text-stone-950">
+              {MONTH_NAMES_HEBREW[currentMonth]} {currentYear}
             </h3>
           </div>
 
@@ -378,15 +379,15 @@ export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
             {(currentMonth !== weddingDate.getMonth() || currentYear !== weddingDate.getFullYear()) ? (
               <button
                 onClick={handleSnapToWeddingMonth}
-                className="text-xs font-semibold px-3 py-1.5 bg-gold-50 text-gold-700 border border-gold-200 rounded-full hover:bg-gold-100 transition-all flex items-center gap-1 cursor-pointer shadow-sm active:scale-95"
+                className="text-xs font-bold px-3 py-1.5 bg-gold-50 text-gold-700 border border-gold-200 rounded-full hover:bg-gold-100 transition-all flex items-center gap-1 cursor-pointer shadow-xs active:scale-95"
               >
                 <Sparkles className="w-3 h-3 text-gold-500" />
-                <span>Wedding Month</span>
+                <span>חודש החתונה</span>
               </button>
             ) : (
               <div className="text-xs px-3 py-1.5 bg-gold-100 text-gold-900 rounded-full flex items-center gap-1.5 font-bold">
                 <Heart className="w-3 h-3 text-red-500 fill-red-500 animate-pulse" />
-                <span>Wedding Month</span>
+                <span>חודש החתונה</span>
               </div>
             )}
           </div>
@@ -395,8 +396,8 @@ export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
         {/* Days of Week Headers */}
         <div className="grid grid-cols-7 gap-1 md:gap-3 text-center mb-4">
           {WEEKDAYS.map(day => (
-            <div key={day} className="text-xs md:text-sm font-semibold tracking-wider text-stone-400 uppercase py-1">
-              {day}
+            <div key={day} className="text-xs md:text-sm font-bold tracking-wider text-stone-400 py-1">
+              שבת {day === "ש'" ? '' : 'יום ' + day.replace("'", "")}
             </div>
           ))}
         </div>
@@ -421,25 +422,25 @@ export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
                 {/* Visual strike-through line for passed dates */}
                 {day.isPassed && (
                   <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none rounded-xl md:rounded-2xl">
-                    <div className="w-[141%] h-[1.5px] bg-gradient-to-r from-transparent via-red-300/60 to-transparent rotate-45 transform" />
-                    <div className="absolute inset-0 bg-stone-100/20 backdrop-brightness-95 rounded-xl md:rounded-2xl" />
+                    <div className="w-[141%] h-[1.5px] bg-gradient-to-r from-transparent via-red-300/40 to-transparent rotate-45 transform" />
+                    <div className="absolute inset-0 bg-stone-100/10 backdrop-brightness-95 rounded-xl md:rounded-2xl" />
                   </div>
                 )}
 
                 {/* Day Number / Highlight Icon on Wedding Day */}
                 <div className="flex justify-between items-start w-full">
                   <span className={`
-                    text-sm md:text-lg font-mono font-light tracking-tight
+                    text-sm md:text-lg font-mono font-medium tracking-tight
                     ${day.isPassed ? 'text-stone-300 line-through decoration-transparent' : 'text-[#3c362f]'}
-                    ${day.isWeddingDay ? 'text-gold-800 font-semibold' : ''}
-                    ${day.isToday ? 'text-gold-950 font-bold' : ''}
+                    ${day.isWeddingDay ? 'text-gold-950 font-bold' : ''}
+                    ${day.isToday ? 'text-gold-950 font-black' : ''}
                   `}>
                     {day.dayNumber}
                   </span>
 
                   {day.isWeddingDay && (
                     <motion.div
-                      animate={{ scale: [1, 1.12, 1] }}
+                      animate={{ scale: [1, 1.15, 1] }}
                       transition={{ repeat: Infinity, duration: 2 }}
                     >
                       <Heart className="w-3.5 h-3.5 md:w-5 md:h-5 text-red-500 fill-red-500" />
@@ -447,21 +448,21 @@ export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
                   )}
                 </div>
 
-                {/* Hebrew Date Text (Bottom-Left) */}
+                {/* Hebrew Date Text (Bottom-Right / Left) */}
                 <span className={`
-                  text-[9px] md:text-[10px] text-right font-serif truncate max-w-full
-                  ${day.isPassed ? 'text-stone-300' : 'text-stone-500'}
-                  ${day.isWeddingDay ? 'text-gold-700 font-medium' : ''}
-                  ${isSelected ? 'text-gold-800' : ''}
+                  text-[9px] md:text-xs text-right font-serif truncate max-w-full font-medium
+                  ${day.isPassed ? 'text-stone-300' : 'text-gold-800'}
+                  ${day.isWeddingDay ? 'text-red-600 font-bold' : ''}
+                  ${isSelected ? 'text-gold-950' : ''}
                 `}>
-                  {day.formattedHebrewDate && day.formattedHebrewDate.split(' ')[0] /* just show Hebrew date chunk or full on layout width */}
-                  <span className="hidden md:inline"> {day.formattedHebrewDate && day.formattedHebrewDate.split(' ')[1]}</span>
+                  {day.formattedHebrewDate && day.formattedHebrewDate.replace(" באב", "").replace(" באלול", "").replace(" בתמוז", "").replace(" בסיוון", "")}
+                  <span className="hidden md:inline"> {day.formattedHebrewDate && (day.formattedHebrewDate.includes("אב") ? "אב" : day.formattedHebrewDate.includes("אלול") ? "אלול" : day.formattedHebrewDate.includes("תמוז") ? "תמוז" : "סיוון")}</span>
                 </span>
 
-                {/* Micro circle indicator for simulated today */}
+                {/* Today indicator label */}
                 {day.isToday && (
-                  <span className="absolute bottom-1 right-1 font-sans text-[7px] bg-gold-600 text-white rounded px-1 scale-90 md:scale-100">
-                    TODAY
+                  <span className="absolute bottom-1 left-1 font-sans text-[7px] md:text-[8px] bg-gold-600 text-white font-bold rounded px-1 scale-90 md:scale-100">
+                    היום
                   </span>
                 )}
               </div>
@@ -477,7 +478,7 @@ export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 15 }}
-            className="mt-6 p-5 rounded-2xl luxury-glass border border-gold-300 bg-white/90 shadow-md flex items-start gap-4"
+            className="mt-6 p-5 rounded-2xl luxury-glass border border-gold-300 bg-white/95 shadow-xs flex items-start gap-4"
             id="day-detail-panel"
           >
             <div className="p-3 bg-gold-50 rounded-xl text-gold-700 border border-gold-100 shrink-0">
@@ -490,15 +491,15 @@ export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
               )}
             </div>
             <div className="space-y-1">
-              <h4 className="font-serif text-base text-slate-900 font-bold">
-                {MONTH_NAMES[selectedDay.getMonth()]} {selectedDay.getDate()}, {selectedDay.getFullYear()}
+              <h4 className="font-serif text-lg text-stone-900 font-bold">
+                {selectedDay.getDate()} ב{MONTH_NAMES_HEBREW[selectedDay.getMonth()]}, {selectedDay.getFullYear()}
                 {getHebrewDateLabel(selectedDay) && (
-                  <span className="text-gold-600 font-serif text-sm font-medium block md:inline md:ml-2">
+                  <span className="text-gold-700 font-serif text-sm font-bold block md:inline md:mr-2">
                     ({getHebrewDateLabel(selectedDay)})
                   </span>
                 )}
               </h4>
-              <p className="text-stone-600 text-sm italic font-serif">
+              <p className="text-stone-600 text-sm leading-relaxed">
                 {weddingNoteText}
               </p>
             </div>
