@@ -5,6 +5,7 @@ import { DayInfo } from '../types';
 
 interface CalendarSectionProps {
   weddingDate: Date;
+  timeOffset?: number;
 }
 
 interface HebrewMonthData {
@@ -64,7 +65,7 @@ const formatGregorianDaySimple = (date: Date): string => {
   return `${d}.${m}`;
 };
 
-export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
+export default function CalendarSection({ weddingDate, timeOffset = 0 }: CalendarSectionProps) {
   // Calendar System Mode - toggle between Hebrew Calendar structure (default) and standard Gregorian
   const [calendarMode, setCalendarMode] = useState<'hebrew' | 'gregorian'>('hebrew');
 
@@ -77,8 +78,9 @@ export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
       const parts = simulatedTodayStr.split('-');
       return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
     }
-    return new Date();
-  }, [useVirtualDate, simulatedTodayStr]);
+    // High-precision server offset computed dynamically
+    return new Date(Date.now() + timeOffset);
+  }, [useVirtualDate, simulatedTodayStr, timeOffset]);
 
   // Selected Month Focus
   const [hebrewMonthIndex, setHebrewMonthIndex] = useState(2); // Initially focus "אב" (Aug Index 2)

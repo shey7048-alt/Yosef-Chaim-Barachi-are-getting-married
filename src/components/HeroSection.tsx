@@ -5,10 +5,11 @@ import { CountdownTime } from '../types';
 
 interface HeroSectionProps {
   weddingDate: Date;
+  timeOffset?: number; // Calculated dynamic offset (Jerusalem standard time - client system clock)
   onScrollToCalendar: () => void;
 }
 
-export default function HeroSection({ weddingDate, onScrollToCalendar }: HeroSectionProps) {
+export default function HeroSection({ weddingDate, timeOffset = 0, onScrollToCalendar }: HeroSectionProps) {
   const [timeLeft, setTimeLeft] = useState<CountdownTime>({
     days: 0,
     hours: 0,
@@ -23,7 +24,8 @@ export default function HeroSection({ weddingDate, onScrollToCalendar }: HeroSec
 
   useEffect(() => {
     const calculateTimeLeft = () => {
-      const now = new Date();
+      // Calculate current live date adjusted with the high-precision offset fetched from API
+      const now = new Date(Date.now() + timeOffset);
       const differenceMs = weddingDate.getTime() - now.getTime();
       
       // Determine if it's the wedding day (August 10, 2026, from 00:00 until 23:59:59)
@@ -66,11 +68,8 @@ export default function HeroSection({ weddingDate, onScrollToCalendar }: HeroSec
 
       const days = Math.floor(differenceMs / (1000 * 60 * 60 * 24));
       const hours = Math.floor((differenceMs / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((differenceMs / 1000 / 60) % 65); // correct to % 60
-      const seconds = Math.floor((differenceMs / 1000) % 60);
-
-      // Fix minutes formula just in case
       const minutesCorrect = Math.floor((differenceMs / (1000 * 60)) % 60);
+      const seconds = Math.floor((differenceMs / 1000) % 60);
 
       setTimeLeft({
         days,
@@ -87,7 +86,7 @@ export default function HeroSection({ weddingDate, onScrollToCalendar }: HeroSec
     const interval = setInterval(calculateTimeLeft, 1000);
 
     return () => clearInterval(interval);
-  }, [weddingDate]);
+  }, [weddingDate, timeOffset]);
 
   // Framer-motion layout variables
   const containerVariants = {
