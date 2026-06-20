@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --color-gold-50: #fefcf8;
+  --color-gold-100: #fbf6ea;
+  --color-gold-200: #f5eacf;
+  --color-gold-300: #eed8ab;
+  --color-gold-400: #e5bd7a;
+  --color-gold-500: #c89d55;
+  --color-gold-600: #b08240;
+  --color-gold-700: #936730;
+  --color-gold-800: #754f24;
+  --color-gold-900: #573718;
+  --color-gold-950: #3a2110;
+}
+
+@layer base {
+  body {
+    @apply bg-[#fbf9f5] text-[#2c2722] font-sans antialiased selection:bg-gold-200 selection:text-gold-950;
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom visual styling to give standard element a tailored look */
+.luxury-glass {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(219, 161, 83, 0.15);
+}
+
+.luxury-glass-dark {
+  background: rgba(44, 39, 34, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(219, 161, 83, 0.25);
+}
+
+.champagne-gradient {
+  background: radial-gradient(circle at top, #fdfbfa 0%, #fbf5e8 50%, #f7ebd4 100%);
+}
+
+/* Elegant gold underline effect */
+.gold-underline {
+  position: relative;
+}
+.gold-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #c89d55, transparent);
+}

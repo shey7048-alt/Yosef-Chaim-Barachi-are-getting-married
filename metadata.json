@@ -1,0 +1,6 @@
+{
+  "name": "Yosef Chaim & Brachi's Wedding Countdown",
+  "description": "An elegant live countdown and interactive calendar for the wedding of Yosef Chaim & Brachi on August 10, 2026 (כ\"ז באב תשפ\"ו).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
