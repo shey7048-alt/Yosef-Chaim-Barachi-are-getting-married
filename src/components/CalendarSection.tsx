@@ -119,8 +119,13 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
     const startOfWeek = selectedMonth.startDayOfWeek;
     
     // Previous Hebrew month data
-    const prevMonthIdx = hebrewMonthIndex === 0 ? HEBREW_MONTHS.length - 1 : hebrewMonthIndex - 1;
-    const prevMonth = HEBREW_MONTHS[prevMonthIdx];
+    const prevMonth = hebrewMonthIndex === 0 ? {
+      name: "ניסן",
+      year: "ה'תשפ\"ו",
+      startGregorian: new Date('2026-03-19T00:00:00'),
+      daysCount: 30,
+      startDayOfWeek: 4
+    } : HEBREW_MONTHS[hebrewMonthIndex - 1];
 
     // Padding from previous Hebrew Month
     for (let i = startOfWeek - 1; i >= 0; i--) {
@@ -172,8 +177,13 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
     }
 
     // Next Hebrew Month Padding 
-    const nextMonthIdx = hebrewMonthIndex === HEBREW_MONTHS.length - 1 ? 0 : hebrewMonthIndex + 1;
-    const nextMonth = HEBREW_MONTHS[nextMonthIdx];
+    const nextMonth = hebrewMonthIndex === HEBREW_MONTHS.length - 1 ? {
+      name: "אלול",
+      year: "ה'תשפ\"ו",
+      startGregorian: new Date('2026-08-14T00:00:00'),
+      daysCount: 29,
+      startDayOfWeek: 5
+    } : HEBREW_MONTHS[hebrewMonthIndex + 1];
     const remainingCount = (7 - (days.length % 7)) % 7;
 
     for (let i = 1; i <= remainingCount; i++) {
