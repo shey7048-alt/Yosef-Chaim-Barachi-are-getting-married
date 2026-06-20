@@ -7,142 +7,71 @@ interface CalendarSectionProps {
   weddingDate: Date;
 }
 
-// Hebrew month dates mapper for summer 2026 to provide beautifully authentic Hebrew dates
-const getHebrewDateLabel = (date: Date): string => {
-  const m = date.getMonth(); // 0-indexed
-  const d = date.getDate();
-  const y = date.getFullYear();
+interface HebrewMonthData {
+  name: string;
+  year: string;
+  startGregorian: Date;
+  daysCount: number;
+  startDayOfWeek: number; // 0 is Sunday, 1 Monday, etc.
+}
 
-  if (y !== 2026) return '';
-
-  // August 2026 (Month 7) mapping
-  if (m === 7) {
-    const abMapping: Record<number, string> = {
-      1: "י\"ח באב",
-      2: "י\"ט באב",
-      3: "כ' באב",
-      4: "כ\"א באב",
-      5: "כ\"ב באב",
-      6: "כ\"ג באב",
-      7: "כ\"ד באב",
-      8: "כ\"ה באב",
-      9: "כ\"ו באב",
-      10: "כ\"ז באב", // Wedding
-      11: "כ\"ח באב",
-      12: "כ\"ט באב",
-      13: "ל' באב",
-      14: "א' באלול",
-      15: "ב' באלול",
-      16: "ג' באלול",
-      17: "ד' באלול",
-      18: "ה' באלול",
-      19: "ו' באלול",
-      20: "ז' באלול",
-      21: "ח' באלול",
-      22: "ט' באלול",
-      23: "י' באלול",
-      24: "י\"א באלול",
-      25: "י\"ב באלול",
-      26: "י\"ג באלול",
-      27: "י\"ה באלול",
-      28: "י\"ו באלול",
-      29: "י\"ז באלול",
-      30: "י\"ח באלול",
-      31: "י\"ט באלול",
-    };
-    return abMapping[d] || '';
+const HEBREW_MONTHS: HebrewMonthData[] = [
+  {
+    name: "סיוון",
+    year: "ה'תשפ\"ו",
+    startGregorian: new Date('2026-05-17T00:00:00'),
+    daysCount: 30,
+    startDayOfWeek: 0, // May 17, 2026 is Sunday
+  },
+  {
+    name: "תמוז",
+    year: "ה'תשפ\"ו",
+    startGregorian: new Date('2026-06-16T00:00:00'),
+    daysCount: 29,
+    startDayOfWeek: 2, // June 16, 2026 is Tuesday
+  },
+  {
+    name: "אב",
+    year: "ה'תשפ\"ו",
+    startGregorian: new Date('2026-07-15T00:00:00'),
+    daysCount: 30,
+    startDayOfWeek: 3, // July 15, 2026 is Wednesday (Day 27 is Aug 10)
+  },
+  {
+    name: "אלול",
+    year: "ה'תשפ\"ו",
+    startGregorian: new Date('2026-08-14T00:00:00'),
+    daysCount: 29,
+    startDayOfWeek: 5, // August 14, 2026 is Friday
   }
-
-  // July 2026 (Month 6) mapping
-  if (m === 6) {
-    const tammuzAbMapping: Record<number, string> = {
-      1: "י\"ו בתמוז",
-      2: "י\"ז בתמוז",
-      3: "י\"ח בתמוז",
-      4: "י\"ט בתמוז",
-      5: "כ' בתמוז",
-      6: "כ\"א בתמוז",
-      7: "כ\"ב בתמוז",
-      8: "כ\"ג בתמוז",
-      9: "כ\"ד בתמוז",
-      10: "כ\"ה בתמוז",
-      11: "כ\"ו בתמוז",
-      12: "כ\"ז בתמוז",
-      13: "כ\"ח בתמוז",
-      14: "כ\"ט בתמוז",
-      15: "א' באב", // Rosh Chodesh Ab
-      16: "ב' באב",
-      17: "ג' באב",
-      18: "ד' באב",
-      19: "ה' באב",
-      20: "ו' באב",
-      21: "ז' באב",
-      22: "ח' באב",
-      23: "ט' באב",
-      24: "י' באב",
-      25: "י\"א באב",
-      26: "י\"ב באב",
-      27: "י\"ג באב",
-      28: "י\"ה באב",
-      29: "י\"ו באב",
-      30: "י\"ז באב",
-      31: "י\"ח באב",
-    };
-    return tammuzAbMapping[d] || '';
-  }
-
-  // June 2026 (Month 5) mapping
-  if (m === 5) {
-    const sivanTammuzMapping: Record<number, string> = {
-      1: "י\"ו בסיוון",
-      2: "י\"ז בסיוון",
-      3: "י\"ח בסיוון",
-      4: "י\"ט בסיוון",
-      5: "כ' בסיוון",
-      6: "כ\"א בסיוון",
-      7: "כ\"ב בסיוון",
-      8: "כ\"ג בסיוון",
-      9: "כ\"ד בסיוון",
-      10: "כ\"ה בסיוון",
-      11: "כ\"ו בסיוון",
-      12: "כ\"ז בסיוון",
-      13: "כ\"ח בסיוון",
-      14: "כ\"ט בסיוון",
-      15: "ל' בסיוון",
-      16: "א' בתמוז", // Rosh Chodesh Tammuz
-      17: "ב' בתמוז",
-      18: "ג' בתמוז",
-      19: "ד' בתמוז",
-      20: "ה' בתמוז",
-      21: "ו' בתמוז",
-      22: "ז' בתמוז",
-      23: "ח' בתמוז",
-      24: "ט' בתמוז",
-      25: "י' בתמוז",
-      26: "י\"א בתמוז",
-      27: "י\"ב בתמוז",
-      28: "י\"ג בתמוז",
-      29: "י\"ד בתמוז",
-      30: "י\"ו בתמוז",
-    };
-    return sivanTammuzMapping[d] || '';
-  }
-
-  return '';
-};
-
-const MONTH_NAMES_HEBREW = [
-  "ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני",
-  "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"
 ];
 
 const WEEKDAYS = ["א'", "ב'", "ג'", "ד'", "ה'", "ו'", "ש'"];
 
+const getHebDateLetter = (dayNum: number): string => {
+  const letters: Record<number, string> = {
+    1: "א'", 2: "ב'", 3: "ג'", 4: "ד'", 5: "ה'", 6: "ו'", 7: "ז'", 8: "ח'", 9: "ט'", 10: "י'",
+    11: "י\"א", 12: "י\"ב", 13: "י\"ג", 14: "י\"ד", 15: "ט\"ו", 16: "ט\"ז", 17: "י\"ז", 18: "י\"ח", 19: "י\"ט", 20: "כ'",
+    21: "כ\"א", 22: "כ\"ב", 23: "כ\"ג", 24: "כ\"ד", 25: "כ\"ה", 26: "כ\"ו", 27: "כ\"ז", 28: "כ\"ח", 29: "כ\"ט", 30: "ל'"
+  };
+  return letters[dayNum] || String(dayNum);
+};
+
+// Formats a Gregorian date nicely in Hebrew
+const formatGregorianDaySimple = (date: Date): string => {
+  const d = String(date.getDate()).padStart(2, '0');
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  return `${d}.${m}`;
+};
+
 export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
-  // Current virtual date state to allow testing of progression (defaults to June 20, 2026)
+  // Calendar System Mode - toggle between Hebrew Calendar structure (default) and standard Gregorian
+  const [calendarMode, setCalendarMode] = useState<'hebrew' | 'gregorian'>('hebrew');
+
+  // Interactive Virtual Date Simulation
   const [useVirtualDate, setUseVirtualDate] = useState(false);
   const [simulatedTodayStr, setSimulatedTodayStr] = useState("2026-06-20");
-  
+
   const today = useMemo(() => {
     if (useVirtualDate) {
       const parts = simulatedTodayStr.split('-');
@@ -151,327 +80,595 @@ export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
     return new Date();
   }, [useVirtualDate, simulatedTodayStr]);
 
-  // Calendar month/year focus state (initially set to August 2026 since it's the wedding month)
-  const [currentYear, setCurrentYear] = useState(2026);
-  const [currentMonth, setCurrentMonth] = useState(7); // August is 7
+  // Selected Month Focus
+  const [hebrewMonthIndex, setHebrewMonthIndex] = useState(2); // Initially focus "אב" (Aug Index 2)
+  const [gregorianMonth, setGregorianMonth] = useState(7); // August is index 7
+  const [gregorianYear, setGregorianYear] = useState(2026);
 
-  // Day click note feedback
-  const [selectedDay, setSelectedDay] = useState<Date | null>(null);
+  // Click Details Panel state
+  const [selectedDay, setSelectedDay] = useState<{
+    date: Date;
+    hebrewLabel: string;
+    dayNumHebrew: number;
+    isWedding: boolean;
+  } | null>(null);
 
-  // Grid builder
-  const daysInGrid = useMemo(() => {
-    const days: DayInfo[] = [];
-    const dateOfFirst = new Date(currentYear, currentMonth, 1);
-    const firstDayOfWeek = dateOfFirst.getDay(); // 0 is Sunday
-    const totalDaysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  // 1. Build HEBREW Calendar Grid
+  const hebrewGridDays = useMemo(() => {
+    const selectedMonth = HEBREW_MONTHS[hebrewMonthIndex];
+    const days: Array<{
+      date: Date;
+      hebrewDayNum: number;
+      hebrewDayLetter: string;
+      isCurrentMonth: boolean;
+      isToday: boolean;
+      isPassed: boolean;
+      isWeddingDay: boolean;
+    }> = [];
+
+    const startOfWeek = selectedMonth.startDayOfWeek;
     
-    // Add padding days from the previous month
-    const prevMonth = currentMonth === 0 ? 11 : currentMonth - 1;
-    const prevYear = currentMonth === 0 ? currentYear - 1 : currentYear;
-    const daysInPrevMonth = new Date(prevYear, prevMonth + 1, 0).getDate();
+    // Previous Hebrew month data
+    const prevMonthIdx = hebrewMonthIndex === 0 ? HEBREW_MONTHS.length - 1 : hebrewMonthIndex - 1;
+    const prevMonth = HEBREW_MONTHS[prevMonthIdx];
 
-    for (let i = firstDayOfWeek - 1; i >= 0; i--) {
-      const dayNum = daysInPrevMonth - i;
-      const d = new Date(prevYear, prevMonth, dayNum);
+    // Padding from previous Hebrew Month
+    for (let i = startOfWeek - 1; i >= 0; i--) {
+      const dayNum = prevMonth.daysCount - i;
+      const d = new Date(prevMonth.startGregorian.getTime());
+      d.setDate(d.getDate() + (dayNum - 1));
+
+      const todayDateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const checkDateOnly = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      const isPassed = checkDateOnly.getTime() < todayDateOnly.getTime();
+
       const isWedding = d.getFullYear() === weddingDate.getFullYear() &&
                         d.getMonth() === weddingDate.getMonth() &&
                         d.getDate() === weddingDate.getDate();
-      
-      const isPassed = d.getTime() < today.setHours(0, 0, 0, 0);
 
       days.push({
         date: d,
-        dayNumber: dayNum,
-        isWeddingDay: isWedding,
-        isPassed: isPassed,
+        hebrewDayNum: dayNum,
+        hebrewDayLetter: getHebDateLetter(dayNum),
         isCurrentMonth: false,
         isToday: d.toDateString() === today.toDateString(),
-        formattedHebrewDate: getHebrewDateLabel(d),
+        isPassed,
+        isWeddingDay: isWedding
       });
     }
 
-    // Add days of the current month
-    for (let dayNum = 1; dayNum <= totalDaysInMonth; dayNum++) {
-      const d = new Date(currentYear, currentMonth, dayNum);
+    // Days in of Current Hebrew Month
+    for (let dayNum = 1; dayNum <= selectedMonth.daysCount; dayNum++) {
+      const d = new Date(selectedMonth.startGregorian.getTime());
+      d.setDate(d.getDate() + (dayNum - 1));
+
+      const todayDateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const checkDateOnly = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      const isPassed = checkDateOnly.getTime() < todayDateOnly.getTime();
+
       const isWedding = d.getFullYear() === weddingDate.getFullYear() &&
                         d.getMonth() === weddingDate.getMonth() &&
                         d.getDate() === weddingDate.getDate();
 
-      const isPassed = d.getTime() < today.setHours(0, 0, 0, 0);
-
       days.push({
         date: d,
-        dayNumber: dayNum,
-        isWeddingDay: isWedding,
-        isPassed: isPassed,
+        hebrewDayNum: dayNum,
+        hebrewDayLetter: getHebDateLetter(dayNum),
         isCurrentMonth: true,
         isToday: d.toDateString() === today.toDateString(),
-        formattedHebrewDate: getHebrewDateLabel(d),
+        isPassed,
+        isWeddingDay: isWedding
       });
     }
 
-    // Add padding days from the next month to complete the grid (multiples of 7)
-    const nextMonth = currentMonth === 11 ? 0 : currentMonth + 1;
-    const nextYear = currentMonth === 11 ? currentYear + 1 : currentYear;
-    const remainingPowerOfSeven = (7 - (days.length % 7)) % 7;
-    for (let i = 1; i <= remainingPowerOfSeven; i++) {
-      const d = new Date(nextYear, nextMonth, i);
+    // Next Hebrew Month Padding 
+    const nextMonthIdx = hebrewMonthIndex === HEBREW_MONTHS.length - 1 ? 0 : hebrewMonthIndex + 1;
+    const nextMonth = HEBREW_MONTHS[nextMonthIdx];
+    const remainingCount = (7 - (days.length % 7)) % 7;
+
+    for (let i = 1; i <= remainingCount; i++) {
+      const d = new Date(nextMonth.startGregorian.getTime());
+      d.setDate(d.getDate() + (i - 1));
+
+      const todayDateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const checkDateOnly = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      const isPassed = checkDateOnly.getTime() < todayDateOnly.getTime();
+
       const isWedding = d.getFullYear() === weddingDate.getFullYear() &&
                         d.getMonth() === weddingDate.getMonth() &&
                         d.getDate() === weddingDate.getDate();
 
-      const isPassed = d.getTime() < today.setHours(0, 0, 0, 0);
-
       days.push({
         date: d,
-        dayNumber: i,
-        isWeddingDay: isWedding,
-        isPassed: isPassed,
+        hebrewDayNum: i,
+        hebrewDayLetter: getHebDateLetter(i),
         isCurrentMonth: false,
         isToday: d.toDateString() === today.toDateString(),
-        formattedHebrewDate: getHebrewDateLabel(d),
+        isPassed,
+        isWeddingDay: isWedding
       });
     }
 
     return days;
-  }, [currentYear, currentMonth, today, weddingDate]);
+  }, [hebrewMonthIndex, today, weddingDate]);
 
-  const handlePrevMonth = () => {
-    if (currentMonth === 0) {
-      setCurrentMonth(11);
-      setCurrentYear(currentYear - 1);
-    } else {
-      setCurrentMonth(currentMonth - 1);
+  // 2. Fallback Gregorian Custom Mapping (Used to resolve general Month lookup if requested)
+  const getHebrewLabelForGregorian = (date: Date): string => {
+    // Elegant mapper for quick resolution
+    const timestamp = date.getTime();
+    for (let i = 0; i < HEBREW_MONTHS.length; i++) {
+      const m = HEBREW_MONTHS[i];
+      const start = m.startGregorian.getTime();
+      const end = start + (m.daysCount * 24 * 60 * 60 * 1000);
+      if (timestamp >= start && timestamp < end) {
+        const daysDiff = Math.floor((timestamp - start) / (24 * 60 * 60 * 1000));
+        return `${getHebDateLetter(daysDiff + 1)} ב${m.name}`;
+      }
     }
-    setSelectedDay(null);
+    return '';
   };
 
-  const handleNextMonth = () => {
-    if (currentMonth === 11) {
-      setCurrentMonth(0);
-      setCurrentYear(currentYear + 1);
-    } else {
-      setCurrentMonth(currentMonth + 1);
+  const gregorianGridDays = useMemo(() => {
+    const days: DayInfo[] = [];
+    const dateOfFirst = new Date(gregorianYear, gregorianMonth, 1);
+    const startOfWeek = dateOfFirst.getDay();
+    const totalDays = new Date(gregorianYear, gregorianMonth + 1, 0).getDate();
+
+    const prevMonthIdx = gregorianMonth === 0 ? 11 : gregorianMonth - 1;
+    const prevYear = gregorianMonth === 0 ? gregorianYear - 1 : gregorianYear;
+    const daysInPrev = new Date(prevYear, prevMonthIdx + 1, 0).getDate();
+
+    for (let i = startOfWeek - 1; i >= 0; i--) {
+      const dayNum = daysInPrev - i;
+      const d = new Date(prevYear, prevMonthIdx, dayNum);
+      const isWedding = d.getFullYear() === weddingDate.getFullYear() &&
+                        d.getMonth() === weddingDate.getMonth() &&
+                        d.getDate() === weddingDate.getDate();
+      days.push({
+        date: d,
+        dayNumber: dayNum,
+        isWeddingDay: isWedding,
+        isPassed: d.getTime() < today.setHours(0, 0, 0, 0),
+        isCurrentMonth: false,
+        isToday: d.toDateString() === today.toDateString(),
+        formattedHebrewDate: getHebrewLabelForGregorian(d)
+      });
     }
-    setSelectedDay(null);
-  };
 
-  const handleSnapToWeddingMonth = () => {
-    setCurrentMonth(weddingDate.getMonth());
-    setCurrentYear(weddingDate.getFullYear());
-    setSelectedDay(null);
-  };
+    for (let dayNum = 1; dayNum <= totalDays; dayNum++) {
+      const d = new Date(gregorianYear, gregorianMonth, dayNum);
+      const isWedding = d.getFullYear() === weddingDate.getFullYear() &&
+                        d.getMonth() === weddingDate.getMonth() &&
+                        d.getDate() === weddingDate.getDate();
+      days.push({
+        date: d,
+        dayNumber: dayNum,
+        isWeddingDay: isWedding,
+        isPassed: d.getTime() < today.setHours(0, 0, 0, 0),
+        isCurrentMonth: true,
+        isToday: d.toDateString() === today.toDateString(),
+        formattedHebrewDate: getHebrewLabelForGregorian(d)
+      });
+    }
 
-  // Check how many days of the month have elements already passed
-  const passedDaysCountMemo = useMemo(() => {
-    return daysInGrid.filter(d => d.isCurrentMonth && d.isPassed).length;
-  }, [daysInGrid]);
+    const remaining = (7 - (days.length % 7)) % 7;
+    const nextMonthIdx = gregorianMonth === 11 ? 0 : gregorianMonth + 1;
+    const nextYear = gregorianMonth === 11 ? gregorianYear + 1 : gregorianYear;
+    for (let i = 1; i <= remaining; i++) {
+      const d = new Date(nextYear, nextMonthIdx, i);
+      const isWedding = d.getFullYear() === weddingDate.getFullYear() &&
+                        d.getMonth() === weddingDate.getMonth() &&
+                        d.getDate() === weddingDate.getDate();
+      days.push({
+        date: d,
+        dayNumber: i,
+        isWeddingDay: isWedding,
+        isPassed: d.getTime() < today.setHours(0, 0, 0, 0),
+        isCurrentMonth: false,
+        isToday: d.toDateString() === today.toDateString(),
+        formattedHebrewDate: getHebrewLabelForGregorian(d)
+      });
+    }
 
-  const totalCurrentMonthDays = useMemo(() => {
-    return daysInGrid.filter(d => d.isCurrentMonth).length;
-  }, [daysInGrid]);
+    return days;
+  }, [gregorianMonth, gregorianYear, today, weddingDate]);
 
-  const weddingNoteText = useMemo(() => {
+  // Counts for the feedback bar
+  const currentHebewMonthObj = HEBREW_MONTHS[hebrewMonthIndex];
+  const passedDaysCount = useMemo(() => {
+    if (calendarMode === 'hebrew') {
+      return hebrewGridDays.filter(d => d.isCurrentMonth && d.isPassed).length;
+    } else {
+      return gregorianGridDays.filter(d => d.isCurrentMonth && d.isPassed).length;
+    }
+  }, [calendarMode, hebrewGridDays, gregorianGridDays]);
+
+  const totalCurrentGridDays = useMemo(() => {
+    if (calendarMode === 'hebrew') {
+      return currentHebewMonthObj.daysCount;
+    } else {
+      return new Date(gregorianYear, gregorianMonth + 1, 0).getDate();
+    }
+  }, [calendarMode, hebrewMonthIndex, gregorianMonth, gregorianYear]);
+
+  // Note text resolution
+  const detailNoteText = useMemo(() => {
     if (!selectedDay) return '';
-    const isWeddingSelection = selectedDay.getFullYear() === weddingDate.getFullYear() &&
-                               selectedDay.getMonth() === weddingDate.getMonth() &&
-                               selectedDay.getDate() === weddingDate.getDate();
-    if (isWeddingSelection) {
-      return "היום המאושר בחייהם! טקס החופה המקודש של יוסף חיים וברכי יחל לשמחת כולנו בשעה 19:00 (כ\"ז באב ה'תשפ\"ו).";
+    
+    if (selectedDay.isWedding) {
+      return `היום המאושר בחייהם! טקס החופה המקודש של יוסף חיים וברכי יתקיים אי"ה בשעה 19:00 באולמי "היכל הנגינה", רחוב רשב"י 21, מודיעין עילית.`;
     }
 
-    const tToday = new Date(selectedDay.getFullYear(), selectedDay.getMonth(), selectedDay.getDate());
+    const tSelected = new Date(selectedDay.date.getFullYear(), selectedDay.date.getMonth(), selectedDay.date.getDate());
     const tWedding = new Date(weddingDate.getFullYear(), weddingDate.getMonth(), weddingDate.getDate());
-    const diffTime = tToday.getTime() - tWedding.getTime();
+    const diffTime = tSelected.getTime() - tWedding.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
+
     if (diffDays === 0) {
-      return "יום החתונה המרגש של יוסף חיים & ברכי!";
+      return "יום החתונה הגדול והמאושר!";
     } else if (diffDays < 0) {
-      return `עוד ${Math.abs(diffDays)} ימים נותרו לחתונה הגדולה של יוסף חיים וברכי. כל יום מקרב אותנו לרגע המרגש תחת החופה!`;
+      return `עוד ${Math.abs(diffDays)} ימים לחתונה הגדולה של יוסף חיים וברכי! כל יום מקרב אותנו לקראת שמחת הנישואין המרגשת תחת החופה.`;
     } else {
-      return `עברו כבר ${diffDays} ימים מאז יום הנישואין המרגש והיפה. מאחלים לזוג היקר ברכה, הצלחה ושפע שמחות תמיד!`;
+      return `עברו כבר ${diffDays} ימים מאז החתונה המרגשת. אנו מאחלים לזוג היקר בניין עדי עד, שמחה, הצלחה ושפע ברכות בביתם החדש!`;
     }
   }, [selectedDay, weddingDate]);
 
   return (
-    <div 
-      className="max-w-4xl mx-auto px-4 py-16"
-      id="calendar-destination"
-    >
-      <div className="text-center space-y-3 mb-12">
-        <div className="inline-flex p-2 bg-gold-50 text-gold-600 rounded-full border border-gold-200">
-          <Calendar className="w-5 h-5 text-gold-600" />
+    <div className="max-w-4xl mx-auto px-4 py-16" id="calendar-destination">
+      {/* HEADER SECTION */}
+      <div className="text-center space-y-4 mb-10">
+        <div className="inline-flex p-2.5 bg-gold-50 text-gold-650 rounded-full border border-gold-200">
+          <Calendar className="w-5 h-5 text-gold-650 animate-pulse" />
         </div>
-        <h2 className="text-3xl md:text-4xl font-serif text-stone-900 font-light">
-          לוח הימים המרגש
+        <h2 className="text-3xl md:text-4xl font-serif text-stone-900 font-medium tracking-tight">
+          לוח למעקב התקדמות החתונה
         </h2>
-        <p className="text-stone-500 max-w-lg mx-auto text-sm italic">
-          עקבו אחר התקדמות הימים. הימים שעברו נמחקים ונסגרים באופן אוטומטי, ומסמנים את הדרך המהירה אל החתונה המאושרת ב-10 באוגוסט.
+        <p className="text-stone-500 max-w-xl mx-auto text-sm leading-relaxed">
+          גלו לוח שנה עברי מקורי המציג את שלבי הזמן לפי חודשי הירח העבריים. הימים שחלפו נמחקים אוטומטית לקראת יום החופה המרגש ב-כ"ז באב.
         </p>
       </div>
 
-      {/* Date progression simulation bar (Completely in Hebrew) */}
-      <div className="mb-8 p-4 rounded-2xl bg-white/50 border border-gold-200/20 backdrop-blur-sm shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+      {/* MODE SELECTOR (Proper Hebrew Months vs Gregorian Conversion) */}
+      <div className="flex justify-center mb-8">
+        <div className="p-1 rounded-full bg-stone-100 border border-stone-200/50 inline-flex">
+          <button
+            onClick={() => {
+              setCalendarMode('hebrew');
+              setSelectedDay(null);
+            }}
+            className={`px-5 py-2 rounded-full text-xs font-bold transition-all ${
+              calendarMode === 'hebrew'
+                ? 'bg-white text-gold-950 shadow-xs'
+                : 'text-stone-500 hover:text-stone-800'
+            }`}
+            id="mode-hebrew-btn"
+          >
+            לוח שנה עברי (חודשי ירח)
+          </button>
+          <button
+            onClick={() => {
+              setCalendarMode('gregorian');
+              setSelectedDay(null);
+            }}
+            className={`px-5 py-2 rounded-full text-xs font-bold transition-all ${
+              calendarMode === 'gregorian'
+                ? 'bg-white text-gold-950 shadow-xs'
+                : 'text-stone-500 hover:text-stone-800'
+            }`}
+            id="mode-gregorian-btn"
+          >
+            לוח לועזי (חודשי אוגוסט)
+          </button>
+        </div>
+      </div>
+
+      {/* PROGRESSION SIMULATOR WITH SYSTEM TIME SYNC */}
+      <div className="mb-8 p-4 rounded-2xl bg-white/60 border border-gold-200/20 backdrop-blur-md shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2.5">
           <input 
             type="checkbox" 
             id="virtual-date"
             checked={useVirtualDate} 
-            onChange={(e) => setUseVirtualDate(e.target.checked)}
-            className="w-4 h-4 text-gold-600 focus:ring-gold-500 border-gold-300 rounded cursor-pointer"
+            onChange={(e) => {
+              setUseVirtualDate(e.target.checked);
+              setSelectedDay(null);
+            }}
+            className="w-4 h-4 text-gold-650 focus:ring-gold-500 border-stone-300 rounded cursor-pointer"
           />
           <label htmlFor="virtual-date" className="text-xs font-bold text-stone-700 cursor-pointer">
-            הפעל סימולטור התקדמות ימים (לבדיקה מהירה)
+            סנכרון מדומה / בדיקת התקדמות הלוח (סימולטור)
           </label>
         </div>
 
-        {useVirtualDate && (
-          <div className="flex items-center gap-2.5 animate-in fade-in slide-in-from-top-1 duration-200">
-            <span className="text-xs text-stone-500">בחר תאריך מדומה:</span>
+        {useVirtualDate ? (
+          <div className="flex items-center gap-2 animate-in fade-in slide-in-from-top-1 duration-200">
+            <span className="text-xs text-stone-500">תאריך סימולציה:</span>
             <input 
               type="date" 
               value={simulatedTodayStr}
-              onChange={(e) => setSimulatedTodayStr(e.target.value)}
+              onChange={(e) => {
+                setSimulatedTodayStr(e.target.value);
+                setSelectedDay(null);
+              }}
               className="px-2.5 py-1 text-xs border border-gold-200 bg-white rounded-lg focus:outline-none focus:ring-1 focus:ring-gold-500 font-mono text-stone-700"
               min="2026-05-01"
               max="2026-09-01"
             />
           </div>
+        ) : (
+          <div className="text-xs text-stone-500 flex items-center gap-1">
+            <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+            <span>סנכרון חי מול שעון המערכת והמשתמש פעיל</span>
+          </div>
         )}
 
-        <div className="text-xs font-semibold text-stone-600 bg-gold-100/50 px-3 py-1.5 rounded-full flex items-center gap-1.5">
-          <CheckCircle2 className="w-3.5 h-3.5 text-gold-600" />
+        <div className="text-xs font-bold text-gold-900 bg-gold-100/50 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+          <CheckCircle2 className="w-3.5 h-3.5 text-gold-650" />
           <span>
-            {passedDaysCountMemo} מתוך {totalCurrentMonthDays} ימים עברו בחודש הנוכחי
+            {passedDaysCount} מתוך {totalCurrentGridDays} ימים עברו כבר במחזור הנוכחי
           </span>
         </div>
       </div>
 
-      {/* Calendar visual container */}
-      <div className="bg-white/80 rounded-3xl shadow-xl border border-gold-100/40 p-5 md:p-8 backdrop-blur-md">
-        {/* Calendar Nav Headers */}
-        <div className="flex items-center justify-between mb-8 pb-4 border-b border-stone-100">
-          <div className="flex items-center gap-1.5">
-            <button 
-              onClick={handlePrevMonth}
-              className="p-2 hover:bg-gold-50 text-stone-600 hover:text-gold-800 rounded-full transition-colors cursor-pointer"
-              aria-label="Previous Month"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-            <button 
-              onClick={handleNextMonth}
-              className="p-2 hover:bg-gold-50 text-stone-600 hover:text-gold-800 rounded-full transition-colors cursor-pointer"
-              aria-label="Next Month"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
+      {/* RENDER CALENDAR CONTAINER */}
+      <div className="bg-white/85 rounded-3xl shadow-xl border border-gold-100/40 p-5 md:p-8 backdrop-blur-md">
+        
+        {/* MONTH HEADER - HEBREW MODE */}
+        {calendarMode === 'hebrew' ? (
+          <div className="flex flex-col space-y-4 mb-8">
+            {/* Quick Lunar tabs */}
+            <div className="grid grid-cols-4 gap-1.5 md:gap-3">
+              {HEBREW_MONTHS.map((m, idx) => {
+                const isActive = hebrewMonthIndex === idx;
+                const isWeddingMonth = idx === 2; // אב
+                return (
+                  <button
+                    key={m.name}
+                    onClick={() => {
+                      setHebrewMonthIndex(idx);
+                      setSelectedDay(null);
+                    }}
+                    className={`py-3 px-1 md:px-3 rounded-2xl text-[11px] md:text-sm font-bold tracking-wide transition-all border ${
+                      isActive 
+                        ? 'bg-gold-500 text-white border-gold-600 shadow-md transform -y-1' 
+                        : 'bg-white text-stone-600 hover:text-stone-900 hover:bg-gold-50/20 border-stone-200/60'
+                    } flex flex-col items-center justify-center relative cursor-pointer`}
+                  >
+                    <span>{m.name}</span>
+                    <span className={`text-[9px] font-normal tracking-normal ${isActive ? 'text-gold-100' : 'text-stone-400'}`}>
+                      {m.year}
+                    </span>
+                    {isWeddingMonth && (
+                      <span className="absolute -top-1.5 -right-1 flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+            
+            <div className="text-center pt-2">
+              <span className="text-xs text-stone-400 tracking-wider">
+                חודש {currentHebewMonthObj.name} מקביל בעיקרו לטווח התאריכים {formatGregorianDaySimple(currentHebewMonthObj.startGregorian)} - {formatGregorianDaySimple(new Date(currentHebewMonthObj.startGregorian.getTime() + (currentHebewMonthObj.daysCount - 1) * 24 * 60 * 60 * 1000))}
+              </span>
+            </div>
           </div>
-
-          <div className="text-center font-bold">
-            <h3 className="text-xl md:text-2xl font-serif text-stone-950">
-              {MONTH_NAMES_HEBREW[currentMonth]} {currentYear}
-            </h3>
-          </div>
-
-          <div>
-            {(currentMonth !== weddingDate.getMonth() || currentYear !== weddingDate.getFullYear()) ? (
-              <button
-                onClick={handleSnapToWeddingMonth}
-                className="text-xs font-bold px-3 py-1.5 bg-gold-50 text-gold-700 border border-gold-200 rounded-full hover:bg-gold-100 transition-all flex items-center gap-1 cursor-pointer shadow-xs active:scale-95"
+        ) : (
+          /* MONTH HEADER - GREGORIAN MODE */
+          <div className="flex items-center justify-between mb-8 pb-4 border-b border-stone-100">
+            <div className="flex items-center gap-1">
+              <button 
+                onClick={() => {
+                  if (gregorianMonth === 0) {
+                    setGregorianMonth(11);
+                    setGregorianYear(gregorianYear - 1);
+                  } else {
+                    setGregorianMonth(gregorianMonth - 1);
+                  }
+                  setSelectedDay(null);
+                }}
+                className="p-2 hover:bg-gold-50 text-stone-600 hover:text-gold-800 rounded-full cursor-pointer"
               >
-                <Sparkles className="w-3 h-3 text-gold-500" />
-                <span>חודש החתונה</span>
+                <ChevronRight className="w-5 h-5" />
               </button>
-            ) : (
-              <div className="text-xs px-3 py-1.5 bg-gold-100 text-gold-900 rounded-full flex items-center gap-1.5 font-bold">
-                <Heart className="w-3 h-3 text-red-500 fill-red-500 animate-pulse" />
-                <span>חודש החתונה</span>
-              </div>
-            )}
+              <button 
+                onClick={() => {
+                  if (gregorianMonth === 11) {
+                    setGregorianMonth(0);
+                    setGregorianYear(gregorianYear + 1);
+                  } else {
+                    setGregorianMonth(gregorianMonth + 1);
+                  }
+                  setSelectedDay(null);
+                }}
+                className="p-2 hover:bg-gold-50 text-stone-600 hover:text-gold-800 rounded-full cursor-pointer"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="text-center font-bold">
+              <h3 className="text-xl md:text-2xl font-serif text-stone-950">
+                {["ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני", "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"][gregorianMonth]} {gregorianYear}
+              </h3>
+            </div>
+
+            <div>
+              {(gregorianMonth !== weddingDate.getMonth() || gregorianYear !== weddingDate.getFullYear()) ? (
+                <button
+                  onClick={() => {
+                    setGregorianMonth(weddingDate.getMonth());
+                    setGregorianYear(weddingDate.getFullYear());
+                    setSelectedDay(null);
+                  }}
+                  className="text-xs font-bold px-3 py-1.5 bg-gold-50 text-gold-700 border border-gold-200 rounded-full hover:bg-gold-100 transition-all flex items-center gap-1 cursor-pointer"
+                >
+                  <Sparkles className="w-3 h-3 text-gold-500" />
+                  <span>חודש החתונה</span>
+                </button>
+              ) : (
+                <div className="text-xs px-3 py-1.5 bg-gold-100 text-gold-900 rounded-full flex items-center gap-1.5 font-bold">
+                  <Heart className="w-3 h-3 text-red-500 fill-red-500 animate-pulse" />
+                  <span>אוגוסט 2026</span>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Days of Week Headers */}
         <div className="grid grid-cols-7 gap-1 md:gap-3 text-center mb-4">
           {WEEKDAYS.map(day => (
             <div key={day} className="text-xs md:text-sm font-bold tracking-wider text-stone-400 py-1">
-              שבת {day === "ש'" ? '' : 'יום ' + day.replace("'", "")}
+              ישבת {day === "ש'" ? '' : 'יום ' + day.replace("'", "")}
             </div>
           ))}
         </div>
 
-        {/* Calendar Dates Grid */}
-        <div className="grid grid-cols-7 gap-1 md:gap-3">
-          {daysInGrid.map((day, idx) => {
-            const isSelected = selectedDay && day.date.toDateString() === selectedDay.toDateString();
-            
-            return (
-              <div
-                key={`${day.date.toDateString()}-${idx}`}
-                onClick={() => setSelectedDay(day.date)}
-                className={`
-                  relative aspect-square rounded-xl md:rounded-2xl flex flex-col justify-between p-1.5 md:p-3 cursor-pointer select-none transition-all duration-300 border
-                  ${day.isCurrentMonth ? 'bg-white/40' : 'bg-stone-50/10 text-stone-300 opacity-30'}
-                  ${day.isToday ? 'ring-2 ring-gold-500 bg-gold-50/20' : ''}
-                  ${isSelected ? 'border-gold-500 scale-[1.03] shadow-md bg-gold-50/10' : 'border-stone-100 hover:border-gold-200 hover:bg-gold-50/10'}
-                `}
-                id={`calendar-day-${day.date.getDate()}-${day.isCurrentMonth ? 'current' : 'outside'}`}
-              >
-                {/* Visual strike-through line for passed dates */}
-                {day.isPassed && (
-                  <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none rounded-xl md:rounded-2xl">
-                    <div className="w-[141%] h-[1.5px] bg-gradient-to-r from-transparent via-red-300/40 to-transparent rotate-45 transform" />
-                    <div className="absolute inset-0 bg-stone-100/10 backdrop-brightness-95 rounded-xl md:rounded-2xl" />
-                  </div>
-                )}
+        {/* 3. CALENDAR DAYS GRID LAYOUT */}
+        <div className="grid grid-cols-7 gap-1 md:gap-3 animate-fade-in duration-300">
+          
+          {/* HEBREW INTERACTIVE GRID */}
+          {calendarMode === 'hebrew' ? (
+            hebrewGridDays.map((day, idx) => {
+              const isSelected = selectedDay && day.date.toDateString() === selectedDay.date.toDateString();
+              
+              return (
+                <div
+                  key={`${day.date.toDateString()}-${idx}`}
+                  onClick={() => setSelectedDay({
+                    date: day.date,
+                    hebrewLabel: `${day.hebrewDayLetter} ב${HEBREW_MONTHS[hebrewMonthIndex].name}`,
+                    dayNumHebrew: day.hebrewDayNum,
+                    isWedding: day.isWeddingDay
+                  })}
+                  className={`
+                    relative aspect-square rounded-xl md:rounded-2xl flex flex-col justify-between p-1.5 md:p-3 cursor-pointer select-none transition-all duration-300 border
+                    ${day.isCurrentMonth ? 'bg-white/40' : 'bg-stone-50/10 text-stone-300 opacity-20'}
+                    ${day.isToday ? 'ring-2 ring-gold-500 bg-gold-50/20' : ''}
+                    ${isSelected ? 'border-gold-500 scale-[1.03] shadow-md bg-gold-50/10' : 'border-stone-100 hover:border-gold-200 hover:bg-gold-50/10'}
+                  `}
+                >
+                  {/* Visual Cross Off for Passed Days */}
+                  {day.isPassed && (
+                    <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none rounded-xl md:rounded-2xl">
+                      <div className="w-[141%] h-[1.5px] bg-gradient-to-r from-transparent via-red-300/40 to-transparent rotate-45 transform" />
+                      <div className="absolute inset-0 bg-stone-100/10 backdrop-brightness-95 rounded-xl md:rounded-2xl" />
+                    </div>
+                  )}
 
-                {/* Day Number / Highlight Icon on Wedding Day */}
-                <div className="flex justify-between items-start w-full">
+                  {/* Day Label in Letters */}
+                  <div className="flex justify-between items-start w-full">
+                    <span className={`
+                      text-xs md:text-sm font-bold tracking-tight
+                      ${day.isPassed ? 'text-stone-300 line-through decoration-transparent' : 'text-stone-850'}
+                      ${day.isWeddingDay ? 'text-red-600 font-extrabold' : ''}
+                      ${day.isToday ? 'text-gold-950 font-black' : ''}
+                    `}>
+                      {day.hebrewDayLetter}
+                    </span>
+
+                    {day.isWeddingDay && (
+                      <motion.div
+                        animate={{ scale: [1, 1.15, 1] }}
+                        transition={{ repeat: Infinity, duration: 2 }}
+                        className="shrink-0"
+                      >
+                        <Heart className="w-4 h-4 md:w-5 md:h-5 text-red-500 fill-red-500" />
+                      </motion.div>
+                    )}
+                  </div>
+
+                  {/* Gregorian Date representation corresponding at bottom */}
                   <span className={`
-                    text-sm md:text-lg font-mono font-medium tracking-tight
-                    ${day.isPassed ? 'text-stone-300 line-through decoration-transparent' : 'text-[#3c362f]'}
-                    ${day.isWeddingDay ? 'text-gold-950 font-bold' : ''}
-                    ${day.isToday ? 'text-gold-950 font-black' : ''}
+                    text-[9px] md:text-[10px] text-right font-mono font-medium
+                    ${day.isPassed ? 'text-stone-300' : 'text-stone-500'}
+                    ${isSelected ? 'text-gold-950' : ''}
                   `}>
-                    {day.dayNumber}
+                    {formatGregorianDaySimple(day.date)}
                   </span>
 
-                  {day.isWeddingDay && (
-                    <motion.div
-                      animate={{ scale: [1, 1.15, 1] }}
-                      transition={{ repeat: Infinity, duration: 2 }}
-                    >
-                      <Heart className="w-3.5 h-3.5 md:w-5 md:h-5 text-red-500 fill-red-500" />
-                    </motion.div>
+                  {day.isToday && (
+                    <span className="absolute bottom-1 left-1 pointer-events-none font-sans text-[7px] md:text-[8px] bg-gold-600 text-white font-bold rounded px-1 transform scale-90 origin-bottom-left">
+                      היום
+                    </span>
                   )}
                 </div>
+              );
+            })
+          ) : (
+            /* GREGORIAN INTERACTIVE GRID */
+            gregorianGridDays.map((day, idx) => {
+              const isSelected = selectedDay && day.date.toDateString() === selectedDay.date.toDateString();
+              
+              return (
+                <div
+                  key={`${day.date.toDateString()}-${idx}`}
+                  onClick={() => setSelectedDay({
+                    date: day.date,
+                    hebrewLabel: day.formattedHebrewDate || '',
+                    dayNumHebrew: parseInt(day.formattedHebrewDate?.split(' ')[0] || '1'),
+                    isWedding: day.isWeddingDay
+                  })}
+                  className={`
+                    relative aspect-square rounded-xl md:rounded-2xl flex flex-col justify-between p-1.5 md:p-3 cursor-pointer select-none transition-all duration-300 border
+                    ${day.isCurrentMonth ? 'bg-white/40' : 'bg-stone-50/10 text-stone-300 opacity-20'}
+                    ${day.isToday ? 'ring-2 ring-gold-500 bg-gold-50/20' : ''}
+                    ${isSelected ? 'border-gold-500 scale-[1.03] shadow-md bg-gold-50/10' : 'border-stone-100 hover:border-gold-200 hover:bg-gold-50/10'}
+                  `}
+                >
+                  {/* Strike-through for passed */}
+                  {day.isPassed && (
+                    <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none rounded-xl md:rounded-2xl">
+                      <div className="w-[141%] h-[1.5px] bg-gradient-to-r from-transparent via-red-300/40 to-transparent rotate-45 transform" />
+                      <div className="absolute inset-0 bg-stone-100/10 backdrop-brightness-95 rounded-xl md:rounded-2xl" />
+                    </div>
+                  )}
 
-                {/* Hebrew Date Text (Bottom-Right / Left) */}
-                <span className={`
-                  text-[9px] md:text-xs text-right font-serif truncate max-w-full font-medium
-                  ${day.isPassed ? 'text-stone-300' : 'text-gold-800'}
-                  ${day.isWeddingDay ? 'text-red-600 font-bold' : ''}
-                  ${isSelected ? 'text-gold-950' : ''}
-                `}>
-                  {day.formattedHebrewDate && day.formattedHebrewDate.replace(" באב", "").replace(" באלול", "").replace(" בתמוז", "").replace(" בסיוון", "")}
-                  <span className="hidden md:inline"> {day.formattedHebrewDate && (day.formattedHebrewDate.includes("אב") ? "אב" : day.formattedHebrewDate.includes("אלול") ? "אלול" : day.formattedHebrewDate.includes("תמוז") ? "תמוז" : "סיוון")}</span>
-                </span>
+                  <div className="flex justify-between items-start w-full">
+                    <span className={`
+                      text-sm md:text-lg font-mono font-medium tracking-tight
+                      ${day.isPassed ? 'text-stone-300 line-through' : 'text-stone-800'}
+                      ${day.isWeddingDay ? 'text-gold-950 font-bold' : ''}
+                      ${day.isToday ? 'text-gold-950 font-black' : ''}
+                    `}>
+                      {day.dayNumber}
+                    </span>
 
-                {/* Today indicator label */}
-                {day.isToday && (
-                  <span className="absolute bottom-1 left-1 font-sans text-[7px] md:text-[8px] bg-gold-600 text-white font-bold rounded px-1 scale-90 md:scale-100">
-                    היום
+                    {day.isWeddingDay && (
+                      <motion.div
+                        animate={{ scale: [1, 1.15, 1] }}
+                        transition={{ repeat: Infinity, duration: 2 }}
+                        className="shrink-0"
+                      >
+                        <Heart className="w-4 h-4 md:w-5 md:h-5 text-red-500 fill-red-500" />
+                      </motion.div>
+                    )}
+                  </div>
+
+                  <span className={`
+                    text-[9px] md:text-xs text-right truncate max-w-full font-serif font-semibold
+                    ${day.isPassed ? 'text-stone-300' : 'text-gold-800'}
+                    ${isSelected ? 'text-stone-900' : ''}
+                  `}>
+                    {day.formattedHebrewDate?.split(' ')[0]}
                   </span>
-                )}
-              </div>
-            );
-          })}
+
+                  {day.isToday && (
+                    <span className="absolute bottom-1 left-1 pointer-events-none font-sans text-[7px] md:text-[8px] bg-gold-600 text-white font-bold rounded px-1 scale-90">
+                      היום
+                    </span>
+                  )}
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
 
-      {/* Selected Day Note Panel */}
+      {/* 4. DETAIL PANEL POPUP FOR ACTIVE DAYS */}
       <AnimatePresence mode="wait">
         {selectedDay && (
           <motion.div
@@ -482,25 +679,23 @@ export default function CalendarSection({ weddingDate }: CalendarSectionProps) {
             id="day-detail-panel"
           >
             <div className="p-3 bg-gold-50 rounded-xl text-gold-700 border border-gold-100 shrink-0">
-              {selectedDay.getFullYear() === weddingDate.getFullYear() &&
-               selectedDay.getMonth() === weddingDate.getMonth() &&
-               selectedDay.getDate() === weddingDate.getDate() ? (
-                <Sparkles className="w-5 h-5 text-gold-600 animate-spin" style={{ animationDuration: '6s' }} />
+              {selectedDay.isWedding ? (
+                <Sparkles className="w-5 h-5 text-gold-650 animate-spin" style={{ animationDuration: '6s' }} />
               ) : (
-                <Calendar className="w-5 h-5 text-gold-600" />
+                <Calendar className="w-5 h-5 text-gold-650" />
               )}
             </div>
             <div className="space-y-1">
               <h4 className="font-serif text-lg text-stone-900 font-bold">
-                {selectedDay.getDate()} ב{MONTH_NAMES_HEBREW[selectedDay.getMonth()]}, {selectedDay.getFullYear()}
-                {getHebrewDateLabel(selectedDay) && (
+                {selectedDay.date.getDate()} ב{["ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני", "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"][selectedDay.date.getMonth()]} {selectedDay.date.getFullYear()}
+                {selectedDay.hebrewLabel && (
                   <span className="text-gold-700 font-serif text-sm font-bold block md:inline md:mr-2">
-                    ({getHebrewDateLabel(selectedDay)})
+                     ({selectedDay.hebrewLabel})
                   </span>
                 )}
               </h4>
-              <p className="text-stone-600 text-sm leading-relaxed">
-                {weddingNoteText}
+              <p className="text-stone-650 text-sm leading-relaxed mt-1">
+                {detailNoteText}
               </p>
             </div>
           </motion.div>
