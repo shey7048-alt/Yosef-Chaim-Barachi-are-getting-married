@@ -1,11 +1,13 @@
 import React from 'react';
 
+// @ts-expect-error - image import declaration handled by Vite bundler
+import chuppahImage from '../assets/images/wedding_chuppah_1781997597704.jpg';
+
 interface BackgroundOverlayProps {
   children: React.ReactNode;
 }
 
 export default function BackgroundOverlay({ children }: BackgroundOverlayProps) {
-  const chuppahImage = '/src/assets/images/wedding_chuppah_1781997597704.jpg';
   
   // Lock to a beautiful elegant default champagne gradient and soft watercolor circles
   const defaultBackgroundStyle = {
