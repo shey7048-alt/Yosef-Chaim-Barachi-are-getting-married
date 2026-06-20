@@ -44,13 +44,6 @@ const HEBREW_MONTHS: HebrewMonthData[] = [
     startGregorian: new Date('2026-07-15T00:00:00'),
     daysCount: 30,
     startDayOfWeek: 3, // July 15, 2026 is Wednesday
-  },
-  {
-    name: "אלול",
-    year: "ה'תשפ\"ו",
-    startGregorian: new Date('2026-08-14T00:00:00'),
-    daysCount: 29,
-    startDayOfWeek: 5, // August 14, 2026 is Friday
   }
 ];
 
@@ -388,17 +381,6 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
         </div>
       </div>
 
-      {/* Elegant real-time synchronization tracker */}
-      <div className="mb-8 p-4 rounded-2xl bg-white/60 border border-gold-200/20 backdrop-blur-md shadow-sm flex items-center justify-center gap-2.5">
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-        </span>
-        <span className="text-xs text-stone-600 font-bold font-sans">
-          סנכרון תאריך ושעה רציף מול שעון ירושלים הרשמי
-        </span>
-      </div>
-
       {/* RENDER CALENDAR CONTAINER */}
       <div className="bg-white/85 rounded-3xl shadow-xl border border-gold-100/40 p-5 md:p-8 backdrop-blur-md">
         
@@ -406,7 +388,7 @@ export default function CalendarSection({ weddingDate, timeOffset = 0 }: Calenda
         {calendarMode === 'hebrew' ? (
           <div className="flex flex-col space-y-4 mb-8">
             {/* Quick Lunar tabs */}
-            <div className="grid grid-cols-5 gap-1.5 md:gap-3">
+            <div className="grid grid-cols-4 gap-1.5 md:gap-3">
               {HEBREW_MONTHS.map((m, idx) => {
                 const isActive = hebrewMonthIndex === idx;
                 const isWeddingMonth = m.name.includes("אב");

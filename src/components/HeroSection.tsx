@@ -228,11 +228,11 @@ export default function HeroSection({ weddingDate, timeOffset = 0, onScrollToCal
                     </div>
 
                     {/* Seconds */}
-                    <div className="bg-white/60 p-3 sm:p-5 rounded-2xl border border-gold-100/60 bg-emerald-50/10 shadow-xs">
-                      <span className="text-emerald-600 font-mono text-2xl sm:text-4xl md:text-5xl font-black tracking-tight block">
+                    <div className="bg-white/60 p-3 sm:p-5 rounded-2xl border border-gold-100/60 shadow-xs">
+                      <span className="text-stone-900 font-mono text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight block">
                         {String(timeLeft.seconds).padStart(2, '0')}
                       </span>
-                      <span className="text-[10px] sm:text-xs text-emerald-700 font-extrabold uppercase mt-1 block">
+                      <span className="text-[10px] sm:text-xs text-stone-500 font-extrabold uppercase mt-1 block">
                         שניות
                       </span>
                     </div>
