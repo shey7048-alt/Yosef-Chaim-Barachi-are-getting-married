@@ -261,13 +261,13 @@ export default function HeroSection({ weddingDate, timeOffset = 0, onScrollToCal
 
             {/* Elegant invitation button */}
             <motion.button
-              whileHover={{ scale: 1.03 }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setIsInvitationOpen(true)}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-700 hover:to-gold-600 text-white font-sans text-xs md:text-sm font-bold py-3 px-6 rounded-full shadow-md shadow-gold-600/15 hover:shadow-lg hover:shadow-gold-600/20 transition-all cursor-pointer border border-gold-400"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-700 hover:to-gold-600 text-white font-sans text-xs md:text-sm font-bold py-3 px-8 rounded-full shadow-md shadow-gold-600/15 hover:shadow-lg hover:shadow-gold-600/20 transition-all cursor-pointer border border-gold-400"
             >
-              <MailOpen className="w-4 h-4 text-white animate-bounce" />
-              <span>פתחו את הזמנת החתונה הרשמית 💍</span>
+              <MailOpen className="w-4 h-4 text-white" />
+              <span>פתחו את הזמנת החתונה הרשמית</span>
             </motion.button>
           </motion.div>
         </motion.div>
