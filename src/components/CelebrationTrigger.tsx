@@ -76,19 +76,20 @@ export default function CelebrationTrigger({ timeOffset = 0 }: CelebrationTrigge
     const duration = 12 * 1000; // 12 seconds of breathtaking visual celebration
     const animationEnd = Date.now() + duration;
 
-    // Majestic color scheme (Imperial gold, sparkling platinum white, peach, blush pink, violet)
-    const customColors = ['#ffd700', '#ffb6c1', '#ffffff', '#fff0f5', '#dda0dd', '#dbb67a', '#f1e2cd'];
+    // Rich blazing fire colors: Gold, brilliant crimson, hot orange, spark-white, glowing amber, sunset gold
+    const fieryColors = ['#ff4500', '#ff8c00', '#ffd700', '#ffffff', '#ff1493', '#ffaa00', '#e26d5c'];
 
-    // 1. Initial Massive Screen Burst
+    // 1. Initial Mega Blazing Firework Shell
     confetti({
-      particleCount: 350,
-      spread: 160,
-      origin: { y: 0.35 },
-      colors: customColors,
-      scalar: 1.4
+      particleCount: 450,
+      spread: 180,
+      origin: { y: 0.3 },
+      colors: fieryColors,
+      scalar: 1.5,
+      gravity: 0.8
     });
 
-    // 2. High-impact Fireworks Launchers
+    // 2. High-intensity Explosive Firework Launcher Loop
     const interval = setInterval(() => {
       const timeLeft = animationEnd - Date.now();
 
@@ -98,71 +99,82 @@ export default function CelebrationTrigger({ timeOffset = 0 }: CelebrationTrigge
       }
 
       const strength = (timeLeft / duration);
-      const particleCount = Math.floor(80 * strength) + 15;
+      // More intense particles earlier in the launch
+      const burstParticleCount = Math.floor(110 * strength) + 30;
 
-      // Random sparks shooting from the left hemisphere
+      // Simulate a realistic glowing firework shell exploding in the sky
+      const randomX = Math.random() * 0.8 + 0.1; // random spot in sky
+      const randomY = Math.random() * 0.4 + 0.15;
+
+      // Main spherical firework blast core
       confetti({
-        particleCount,
-        angle: 50,
+        particleCount: burstParticleCount,
+        angle: 360 * Math.random(),
         spread: 360,
-        startVelocity: 42,
-        origin: { x: Math.random() * 0.3 + 0.1, y: Math.random() * 0.4 + 0.2 },
-        colors: customColors,
-        scalar: 1.3
+        startVelocity: 45,
+        origin: { x: randomX, y: randomY },
+        colors: fieryColors,
+        scalar: 1.4,
+        gravity: 0.7,
+        drift: Math.random() > 0.5 ? 0.3 : -0.3
       });
 
-      // Random sparks shooting from the right hemisphere
-      confetti({
-        particleCount,
-        angle: 130,
-        spread: 360,
-        startVelocity: 42,
-        origin: { x: Math.random() * 0.3 + 0.6, y: Math.random() * 0.3 + 0.2 },
-        colors: customColors,
-        scalar: 1.3
-      });
-
-      // Joyous falling celebration star clusters
-      if (Math.random() > 0.35) {
+      // Shimmering outer sparks of the firework shell (white-hot embers)
+      if (Math.random() > 0.3) {
         confetti({
-          particleCount: 40,
-          spread: 90,
-          origin: { x: Math.random() * 0.6 + 0.2, y: Math.random() * 0.2 },
-          colors: ['#ffe4e1', '#fafad2', '#ffffea', '#f0f8ff'], 
-          scalar: 1.5,
-          gravity: 0.6
+          particleCount: Math.floor(burstParticleCount / 2),
+          spread: 360,
+          startVelocity: 60, // Faster outer ring expanding
+          origin: { x: randomX, y: randomY },
+          colors: ['#ffffff', '#ffebcd', '#ffd700', '#ffe4b5'],
+          scalar: 1.2,
+          gravity: 0.9
         });
       }
-    }, 650);
 
-    // 3. Side cannons for intense continuous volume
-    const sideInterval = setInterval(() => {
+      // Rising spark rocket trails rising from bottom to emulate real firework launches
+      confetti({
+        particleCount: 15,
+        angle: 90 + (Math.random() * 15 - 7.5), // straight up with slight deviation
+        spread: 15,
+        startVelocity: 55,
+        origin: { x: randomX, y: 1.0 }, // launch from bottom screen edge
+        colors: ['#ffd700', '#ff4500', '#ffffff'],
+        scalar: 1.0,
+        gravity: 1.2
+      });
+    }, 550);
+
+    // 3. Left and Right Massive Continuous Ground Fire Fountains
+    const fountainInterval = setInterval(() => {
       const timeLeft = animationEnd - Date.now();
       if (timeLeft <= 0) {
-        clearInterval(sideInterval);
+        clearInterval(fountainInterval);
         return;
       }
 
-      // Left-corner sweep
+      // Left Fire Flare (spark fountain shooting up-right)
       confetti({
-        particleCount: 45,
-        angle: 55,
-        spread: 55,
-        origin: { x: 0, y: 0.85 },
-        colors: customColors,
-        scalar: 1.2
+        particleCount: 65,
+        angle: 65,
+        spread: 45,
+        startVelocity: 50,
+        origin: { x: 0, y: 0.9 },
+        colors: fieryColors,
+        scalar: 1.3
       });
 
-      // Right-corner sweep
+      // Right Fire Flare (spark fountain shooting up-left)
       confetti({
-        particleCount: 45,
-        angle: 125,
-        spread: 55,
-        origin: { x: 1, y: 0.85 },
-        colors: customColors,
-        scalar: 1.2
+        particleCount: 65,
+        angle: 115,
+        spread: 45,
+        startVelocity: 50,
+        origin: { x: 1, y: 0.9 },
+        colors: fieryColors,
+        scalar: 1.3
       });
-    }, 1100);
+    }, 900);
   };
 
   const handleFirstInteraction = () => {
