@@ -1,36 +1,16 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, FileText, Sparkles } from 'lucide-react';
+// @ts-ignore
+import weddingInvitation from '../assets/images/wedding_invitation.jpg';
 
 interface InvitationModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-// Support multiple common paths to auto-resolve what they uploaded to GitHub/Vercel
-const POTENTIAL_PATHS = [
-  '/src/assets/images/wedding_invitation.jpg',
-  '/src/assets/images/wedding_invitation.png',
-  '/src/assets/images/wedding_invitation.jpeg',
-  '/src/assets/images/invitation.jpg',
-  '/src/assets/images/invitation.png',
-  '/src/assets/images/invitation.jpeg',
-  '/src/assets/images/wedding_chuppah_1781997597704.jpg' // In case they overwrote the original chuppah background
-];
-
 export default function InvitationModal({ isOpen, onClose }: InvitationModalProps) {
-  const [pathIndex, setPathIndex] = useState(0);
   const [hasError, setHasError] = useState(false);
-
-  const handleImageError = () => {
-    if (pathIndex < POTENTIAL_PATHS.length - 1) {
-      setPathIndex(prev => prev + 1);
-    } else {
-      setHasError(true);
-    }
-  };
-
-  const currentPath = POTENTIAL_PATHS[pathIndex];
 
   return (
     <AnimatePresence>
@@ -77,9 +57,9 @@ export default function InvitationModal({ isOpen, onClose }: InvitationModalProp
             {!hasError ? (
               <div className="flex justify-center items-center w-full rounded-lg overflow-hidden border border-stone-200/40 bg-white">
                 <img
-                  src={currentPath}
+                  src={weddingInvitation}
                   alt="הזמנת חתונה"
-                  onError={handleImageError}
+                  onError={() => setHasError(true)}
                   referrerPolicy="no-referrer"
                   className="w-full h-auto max-h-[80vh] object-contain"
                 />
@@ -92,20 +72,8 @@ export default function InvitationModal({ isOpen, onClose }: InvitationModalProp
                 </div>
                 <h4 className="text-stone-850 text-lg font-bold mb-2">קובץ ההזמנה המקורית</h4>
                 <p className="text-stone-650 text-xs md:text-sm leading-relaxed max-w-xs mx-auto mb-6">
-                  הקובץ ייטען כאן בצורה מושלמת כאשר הוא יועלה לשרת.
+                  אנא ודא שקובץ ההזמנה הועלה כראוי לשרת.
                 </p>
-                
-                <div className="p-4 bg-stone-50 rounded-xl border border-stone-200/30 text-right max-w-sm mx-auto text-xs space-y-2">
-                  <p className="font-bold text-stone-800 flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-gold-650" />
-                    <span>הנחיות להעלאת הקובץ:</span>
-                  </p>
-                  <ul className="list-disc list-inside space-y-1 text-stone-600 pr-1">
-                    <li>ודא ששם הקובץ שהעלית ל-GitHub הוא בדיוק <code className="font-mono bg-stone-200/60 px-1 rounded text-red-700">wedding_invitation.jpg</code></li>
-                    <li>הקובץ צריך להיות בתוך התיקייה <code className="font-mono bg-stone-200/60 px-1 rounded text-stone-800">src/assets/images/</code></li>
-                    <li>אנו תומכים בסיומות נפוצות: <code className="font-mono bg-stone-200/40 px-1 rounded">.jpg</code>, <code className="font-mono bg-stone-200/40 px-1 rounded">.jpeg</code>, או <code className="font-mono bg-stone-200/40 px-1 rounded">.png</code>.</li>
-                  </ul>
-                </div>
               </div>
             )}
           </motion.div>
