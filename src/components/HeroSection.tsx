@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Calendar, Clock, Heart, ChevronDown, MapPin } from 'lucide-react';
+import { Calendar, Clock, Heart, ChevronDown, MapPin, MailOpen } from 'lucide-react';
 import { CountdownTime } from '../types';
+import InvitationModal from './InvitationModal';
 
 interface HeroSectionProps {
   weddingDate: Date;
@@ -10,6 +11,7 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ weddingDate, timeOffset = 0, onScrollToCalendar }: HeroSectionProps) {
+  const [isInvitationOpen, setIsInvitationOpen] = useState<boolean>(false);
   const [timeLeft, setTimeLeft] = useState<CountdownTime>({
     days: 0,
     hours: 0,
@@ -243,8 +245,8 @@ export default function HeroSection({ weddingDate, timeOffset = 0, onScrollToCal
           </motion.div>
 
           {/* Core Venue Block */}
-          <motion.div variants={itemVariants} className="flex justify-center">
-            <div className="max-w-md text-stone-700 space-y-2 mt-4 bg-white/30 backdrop-blur-xs p-4 rounded-2xl border border-gold-200/10">
+          <motion.div variants={itemVariants} className="flex flex-col items-center justify-center gap-4">
+            <div className="w-full max-w-md text-stone-700 space-y-2 mt-4 bg-white/40 backdrop-blur-xs p-4 rounded-2xl border border-gold-200/10 shadow-xs transition-all hover:bg-white/50">
               <p className="text-xs tracking-wider uppercase text-gold-800 font-bold flex items-center justify-center gap-1.5">
                 <MapPin className="w-3.5 h-3.5 text-gold-650" />
                 <span>מקום האירוע</span>
@@ -256,6 +258,17 @@ export default function HeroSection({ weddingDate, timeOffset = 0, onScrollToCal
                 רחוב רשב"י 21, מודיעין עילית
               </p>
             </div>
+
+            {/* Elegant invitation button */}
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setIsInvitationOpen(true)}
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-700 hover:to-gold-600 text-white font-sans text-xs md:text-sm font-bold py-3 px-6 rounded-full shadow-md shadow-gold-600/15 hover:shadow-lg hover:shadow-gold-600/20 transition-all cursor-pointer border border-gold-400"
+            >
+              <MailOpen className="w-4 h-4 text-white animate-bounce" />
+              <span>פתחו את הזמנת החתונה הרשמית 💍</span>
+            </motion.button>
           </motion.div>
         </motion.div>
       </div>
@@ -273,6 +286,10 @@ export default function HeroSection({ weddingDate, timeOffset = 0, onScrollToCal
         </span>
         <ChevronDown className="w-5 h-5 text-gold-500 group-hover:text-gold-650" />
       </motion.button>
+      <InvitationModal 
+        isOpen={isInvitationOpen} 
+        onClose={() => setIsInvitationOpen(false)} 
+      />
     </section>
   );
 }
