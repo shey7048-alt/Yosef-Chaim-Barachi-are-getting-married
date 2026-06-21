@@ -7,9 +7,10 @@ interface CelebrationTriggerProps {
 
 // Resilient list of premium cached wedding march and romantic celebration direct MP3 streams
 const AUDIO_SOURCES = [
-  'https://archive.org/download/weddingmarch_202003/wedding%20march.mp3',
-  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
+  'https://archive.org/download/PachelbelCanonInD_201901/Pachelbel%20Canon%20in%20D.mp3', // Premium exquisite Canon in D wedding classic
+  'https://archive.org/download/weddingmarch_202003/wedding%20march.mp3', // High fidelity Mendelssohn Wedding March
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3', // Sparkling beautiful piano/guitar beat fallback
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
 ];
 
 export default function CelebrationTrigger({ timeOffset = 0 }: CelebrationTriggerProps) {
@@ -203,7 +204,6 @@ export default function CelebrationTrigger({ timeOffset = 0 }: CelebrationTrigge
     // 1. Play cached wedding song / audio stream resiliently
     const audioObj = new Audio();
     audioObj.volume = 0.95;
-    audioObj.crossOrigin = 'anonymous';
     
     let sourceIdx = 0;
     const playResiliently = () => {
