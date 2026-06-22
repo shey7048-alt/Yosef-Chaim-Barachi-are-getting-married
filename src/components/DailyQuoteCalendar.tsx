@@ -7,120 +7,159 @@ export default function DailyQuoteCalendar() {
       className="fixed top-8 left-8 z-[45] pointer-events-auto select-none"
     >
       {/* 
-        3D Viewport Scene 
-        Applying high CSS perspective to establish a realistic rendering space
+        3D Viewport Scene
+        Applying custom CSS perspective to align perfectly with the camera angle of the uploaded image.
       */}
       <div 
-        className="relative w-[280px] h-[220px] transition-transform duration-500 hover:scale-[1.02]"
+        className="relative w-[300px] h-[230px] transition-all duration-500 hover:scale-[1.03] hover:translate-y-[-2px]"
         style={{
-          perspective: '1200px',
+          perspective: '1500px',
           transformStyle: 'preserve-3d',
         }}
       >
-        {/* ================= PART 1: THE 3D A-FRAME MATE STAND (TENT STRUCTURE) ================= */}
+        {/* ================= PART 1: KRAFT EARTHEN CARDBOARD CARD STAND ================= */}
         {/* 
-          1A. Front Supporting Backboard Slide
-          Using complex transformations and border bevels to simulate thick dense cardboard material
+          1A. The Main Cardboard Backboard Front Plane.
+          Matches the natural, warm matte kraft-paper color (#b69d84 / #c0aa93) of the uploaded reference.
         */}
         <div 
-          className="absolute inset-0 bg-gradient-to-br from-stone-800 via-stone-850 to-stone-900 border border-stone-750 rounded-lg shadow-[0_12px_28px_rgba(0,0,0,0.5),0_2px_8px_rgba(0,0,0,0.3)]"
+          className="absolute inset-0 bg-gradient-to-br from-[#c8b19a] via-[#baa188] to-[#ab9279] border border-[#a68c73] rounded-sm shadow-[0_16px_36px_rgba(0,0,0,0.35),0_3px_12px_rgba(0,0,0,0.2)]"
           style={{
-            transform: 'rotateX(15deg) rotateY(-22deg) rotateZ(1.5deg)',
+            transform: 'rotateX(14deg) rotateY(24deg) rotateZ(-3deg)',
             transformStyle: 'preserve-3d',
             backfaceVisibility: 'hidden',
           }}
         >
-          {/* Beveled heavy paperboard thickness styling at the bottom fold */}
-          <div className="absolute bottom-0 inset-x-0 h-4 bg-gradient-to-t from-stone-950 to-stone-900 border-t border-stone-800 rounded-b-md" />
+          {/* Subtle horizontal carton fibers / paper texture lines */}
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:100%_4px] opacity-40 mix-blend-overlay rounded-sm" />
           
-          {/* Internal shadow representation representing the hinge depth */}
-          <div className="absolute top-0 bottom-4 left-0 w-[1px] bg-gradient-to-b from-stone-700/20 via-transparent to-stone-900/50" />
+          {/* Highlight along the card top edge */}
+          <div className="absolute top-0 inset-x-0 h-[1.5px] bg-[#dfcbba] opacity-50" />
+          
+          {/* Double thickness bevel at bottom of cardboard edge */}
+          <div className="absolute bottom-0 inset-x-0 h-3.5 bg-gradient-to-t from-[#8d755f] to-[#baa188] border-t border-[#9d846b] rounded-b-sm" />
         </div>
 
         {/* 
-          1B. Isometric Side Profile Triangle (Easel Hinge)
-          This visual represents the actual 3-dimensional shape, displaying the folded triangular cardboard profile
+          1B. Visible Left Triangular Support Fold (Easel Wing).
+          In the uploaded image, the calendar is angled such that the left folding support board is highly visible.
+          Using custom skew and rotations to align perfectly with the left face of the easel.
         */}
         <div 
-          className="absolute right-[-14px] top-[14px] bottom-[3px] w-[32px] bg-gradient-to-l from-stone-900 via-stone-850 to-stone-800 border-l border-b border-stone-700/60"
+          className="absolute left-[-21px] top-[14px] bottom-[3px] w-[46px] bg-gradient-to-r from-[#ab9279] via-[#baa188] to-[#baa188] border-r border-[#967c64] shadow-inner"
           style={{
-            transform: 'rotateX(15deg) rotateY(68deg) rotateZ(1.5deg) skewY(-14.5deg)',
-            transformOrigin: 'left center',
-            borderRadius: '0 4px 4px 0',
+            transform: 'rotateX(14deg) rotateY(-66deg) rotateZ(-3deg) skewY(14deg)',
+            transformOrigin: 'right center',
+            borderRadius: '2px 0 0 2px',
           }}
         >
-          {/* Subtle inside shadow indicating the folded dark canvas texture */}
-          <div className="absolute inset-0.5 border-r border-stone-700/40 opacity-20" />
+          {/* Distinct darker shadows representing the hollow inside of the folding easel A-frame support */}
+          <div className="absolute inset-0 bg-gradient-to-l from-black/40 via-black/10 to-transparent pointer-events-none" />
+          
+          {/* Paper thickness fold ridge representation */}
+          <div className="absolute right-0 top-0 bottom-0 w-[2px] bg-[#dfcbba]/30" />
+          
+          {/* Tiny subtle inner hinge crease */}
+          <div className="absolute left-3 top-[10%] bottom-[10%] w-[1.5px] border-l border-dashed border-[#8d755f]/60 opacity-40" />
         </div>
 
-        {/* ================= PART 2: THE PREMIUM PAPER CALENDAR PACKET (THE PAGES) ================= */}
+        {/* ================= PART 2: PREMIUM TEXTURED CARD STOCK PAGES ================= */}
         {/* 
-          2A. The Hanging Premium Card Paper Page Block
-          Slightly offset forward in 3D space (using translateZ) and rotated with custom shadows for high depth
+          Layered effect to show the realistic thickness of notebook pages (stacked appearance on the bottom/right).
         */}
+        {/* Layer 2 (Slightly offset back page shadow representation) */}
         <div 
-          className="absolute inset-x-3.5 top-4 bottom-8 bg-gradient-to-br from-neutral-50 via-amber-50/50 to-stone-100 rounded border-b-2 border-r border-stone-300 shadow-[0_8px_20px_rgba(0,0,0,0.3),inset_0_1px_2px_white]"
+          className="absolute inset-x-3.5 top-4.5 bottom-8.5 bg-[#e3ded4] rounded-sm border border-stone-300 opacity-90 shadow-sm"
           style={{
-            transform: 'rotateX(15deg) rotateY(-22deg) rotateZ(1.5deg) translateZ(8px)',
+            transform: 'rotateX(14deg) rotateY(24deg) rotateZ(-3deg) translateZ(3px)',
+          }}
+        />
+
+        {/* Layer 1 (Primary Front Calendar Page Card) */}
+        {/* Beautiful high-grain heavy watercolor paper texture with rounded bottom edges */}
+        <div 
+          className="absolute inset-x-3.5 top-4 bottom-8 bg-gradient-to-br from-[#faf9f6] via-[#f5f2eb] to-[#eceae0] rounded-[3px] border-b-[2px] border-r border-[#d4cfc1] shadow-[0_10px_22px_rgba(0,0,0,0.22),inset_0_1.5px_2px_rgba(255,255,255,0.95)] overflow-hidden flex flex-col"
+          style={{
+            transform: 'rotateX(14deg) rotateY(24deg) rotateZ(-3deg) translateZ(6px)',
           }}
         >
-          {/* 
-            Binder punched holes along the top of the white paper page 
-          */}
-          <div className="absolute top-1 inset-x-3 flex justify-between">
-            {Array.from({ length: 14 }).map((_, i) => (
-              <div 
-                key={i} 
-                className="w-1.5 h-1.5 bg-stone-900 rounded-full border-b border-white/60 shadow-inner opacity-90" 
-              />
-            ))}
+          {/* Premium Fine Art Paper fiber overlay */}
+          <div className="absolute inset-0 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:3px_3px] opacity-[0.03] mix-blend-multiply pointer-events-none" />
+          
+          {/* Row of clean circular punch binder holes at the top of the sheet */}
+          <div className="h-[26px] bg-[#f5f2eb] border-b border-[#e5e1d5] flex items-center justify-between px-4 relative">
+            <div className="absolute -top-[1px] inset-x-2.5 flex justify-between">
+              {Array.from({ length: 16 }).map((_, i) => (
+                <div 
+                  key={i} 
+                  className="w-1.5 h-2 bg-gradient-to-b from-stone-900 via-stone-950 to-[#baa188]/30 rounded-full border-b border-white/50 shadow-inner" 
+                />
+              ))}
+            </div>
+
+            {/* Subtle calendar page brand title watermark in gold tint */}
+            <div className="w-full flex justify-between items-center text-[7.5px] text-[#baa188] font-mono tracking-widest mt-1 opacity-70">
+              <span>EST. COURT PAPERS</span>
+              <span>№ 10.08.26</span>
+            </div>
+            
+            {/* Visual dashed tear line indicating high quality craftsmanship */}
+            <div className="absolute bottom-0 inset-x-0 h-[1px] border-b border-dashed border-stone-300" />
           </div>
 
-          {/* Minimal visual representation of a premium blank page texture background */}
-          <div className="absolute inset-0 p-3 mt-3 flex flex-col justify-between opacity-40">
-            {/* Soft water-mark lines simulating expensive high-grain premium stationary stock */}
-            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-stone-300/40 to-transparent" />
-            <div className="h-[2px] w-3/4 bg-gradient-to-r from-transparent via-stone-300/30 to-transparent mx-auto" />
-            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-stone-300/40 to-transparent" />
+          {/* Blank watercolor paper center workspace */}
+          <div className="flex-1 p-4 flex flex-col justify-between items-center relative">
+            {/* Subtle elegant border frame imprint on the watercolor book plate */}
+            <div className="absolute inset-2 border border-[#eae6db] rounded-sm pointer-events-none" />
+            
+            {/* Soft decorative shadow gradient giving the paper card curvature depth */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#000]/[0.02] via-transparent to-[#fff]/40 pointer-events-none" />
+
+            <div className="flex-1 flex flex-col items-center justify-center p-2 z-10">
+              {/* Gold foiled decorative line divider */}
+              <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-[#cfae8f] to-transparent mb-2" />
+              <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-[#cfae8f] to-transparent opacity-60" />
+            </div>
           </div>
         </div>
 
-        {/* ================= PART 3: TOP WIRE SPIRAL BINDING ASSEMBLY ================= */}
+        {/* ================= PART 3: HEAVY METAL SPIRAL BINDING DUAL-RINGS ================= */}
         {/* 
-          Steel dual-rings along the top connecting backboard stand and front pages.
-          Offset in space to perfectly align between stand and container planes.
+          Dual metal wire loop ring elements running through paper punch holes.
+          Perfect silver/gold shiny chrome highlights reflecting natural desk lighting.
         */}
         <div 
-          className="absolute -top-[6px] left-[20px] right-[24px] h-[22px] flex justify-between z-30"
+          className="absolute -top-[5px] left-[18px] right-[20px] h-[21px] flex justify-between z-30"
           style={{
-            transform: 'rotateX(15deg) rotateY(-22deg) rotateZ(1.5deg) translateZ(12px)',
+            transform: 'rotateX(14deg) rotateY(24deg) rotateZ(-3deg) translateZ(11px)',
           }}
         >
-          {Array.from({ length: 14 }).map((_, i) => (
-            <div key={i} className="relative w-3 h-full flex gap-[1px]">
-              {/* Individual metal spiral loop */}
+          {Array.from({ length: 16 }).map((_, i) => (
+            <div key={i} className="relative w-3.5 h-full flex gap-[1.5px]">
+              {/* Primary binder coil wire */}
               <div 
-                className="w-[3px] h-full rounded-full border-t border-l border-b border-stone-400 bg-gradient-to-b from-zinc-300 via-amber-100/35 to-stone-500 shadow-md"
+                className="w-[2.5px] h-full rounded-full border-t border-l border-b border-[#a8a195] bg-gradient-to-b from-zinc-200 via-zinc-400 to-[#736e65] shadow-md"
                 style={{
-                  transform: 'rotateY(12deg)',
+                  transform: 'rotateY(16deg)',
                 }}
               />
+              {/* Double wire spiral offset loop wire matching the reference photo */}
               <div 
-                className="w-[2px] h-full rounded-full border-t border-l border-b border-stone-450 bg-gradient-to-b from-zinc-200 via-transparent to-stone-600 shadow-md -ml-[1px]"
+                className="w-[2.5px] h-full rounded-full border-t border-l border-b border-[#9c9488] bg-gradient-to-b from-zinc-100 via-zinc-450 to-[#666158] shadow-md -ml-[1.5px]"
                 style={{
-                  transform: 'rotateY(-12deg)',
+                  transform: 'rotateY(-16deg)',
                 }}
               />
             </div>
           ))}
         </div>
 
-        {/* ================= PART 4: CAST AMBIENT FLOOR SHADOW ================= */}
-        {/* Realistic drop-shadow on the desktop base representation */}
+        {/* ================= PART 4: DESK AMBIENT DROP SHADOW ================= */}
+        {/* Realistic heavy diffuse drop shadow onto the desk surface below */}
         <div 
-          className="absolute bottom-[-16px] left-[-10px] right-2 h-8 bg-black/40 blur-md rounded-full pointer-events-none"
+          className="absolute bottom-[-14px] left-[-15px] right-2 h-7 bg-black/45 blur-lg rounded-full pointer-events-none"
           style={{
-            transform: 'rotateX(82deg) rotateY(-5deg) rotateZ(-18deg) scaleX(1.15)',
+            transform: 'rotateX(80deg) rotateY(5deg) rotateZ(16deg) scaleX(1.2) scaleY(0.9)',
             zIndex: -1,
           }}
         />
