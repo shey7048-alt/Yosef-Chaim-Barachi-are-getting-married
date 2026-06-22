@@ -3,6 +3,7 @@ import { Heart, Wifi } from 'lucide-react';
 import BackgroundOverlay from './components/BackgroundOverlay';
 import HeroSection from './components/HeroSection';
 import CalendarSection from './components/CalendarSection';
+import DailyQuoteCalendar from './components/DailyQuoteCalendar';
 
 export default function App() {
   // Target Wedding Date: August 10, 2026, at 7:00 PM (19:00:00)
@@ -102,6 +103,9 @@ export default function App() {
 
   return (
     <BackgroundOverlay>
+      {/* 3D Isometric Desktop Desk Calendar Indicator with daily rotating quotes */}
+      <DailyQuoteCalendar timeOffset={timeOffset} />
+
       {/* Live Time Sync Subtle Indicator */}
       <div className="fixed bottom-4 right-4 z-50 pointer-events-none select-none">
         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-stone-900/90 text-white text-[10px] font-sans font-bold shadow-lg backdrop-blur-xs">
