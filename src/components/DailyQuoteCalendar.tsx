@@ -139,59 +139,86 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
       id="desktop-desk-calendar"
       className="fixed top-5 left-5 z-[45] pointer-events-none select-none scale-90 sm:scale-100 origin-top-left animate-fade-in"
     >
-      {/* Elegant, minimalist floating glassmorphic container with custom outer gradient border */}
-      <div className="relative w-[230px] h-[180px] rounded-2xl p-[1px] bg-gradient-to-br from-amber-400/25 via-white/5 to-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-[12px]">
+      {/* Frosted Glass Background Panel */}
+      <div className="relative w-[250px] h-[210px] rounded-2xl p-4 bg-white/5 backdrop-blur-md border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.4)] flex items-center justify-center overflow-visible">
         
-        {/* Inner layout container with elegant luxury dark background feel */}
-        <div className="w-full h-full rounded-[15px] bg-stone-950/65 p-4 flex flex-col justify-between border border-white/5 relative overflow-hidden">
-          
-          {/* Subtle gold decoration glowing gradients */}
-          <div className="absolute top-0 right-0 w-24 h-24 bg-amber-400/5 rounded-full blur-2xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-amber-400/5 rounded-full blur-2xl pointer-events-none" />
+        {/* The tidy, perfectly straight remaining stack of sheets underneath */}
+        <div className="absolute inset-x-6 bottom-4 top-4 bg-[#f1f0ea] border border-stone-200/60 rounded-lg shadow-sm transform translate-y-2 translate-x-0 opacity-40 pointer-events-none" />
+        <div className="absolute inset-x-5 bottom-4 top-4 bg-[#f6f5ee] border border-stone-200/60 rounded-lg shadow-md transform translate-y-1 translate-x-0 opacity-80 pointer-events-none" />
+        <div className="absolute inset-x-4 bottom-4 top-4 bg-[#faf9f3] border border-stone-200/60 rounded-lg shadow-lg transform translate-y-0 translate-x-0 pointer-events-none" />
 
-          {/* Top Row: Weekday (Small, left aligned) & Mini Ornament (Right aligned) */}
-          <div className="flex justify-between items-center pb-2 border-b border-white/10">
-            {/* Weekday name on the left in clean thin typography */}
-            <span className="text-amber-400/90 font-light font-sans text-xs tracking-wider" dir="rtl">
+        {/* Top Dynamic Sheet - Rotated slightly to the left, with torn/frayed aesthetic edges */}
+        <div 
+          className="absolute inset-x-4 bottom-4 top-4 bg-[#fcfbfa] border border-stone-300/80 rounded-lg shadow-[4px_10px_25px_rgba(0,0,0,0.22)] transform rotate-[-3.5deg] -translate-x-1 p-3 flex flex-col justify-between pointer-events-none overflow-hidden"
+          style={{
+            backgroundImage: 'linear-gradient(rgba(0,0,0,0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.01) 1px, transparent 1px)',
+            backgroundSize: '12px 12px'
+          }}
+        >
+          {/* Subtle textured paper frayed fiber simulation on left/right borders */}
+          <div className="absolute inset-y-0 left-0 w-[2px] bg-gradient-to-r from-stone-200/20 to-transparent" />
+          <div className="absolute inset-y-0 right-0 w-[2px] bg-gradient-to-l from-stone-200/20 to-transparent" />
+
+          {/* Miniature Binder Perforations (Tear-off dots at the very top) */}
+          <div className="absolute top-1.5 left-2.5 right-2.5 flex justify-between opacity-25">
+            {[...Array(11)].map((_, i) => (
+              <div key={i} className="w-[3px] h-[3px] bg-stone-500 rounded-full" />
+            ))}
+          </div>
+
+          {/* Top Row: Weekday (Golden modern sans-serif typography, left-aligned) & Icon (Right-aligned) */}
+          <div className="flex justify-between items-center mt-1.5 pb-1.5 border-b border-stone-200/60 w-full">
+            {/* Elegant, small, modern golden sans-serif weekday text */}
+            <span className="text-amber-600 font-sans font-semibold text-[11.5px] tracking-wider uppercase pl-0.5">
               {dayNameRaw}
             </span>
 
-            {/* Small Elegant Sparkle / Heart Icon on the right */}
-            <div className="flex items-center justify-center">
+            {/* Micro Gold Ornament (Sparkle or Heart) */}
+            <div className="flex items-center">
               {activeQuote.theme === 'love' ? (
-                <Heart className="w-3.5 h-3.5 text-amber-400/85 fill-amber-400/10" />
+                <Heart className="w-3 h-3 text-amber-500/70 fill-amber-500/10" />
               ) : (
-                <Sparkles className="w-3.5 h-3.5 text-amber-400/85" />
+                <Sparkles className="w-3 h-3 text-amber-500/70" />
               )}
             </div>
           </div>
 
-          {/* Central Main Quote - Large premium wedding-style font */}
+          {/* Central Quote Area - Luxury High-Contrast Font Rendering */}
           <div className="flex-1 flex flex-col justify-center py-2 relative">
-            {/* Tiny elegant quote icon decoration */}
-            <Quote className="w-3.5 h-3.5 text-amber-400/10 absolute -top-1 right-0" />
+            <Quote className="w-3.5 h-3.5 text-stone-300/30 absolute -top-1.5 right-0" />
             
             <p 
-              className="text-white font-serif text-[14.5px] sm:text-[15.5px] font-light leading-relaxed tracking-wide text-center px-1 max-h-[100px] overflow-hidden select-none" 
+              className="text-stone-800 font-serif text-[12.5px] sm:text-[13.5px] font-normal leading-relaxed text-center px-1 max-h-[85px] overflow-hidden select-none" 
               dir="rtl"
               style={{
                 fontFamily: "'Playfair Display', 'Inter', serif",
-                textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+                textShadow: '0.5px 0.5px 1px rgba(0,0,0,0.05)'
               }}
             >
               {activeQuote.quote}
             </p>
           </div>
 
-          {/* Fine Aesthetic Bottom Gold Accent Divider */}
-          <div className="w-full flex justify-center items-center">
-            <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-amber-400/40 to-transparent" />
+          {/* Delicate bottom accent line */}
+          <div className="w-full flex justify-center items-center pb-0.5">
+            <div className="w-6 h-[1px] bg-amber-500/20" />
           </div>
 
         </div>
 
-        {/* Glossy light sweep overlay on the card */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.03] to-transparent pointer-events-none rounded-2xl" />
+        {/* Elegant Golden Push-Pin in the top-left corner holding the sheet */}
+        <div className="absolute top-2.5 left-2.5 z-50 pointer-events-none drop-shadow-[2px_5px_4px_rgba(0,0,0,0.38)] flex flex-col items-center">
+          {/* Metallic Pin Head (3D dome with luxury gold glint) */}
+          <div className="w-3.5 h-3.5 rounded-full bg-gradient-to-br from-amber-100 via-amber-400 to-amber-700 border border-amber-300/40 relative flex items-center justify-center">
+            {/* White light reflection */}
+            <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white/75 rounded-full blur-[0.2px]" />
+            {/* Inner tack pin core */}
+            <div className="w-1.5 h-1.5 rounded-full bg-amber-600/25" />
+          </div>
+          {/* Fine Pin shaft casting a realistic tiny shadow onto the paper */}
+          <div className="w-[1.5px] h-3 bg-gradient-to-b from-amber-600 via-stone-800 to-transparent -mt-[1px] transform rotate-[12deg]" />
+        </div>
+
       </div>
     </div>
   );
