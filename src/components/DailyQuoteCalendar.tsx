@@ -229,52 +229,6 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
 
         </div>
 
-        {/* Artisanal detailed glossy black office pushpin on the top-left */}
-        <div 
-          className="absolute -top-1 -left-1 z-50 pointer-events-none drop-shadow-[2px_4px_5px_rgba(0,0,0,0.65)] flex flex-col items-center"
-          style={{ transform: 'rotate(-10deg)' }}
-        >
-          {/* Detailed 3D glossy black map/office pushpin with specular high-contrast shine and reflections */}
-          <svg width="32" height="42" viewBox="0 0 32 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              {/* Specular high-gloss black/charcoal gradient for plastic/metal cap */}
-              <radialGradient id="glossy-black-cap" cx="30%" cy="30%" r="70%">
-                <stop offset="0%" stopColor="#8A8A8F" />  {/* Sharp bright highlight core */}
-                <stop offset="12%" stopColor="#3A3A3D" /> {/* Smooth gradient transition */}
-                <stop offset="60%" stopColor="#111112" /> {/* Glossy black finish */}
-                <stop offset="100%" stopColor="#020202" />{/* Deep shadow ambient occlusion */}
-              </radialGradient>
-              
-              {/* Metal pin needle steel gradient */}
-              <linearGradient id="metal-needle" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#7F8C8D" />
-                <stop offset="50%" stopColor="#BDC3C7" />
-                <stop offset="100%" stopColor="#4A4F52" />
-              </linearGradient>
-            </defs>
-
-            {/* Sharp shiny metal needle shaft going straight into the dark page */}
-            <path d="M16 18 L16 38" stroke="url(#metal-needle)" strokeWidth="1.8" strokeLinecap="round" />
-            
-            {/* Puncture hole shadow on paper */}
-            <ellipse cx="16" cy="24" rx="1.6" ry="0.75" fill="#000000" opacity="0.95" />
-
-            {/* Glossy Black Pushpin head shape */}
-            {/* Base platform ring of the pushpin */}
-            <ellipse cx="16" cy="18" rx="7" ry="2.5" fill="url(#glossy-black-cap)" stroke="#111111" strokeWidth="0.45" />
-            
-            {/* Main body neck of the pushpin */}
-            <path d="M10 10 C10 14, 11 18, 16 18 C21 18, 22 14, 22 10 L20 7 C20 7, 12 7, 10 10 Z" fill="url(#glossy-black-cap)" stroke="#111111" strokeWidth="0.4" />
-
-            {/* Top rounded grip cap */}
-            <circle cx="16" cy="6" r="5" fill="url(#glossy-black-cap)" stroke="#111111" strokeWidth="0.4" />
-
-            {/* Glassy/Glossy white specular light reflections for authentic 3D gloss */}
-            <circle cx="14.5" cy="4.5" r="1.1" fill="#FFFFFF" opacity="0.9" />
-            <path d="M12.5 9.5 Q14 7.5, 15.5 9.5" stroke="#FFFFFF" strokeWidth="0.65" strokeLinecap="round" opacity="0.65" />
-          </svg>
-        </div>
-
       </div>
     </div>
   );
