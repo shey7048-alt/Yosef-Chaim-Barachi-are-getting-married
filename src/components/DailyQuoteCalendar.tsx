@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Quote, Sparkles, Heart } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface DailyQuoteCalendarProps {
   timeOffset?: number;
@@ -135,9 +136,22 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
   const dayNameRaw = currentDate.toLocaleDateString('he-IL', { weekday: 'long' });
 
   return (
-    <div 
+    <motion.div 
       id="desktop-desk-calendar"
-      className="fixed top-5 left-5 z-[45] pointer-events-none select-none scale-95 sm:scale-100 origin-top-left animate-fade-in"
+      className="fixed top-6 left-6 md:top-8 md:left-8 z-[100] pointer-events-none select-none scale-90 sm:scale-100 origin-top-left"
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ 
+        opacity: 1, 
+        y: [0, -8, 0] 
+      }}
+      transition={{
+        opacity: { duration: 0.8 },
+        y: {
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }
+      }}
     >
       {/* Clean floating wrapper holding the beautiful handmade paper sheets (no outer grey halo/frosted backdrop) */}
       <div className="relative w-[265px] h-[225px] flex items-center justify-center overflow-visible">
@@ -230,6 +244,6 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
         </div>
 
       </div>
-    </div>
+    </motion.div>
   );
 }
