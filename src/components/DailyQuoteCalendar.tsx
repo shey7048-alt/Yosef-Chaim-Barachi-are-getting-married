@@ -139,8 +139,8 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
       id="desktop-desk-calendar"
       className="fixed top-5 left-5 z-[45] pointer-events-none select-none scale-95 sm:scale-100 origin-top-left animate-fade-in"
     >
-      {/* Frosted Glass Kept-box Backdrop Panel */}
-      <div className="relative w-[265px] h-[225px] rounded-3xl p-4 bg-stone-900/10 backdrop-blur-md border border-white/10 shadow-[0_15px_45px_rgba(35,25,15,0.35)] flex items-center justify-center overflow-visible">
+      {/* Clean floating wrapper holding the beautiful handmade paper sheets (no outer grey halo/frosted backdrop) */}
+      <div className="relative w-[265px] h-[225px] flex items-center justify-center overflow-visible">
         
         {/* Underlayer 3: Warm deep clay/sand paper layer */}
         <div 
@@ -229,49 +229,58 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
 
         </div>
 
-        {/* Custom detailed vintage brass flower bloom pushpin on the top-left */}
+        {/* Artisanal detailed vintage gold & pearl rose pushpin on the top-left */}
         <div 
-          className="absolute top-2.5 left-2.5 z-50 pointer-events-none drop-shadow-[2.5px_4.5px_5px_rgba(50,35,20,0.5)] flex flex-col items-center"
-          style={{ transform: 'rotate(-5deg)' }}
+          className="absolute top-2 left-2 z-50 pointer-events-none drop-shadow-[2.5px_4px_4.5px_rgba(45,30,15,0.45)] flex flex-col items-center"
+          style={{ transform: 'rotate(-3deg)' }}
         >
-          {/* Flower bloom design using overlapping brass/gold circular petals */}
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform rotate-[18deg]">
+          {/* Detailed romantic floral bloom design with layered golden petals and a central lustrous pearl */}
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform rotate-[12deg]">
             <defs>
-              {/* Antique Gold / Vintage Brass gradient */}
-              <radialGradient id="vintage-brass-light" cx="35%" cy="35%" r="65%">
-                <stop offset="0%" stopColor="#FFF1C2" />   {/* Light bronze sheen */}
-                <stop offset="25%" stopColor="#D9B46E" />  {/* Warm brass */}
-                <stop offset="65%" stopColor="#A3783D" />  {/* Aged bronze shadow */}
-                <stop offset="100%" stopColor="#5E431B" /> {/* Antique brown oxide */}
+              {/* Luxury Brushed Gold/Rose Gold Gradient */}
+              <radialGradient id="rose-gold-petal" cx="35%" cy="35%" r="65%">
+                <stop offset="0%" stopColor="#FFF2E6" />   {/* Highlight glint */}
+                <stop offset="30%" stopColor="#E0B094" />  {/* Warm Rose Gold */}
+                <stop offset="70%" stopColor="#B37C5D" />  {/* Saturation shadow */}
+                <stop offset="100%" stopColor="#6E442D" /> {/* Antique copper depth */}
               </radialGradient>
-              {/* Dark aged core gradient */}
-              <radialGradient id="brass-aged-core" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#B3894B" />
-                <stop offset="70%" stopColor="#6E4F22" />
-                <stop offset="100%" stopColor="#301F08" />
+              
+              {/* Pearl Center Luster Gradient */}
+              <radialGradient id="pearl-luster" cx="30%" cy="30%" r="70%">
+                <stop offset="0%" stopColor="#FFFFFF" />
+                <stop offset="25%" stopColor="#FFF5F2" />
+                <stop offset="75%" stopColor="#EAD2C9" />
+                <stop offset="100%" stopColor="#CBB1A7" />
               </radialGradient>
             </defs>
 
-            {/* 8-Petal Rose Bloom Pin Assembly */}
+            {/* Overlapping organic floral petals */}
             {/* Outer Petals */}
-            <path d="M12 12 C10.5 5, 13.5 5, 12 12 Z" fill="url(#vintage-brass-light)" stroke="#5E431B" strokeWidth="0.35" />
-            <path d="M12 12 C19 10.5, 19 13.5, 12 12 Z" fill="url(#vintage-brass-light)" stroke="#5E431B" strokeWidth="0.35" />
-            <path d="M12 12 C13.5 19, 10.5 19, 12 12 Z" fill="url(#vintage-brass-light)" stroke="#5E431B" strokeWidth="0.35" />
-            <path d="M12 12 C5 13.5, 5 10.5, 12 12 Z" fill="url(#vintage-brass-light)" stroke="#5E431B" strokeWidth="0.35" />
+            <path d="M14 14 C12 4, 16 4, 14 14 Z" fill="url(#rose-gold-petal)" stroke="#59341E" strokeWidth="0.4" />
+            <path d="M14 14 C24 12, 24 16, 14 14 Z" fill="url(#rose-gold-petal)" stroke="#59341E" strokeWidth="0.4" />
+            <path d="M14 14 C16 24, 12 24, 14 14 Z" fill="url(#rose-gold-petal)" stroke="#59341E" strokeWidth="0.4" />
+            <path d="M14 14 C4 16, 4 12, 14 14 Z" fill="url(#rose-gold-petal)" stroke="#59341E" strokeWidth="0.4" />
 
-            {/* Inner Diagonal Petals */}
-            <path d="M12 12 C7.5 7.5, 10.5 6.5, 12 12 Z" fill="url(#vintage-brass-light)" stroke="#5E431B" strokeWidth="0.35" opacity="0.95" />
-            <path d="M12 12 C16.5 7.5, 17.5 10.5, 12 12 Z" fill="url(#vintage-brass-light)" stroke="#5E431B" strokeWidth="0.35" opacity="0.95" />
-            <path d="M12 12 C16.5 16.5, 13.5 17.5, 12 12 Z" fill="url(#vintage-brass-light)" stroke="#5E431B" strokeWidth="0.35" opacity="0.95" />
-            <path d="M12 12 C7.5 16.5, 6.5 13.5, 12 12 Z" fill="url(#vintage-brass-light)" stroke="#5E431B" strokeWidth="0.35" opacity="0.95" />
+            {/* Intermediate Diagonal Petals (Off-center rotation for a highly organic, natural floral look) */}
+            <path d="M14 14 C7.5 7.5, 10.5 6, 14 14 Z" fill="url(#rose-gold-petal)" stroke="#59341E" strokeWidth="0.4" />
+            <path d="M14 14 C20.5 7.5, 22 10.5, 14 14 Z" fill="url(#rose-gold-petal)" stroke="#59341E" strokeWidth="0.4" />
+            <path d="M14 14 C20.5 20.5, 17.5 22, 14 14 Z" fill="url(#rose-gold-petal)" stroke="#59341E" strokeWidth="0.4" />
+            <path d="M14 14 C7.5 20.5, 6 17.5, 14 14 Z" fill="url(#rose-gold-petal)" stroke="#59341E" strokeWidth="0.4" />
 
-            {/* Aged golden seed-bud core */}
-            <circle cx="12" cy="12" r="3" fill="url(#brass-aged-core)" stroke="#4A3415" strokeWidth="0.5" />
-            <circle cx="11.4" cy="11.4" r="0.75" fill="#FFF8DD" opacity="0.7" />
+            {/* Inner tiny rose bud ring */}
+            <path d="M14 14 C11 9, 17 9, 14 14 Z" fill="url(#rose-gold-petal)" opacity="0.9" stroke="#422413" strokeWidth="0.3" />
+            <path d="M14 14 C19 11, 19 17, 14 14 Z" fill="url(#rose-gold-petal)" opacity="0.9" stroke="#422413" strokeWidth="0.3" />
+            <path d="M14 14 C17 19, 11 19, 14 14 Z" fill="url(#rose-gold-petal)" opacity="0.9" stroke="#422413" strokeWidth="0.3" />
+            <path d="M14 14 C9 17, 9 11, 14 14 Z" fill="url(#rose-gold-petal)" opacity="0.9" stroke="#422413" strokeWidth="0.3" />
+
+            {/* Central Romantic Pearl Jewel bead */}
+            <circle cx="14" cy="14" r="3.2" fill="url(#pearl-luster)" stroke="#6E5045" strokeWidth="0.45" />
+            {/* Luminous gloss highlight */}
+            <circle cx="12.8" cy="12.8" r="0.8" fill="#FFFFFF" opacity="0.8" />
           </svg>
           
-          {/* Realistic angled pin shaft projecting shadow behind */}
-          <div className="w-[1.5px] h-3.5 bg-gradient-to-b from-[#4A3415]/80 via-stone-900 to-transparent -mt-[1px] transform rotate-[18deg] origin-top" />
+          {/* Detailed brass needle shaft casting a shadow beneath */}
+          <div className="w-[1.8px] h-4 bg-gradient-to-b from-[#59341E] via-stone-800 to-transparent -mt-[1.5px] transform rotate-[15deg] origin-top" />
         </div>
 
       </div>
