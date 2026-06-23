@@ -132,78 +132,66 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
   }, [timeOffset]);
 
   const activeQuote = WEDDING_QUOTES[activeQuoteIndex];
-  const dayName = currentDate.toLocaleDateString('he-IL', { weekday: 'long' });
+  const dayNameRaw = currentDate.toLocaleDateString('he-IL', { weekday: 'long' });
 
   return (
     <div 
       id="desktop-desk-calendar"
-      className="fixed top-4 left-4 z-[45] pointer-events-none select-none scale-90 sm:scale-100 origin-top-left"
+      className="fixed top-5 left-5 z-[45] pointer-events-none select-none scale-90 sm:scale-100 origin-top-left animate-fade-in"
     >
-      {/* Premium Authentic 3D Isometric Desktop Desk Calendar */}
-      <div className="relative group">
+      {/* Elegant, minimalist floating glassmorphic container with custom outer gradient border */}
+      <div className="relative w-[230px] h-[180px] rounded-2xl p-[1px] bg-gradient-to-br from-amber-400/25 via-white/5 to-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-[12px]">
         
-        {/* Real 3D physical support easel shadow casting back onto desk floor */}
-        <div className="absolute -inset-x-2 bottom-0 top-3 bg-black/50 rounded-2xl filter blur-md transform translate-y-3 -translate-x-1 rotate-3 pointer-events-none" />
-        
-        {/* Main Tilted support easel board backdrop */}
-        <div className="absolute inset-0 bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950 border-b-4 border-r-2 border-stone-850 rounded-2xl shadow-xl pointer-events-none transform -skew-x-2" />
-
-        {/* Golden Spiral brass-style Binding rings along the top */}
-        <div className="absolute -top-3.5 left-0 right-0 flex justify-around px-6 z-20 pointer-events-none">
-          <div className="w-1.5 h-6 bg-gradient-to-b from-stone-600 via-amber-300 to-stone-800 rounded-full shadow-md transform rotate-12" />
-          <div className="w-1.5 h-6 bg-gradient-to-b from-stone-600 via-amber-300 to-stone-800 rounded-full shadow-md transform -rotate-6" />
-          <div className="w-1.5 h-6 bg-gradient-to-b from-stone-600 via-amber-300 to-stone-800 rounded-full shadow-md transform rotate-3" />
-          <div className="w-1.5 h-6 bg-gradient-to-b from-stone-600 via-amber-300 to-stone-800 rounded-full shadow-md transform -rotate-12" />
-        </div>
-
-        {/* Beautiful non-interactive tilted fine stationary paper binder */}
-        <div 
-          id="tilted-paper-pad"
-          className="relative w-[215px] h-[225px] bg-gradient-to-b from-stone-900 via-stone-950 to-stone-900 border border-stone-800/80 rounded-xl overflow-hidden shadow-2xl flex flex-col pointer-events-none"
-          style={{
-            perspective: '1000px',
-            transform: 'perspective(1000px) rotateX(11deg) rotateY(-11deg) rotateZ(1.5deg)',
-            transformStyle: 'preserve-3d'
-          }}
-        >
-          {/* Elegant top red-stitched faux header binder edge */}
-          <div className="h-1 bg-gradient-to-r from-red-800 via-rose-600 to-red-800 opacity-85" />
-
-          {/* Calendar Main plate body with delicate gold-tinted inner border */}
-          <div className="flex-1 p-3.5 m-1.5 border border-amber-500/10 rounded-lg bg-stone-900/40 flex flex-col justify-between items-center text-center relative">
-            
-            {/* Split Top Header - Left: Weekday in Hebrew (small), Right: Fine metadata */}
-            <div className="w-full flex justify-between items-center pb-1.5 border-b border-stone-800/80">
-              {/* Day of the week correctly written small above, aligned to the left */}
-              <span className="text-amber-400 font-semibold font-sans text-[11px] text-left uppercase tracking-wider">
-                {dayName}
-              </span>
-              
-              {/* Discrete heart decoration on the right side */}
-              <div className="flex gap-1 items-center">
-                {activeQuote.theme === 'love' && <Heart className="w-2.5 h-2.5 text-rose-500/80 fill-rose-500/20" />}
-                {activeQuote.theme !== 'love' && <Sparkles className="w-2.5 h-2.5 text-amber-500/80" />}
-              </div>
-            </div>
-
-            {/* Central Quote / Display layout - elegant font layout, with NO date of entry/numbers */}
-            <div className="flex-1 flex flex-col justify-center my-2">
-              <Quote className="w-3.5 h-3.5 text-amber-500/15 mx-auto mb-2" />
-              <p 
-                className="text-amber-50 font-serif text-[12.5px] sm:text-[13.5px] font-medium leading-relaxed tracking-wide text-center px-1.5 max-w-[185px] mx-auto select-none" 
-                dir="rtl"
-              >
-                {activeQuote.quote}
-              </p>
-              <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-amber-500/15 to-transparent mx-auto mt-2" />
-            </div>
-
-
-          </div>
+        {/* Inner layout container with elegant luxury dark background feel */}
+        <div className="w-full h-full rounded-[15px] bg-stone-950/65 p-4 flex flex-col justify-between border border-white/5 relative overflow-hidden">
           
-          {/* Subtle glossy layout reflection */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.02] to-transparent pointer-events-none rounded-xl" />
+          {/* Subtle gold decoration glowing gradients */}
+          <div className="absolute top-0 right-0 w-24 h-24 bg-amber-400/5 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-amber-400/5 rounded-full blur-2xl pointer-events-none" />
+
+          {/* Top Row: Weekday (Small, left aligned) & Mini Ornament (Right aligned) */}
+          <div className="flex justify-between items-center pb-2 border-b border-white/10">
+            {/* Weekday name on the left in clean thin typography */}
+            <span className="text-amber-400/90 font-light font-sans text-xs tracking-wider" dir="rtl">
+              {dayNameRaw}
+            </span>
+
+            {/* Small Elegant Sparkle / Heart Icon on the right */}
+            <div className="flex items-center justify-center">
+              {activeQuote.theme === 'love' ? (
+                <Heart className="w-3.5 h-3.5 text-amber-400/85 fill-amber-400/10" />
+              ) : (
+                <Sparkles className="w-3.5 h-3.5 text-amber-400/85" />
+              )}
+            </div>
+          </div>
+
+          {/* Central Main Quote - Large premium wedding-style font */}
+          <div className="flex-1 flex flex-col justify-center py-2 relative">
+            {/* Tiny elegant quote icon decoration */}
+            <Quote className="w-3.5 h-3.5 text-amber-400/10 absolute -top-1 right-0" />
+            
+            <p 
+              className="text-white font-serif text-[14.5px] sm:text-[15.5px] font-light leading-relaxed tracking-wide text-center px-1 max-h-[100px] overflow-hidden select-none" 
+              dir="rtl"
+              style={{
+                fontFamily: "'Playfair Display', 'Inter', serif",
+                textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+              }}
+            >
+              {activeQuote.quote}
+            </p>
+          </div>
+
+          {/* Fine Aesthetic Bottom Gold Accent Divider */}
+          <div className="w-full flex justify-center items-center">
+            <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-amber-400/40 to-transparent" />
+          </div>
+
         </div>
+
+        {/* Glossy light sweep overlay on the card */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.03] to-transparent pointer-events-none rounded-2xl" />
       </div>
     </div>
   );
