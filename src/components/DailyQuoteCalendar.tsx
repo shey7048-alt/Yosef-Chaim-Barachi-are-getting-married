@@ -80,6 +80,130 @@ const WEDDING_QUOTES: QuoteItem[] = [
   {
     quote: "נמשיך לצפות, נמשיך להתפלל, עד ליום המאושר",
     theme: 'hope'
+  },
+  {
+    quote: "מצא אישה מצא טוב, ויפק רצון מה'",
+    theme: 'love'
+  },
+  {
+    quote: "זה בנה ביתו בחכמה, ואשתו תבנהו",
+    theme: 'eternity'
+  },
+  {
+    quote: "הבית הוא המקדש המעט של שנינו",
+    theme: 'peace'
+  },
+  {
+    quote: "זכו – שכינה ביניהם",
+    theme: 'eternity'
+  },
+  {
+    quote: "כל שרוי בלא אישה, שרוי בלא טובה, בלא שמחה, בלא ברכה",
+    theme: 'joy'
+  },
+  {
+    quote: "בניית בית בישראל היא המפעל החשוב ביותר בחיים",
+    theme: 'hope'
+  },
+  {
+    quote: "עוד 50 ימים מתחילה השליחות המשותפת שלנו",
+    theme: 'hope'
+  },
+  {
+    quote: "ההכנות לחתונה הן רק ההקדמה לבית שנבנה יחד",
+    theme: 'eternity'
+  },
+  {
+    quote: "כל יום שעובר מקרב אותנו לרגע הקדוש תחת החופה",
+    theme: 'love'
+  },
+  {
+    quote: "התפילות שלנו יחד הן הכוח שיוביל אותנו בחיים",
+    theme: 'peace'
+  },
+  {
+    quote: "החתונה היא רק ההתחלה, הבית הוא היעד",
+    theme: 'eternity'
+  },
+  {
+    quote: "מתרגשת לבנות איתך בית של תורה, חסד ויראת שמיים",
+    theme: 'hope'
+  },
+  {
+    quote: "הלב פועם לקראת היום בו נהפוך לאחד",
+    theme: 'love'
+  },
+  {
+    quote: "תודה על הזכות לבנות איתך חיים של משמעות",
+    theme: 'joy'
+  },
+  {
+    quote: "נבנה בית נאמן בישראל, יום אחר יום",
+    theme: 'eternity'
+  },
+  {
+    quote: "תודה לה' ששלח לי אותך",
+    theme: 'joy'
+  },
+  {
+    quote: "מחכה לצעוד איתך אל מתחת לחופה",
+    theme: 'love'
+  },
+  {
+    quote: "לכל יום שחולף יש טעם של הבטחה לעתיד",
+    theme: 'hope'
+  },
+    {
+    quote: "לא מחכים רק ליום החתונה, מחכים לכל הימים שאחריו",
+    theme: 'peace'
+  },
+  {
+    quote: "הלב שלי סופר את הימים, וה' סופר את התפילות שלנו",
+    theme: 'hope'
+  },
+  {
+    quote: "חתונה היא לא סוף פסוק, היא הכותרת לספר שאנחנו כותבים יחד",
+    theme: 'eternity'
+  },
+  {
+    quote: "הקשר שלנו הוא המתנה הכי גדולה שקיבלתי בדרך לחופה",
+    theme: 'love'
+  },
+  {
+    quote: "איתך, כל יום של ציפייה מרגיש כמו רגע של חסד",
+    theme: 'peace'
+  },
+  {
+    quote: "הבית הוא לא רק מקום, הבית הוא אנחנו ביחד",
+    theme: 'love'
+  },
+  {
+    quote: "הבית שלנו יהיה המקום שבו תמיד יהיה נעים לחזור אליו",
+    theme: 'peace'
+  },
+  {
+    quote: "הימים עוברים, והציפייה הופכת לשמחה גדולה",
+    theme: 'joy'
+  },
+  {
+    quote: "עוד מעט והציפייה תהפוך לשירה של חופה",
+    theme: 'love'
+  },
+  {
+    quote: "החלום שלנו מקבל צורה וחיים בכל יום שעובר",
+    theme: 'hope'
+  },
+  {
+    quote: "השמחה הגדולה ביותר היא להיות יחד, תמיד",
+    theme: 'joy'
+  },
+  {
+    quote: "אנחנו מוכנים, הלבבות מוכנים, והברכה בדרך",
+    theme: 'hope'
+  },
+  {
+    quote: "הציפייה הייתה יפה, אבל החיים איתך הולכים להיות יפים יותר",
+    theme: 'love'
   }
 ];
 
@@ -124,9 +248,9 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
     const resolvedDate = timeOffset ? new Date(initialNow.getTime() + timeOffset) : initialNow;
     setCurrentDate(resolvedDate);
 
-    // Get number of days since start date to yield current daily quote index (0-16)
+    // Get number of days since start date to yield current daily quote index
     const diffDays = getDaysSinceStart(resolvedDate);
-    const resolvedIndex = Math.min(diffDays, 16);
+    const resolvedIndex = Math.min(diffDays, WEDDING_QUOTES.length - 1);
     setActiveQuoteIndex(resolvedIndex);
 
     return () => clearInterval(timer);
