@@ -137,86 +137,141 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
   return (
     <div 
       id="desktop-desk-calendar"
-      className="fixed top-5 left-5 z-[45] pointer-events-none select-none scale-90 sm:scale-100 origin-top-left animate-fade-in"
+      className="fixed top-5 left-5 z-[45] pointer-events-none select-none scale-95 sm:scale-100 origin-top-left animate-fade-in"
     >
-      {/* Frosted Glass Background Panel */}
-      <div className="relative w-[250px] h-[210px] rounded-2xl p-4 bg-white/5 backdrop-blur-md border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.4)] flex items-center justify-center overflow-visible">
+      {/* Frosted Glass Kept-box Backdrop Panel */}
+      <div className="relative w-[265px] h-[225px] rounded-3xl p-4 bg-stone-900/10 backdrop-blur-md border border-white/10 shadow-[0_15px_45px_rgba(35,25,15,0.35)] flex items-center justify-center overflow-visible">
         
-        {/* The tidy, perfectly straight remaining stack of sheets underneath */}
-        <div className="absolute inset-x-6 bottom-4 top-4 bg-[#f1f0ea] border border-stone-200/60 rounded-lg shadow-sm transform translate-y-2 translate-x-0 opacity-40 pointer-events-none" />
-        <div className="absolute inset-x-5 bottom-4 top-4 bg-[#f6f5ee] border border-stone-200/60 rounded-lg shadow-md transform translate-y-1 translate-x-0 opacity-80 pointer-events-none" />
-        <div className="absolute inset-x-4 bottom-4 top-4 bg-[#faf9f3] border border-stone-200/60 rounded-lg shadow-lg transform translate-y-0 translate-x-0 pointer-events-none" />
-
-        {/* Top Dynamic Sheet - Rotated slightly to the left, with torn/frayed aesthetic edges */}
+        {/* Underlayer 3: Warm deep clay/sand paper layer */}
         <div 
-          className="absolute inset-x-4 bottom-4 top-4 bg-[#fcfbfa] border border-stone-300/80 rounded-lg shadow-[4px_10px_25px_rgba(0,0,0,0.22)] transform rotate-[-3.5deg] -translate-x-1 p-3 flex flex-col justify-between pointer-events-none overflow-hidden"
+          className="absolute inset-x-7 bottom-5 top-5 bg-[#E6DCC3] border border-stone-300/40 shadow-sm pointer-events-none opacity-60"
           style={{
-            backgroundImage: 'linear-gradient(rgba(0,0,0,0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.01) 1px, transparent 1px)',
-            backgroundSize: '12px 12px'
+            borderRadius: '16px 12px 14px 18px / 14px 16px 13px 15px',
+            transform: 'rotate(0.5deg) translate(0px, 4px)'
+          }}
+        />
+
+        {/* Underlayer 2: Warm antique cream handmade page */}
+        <div 
+          className="absolute inset-x-6 bottom-5 top-5 bg-[#EFE9D5]/90 border border-stone-300/50 shadow-md pointer-events-none opacity-90"
+          style={{
+            borderRadius: '13px 17px 12px 16px / 16px 13px 17px 12px',
+            transform: 'rotate(-1deg) translate(1px, 2px)'
+          }}
+        />
+
+        {/* Underlayer 1: Soft tactile ivory paper layer */}
+        <div 
+          className="absolute inset-x-5 bottom-5 top-5 bg-[#F6F1E0] border border-stone-300/70 shadow-lg pointer-events-none"
+          style={{
+            borderRadius: '15px 13px 18px 14px / 12px 15px 14px 16px',
+            transform: 'rotate(1.5deg) translate(-1px, 1px)'
+          }}
+        />
+
+        {/* Top Primary Keepsake Sheet: Warm ivory-cream handmade deckled-edge textured paper */}
+        <div 
+          className="absolute inset-x-5 bottom-5 top-5 bg-[#FDF9EE] border border-[#E9DFCB]/90 shadow-[4px_12px_28px_rgba(45,30,15,0.22)] p-4 flex flex-col justify-between pointer-events-none overflow-hidden"
+          style={{
+            borderRadius: '14px 11px 16px 12px / 11px 16px 12px 15px',
+            transform: 'rotate(-4deg) translate(-3px, -1px)',
+            backgroundImage: 'radial-gradient(#F5ECD2 0.7px, transparent 0.7px), radial-gradient(#F5ECD2 0.7px, #FDF9EE 0.7px)',
+            backgroundSize: '24px 24px',
+            backgroundPosition: '0 0, 12px 12px'
           }}
         >
-          {/* Subtle textured paper frayed fiber simulation on left/right borders */}
-          <div className="absolute inset-y-0 left-0 w-[2px] bg-gradient-to-r from-stone-200/20 to-transparent" />
-          <div className="absolute inset-y-0 right-0 w-[2px] bg-gradient-to-l from-stone-200/20 to-transparent" />
+          {/* Deckled Edge Fibers/Fraying Overlay simulation on margins */}
+          <div className="absolute inset-y-0 left-0 w-[4px] bg-gradient-to-r from-stone-400/5 via-stone-300/10 to-transparent" />
+          <div className="absolute inset-y-0 right-0 w-[4px] bg-gradient-to-l from-stone-400/5 via-stone-300/10 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-[4px] bg-gradient-to-b from-stone-400/5 via-stone-300/10 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-[4px] bg-gradient-to-t from-stone-400/5 via-stone-300/10 to-transparent" />
 
-          {/* Miniature Binder Perforations (Tear-off dots at the very top) */}
-          <div className="absolute top-1.5 left-2.5 right-2.5 flex justify-between opacity-25">
-            {[...Array(11)].map((_, i) => (
-              <div key={i} className="w-[3px] h-[3px] bg-stone-500 rounded-full" />
-            ))}
-          </div>
-
-          {/* Top Row: Weekday (Golden modern sans-serif typography, left-aligned) & Icon (Right-aligned) */}
-          <div className="flex justify-between items-center mt-1.5 pb-1.5 border-b border-stone-200/60 w-full">
-            {/* Elegant, small, modern golden sans-serif weekday text */}
-            <span className="text-amber-600 font-sans font-semibold text-[11.5px] tracking-wider uppercase pl-0.5">
+          {/* Top Row: Weekday Name (Soft Bronze/Copper) & Ornament (Vintage Heart/Sparkle) */}
+          <div className="flex justify-between items-center pb-2 border-b border-[#EADFC7]/60 w-full mt-0.5">
+            {/* Elegant, clean modern bronze-style weekday heading */}
+            <span 
+              className="font-sans font-medium text-[11px] tracking-wider text-[#A37B5C] uppercase pl-1"
+              style={{ letterSpacing: '0.08em' }}
+            >
               {dayNameRaw}
             </span>
 
-            {/* Micro Gold Ornament (Sparkle or Heart) */}
+            {/* Micro Vintage Keepsake Ornament */}
             <div className="flex items-center">
               {activeQuote.theme === 'love' ? (
-                <Heart className="w-3 h-3 text-amber-500/70 fill-amber-500/10" />
+                <Heart className="w-3.5 h-3.5 text-[#B28264]/80 fill-[#B28264]/10" />
               ) : (
-                <Sparkles className="w-3 h-3 text-amber-500/70" />
+                <Sparkles className="w-3.5 h-3.5 text-[#B28264]/80" />
               )}
             </div>
           </div>
 
-          {/* Central Quote Area - Luxury High-Contrast Font Rendering */}
+          {/* Central Quote Body - Rendered in a Delicate Brushed Rose Gold / Soft Bronze */}
           <div className="flex-1 flex flex-col justify-center py-2 relative">
-            <Quote className="w-3.5 h-3.5 text-stone-300/30 absolute -top-1.5 right-0" />
+            <Quote className="w-4 h-4 text-[#C09A7F]/15 absolute -top-1 right-0" />
             
             <p 
-              className="text-stone-800 font-serif text-[12.5px] sm:text-[13.5px] font-normal leading-relaxed text-center px-1 max-h-[85px] overflow-hidden select-none" 
+              className="bg-gradient-to-br from-[#8C5239] via-[#C98E72] to-[#733F27] bg-clip-text text-transparent font-serif text-[13.5px] sm:text-[14.5px] font-bold leading-relaxed text-center px-1 max-h-[90px] overflow-hidden select-none" 
               dir="rtl"
               style={{
                 fontFamily: "'Playfair Display', 'Inter', serif",
-                textShadow: '0.5px 0.5px 1px rgba(0,0,0,0.05)'
+                filter: 'drop-shadow(0.5px 0.7px 0.7px rgba(255,255,255,0.55))'
               }}
             >
               {activeQuote.quote}
             </p>
           </div>
 
-          {/* Delicate bottom accent line */}
-          <div className="w-full flex justify-center items-center pb-0.5">
-            <div className="w-6 h-[1px] bg-amber-500/20" />
+          {/* Delicate Soft Bronze Central Footer Accent Divider */}
+          <div className="w-full flex justify-center items-center pb-1">
+            <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-[#C09A7F]/30 to-transparent" />
           </div>
 
         </div>
 
-        {/* Elegant Golden Push-Pin in the top-left corner holding the sheet */}
-        <div className="absolute top-2.5 left-2.5 z-50 pointer-events-none drop-shadow-[2px_5px_4px_rgba(0,0,0,0.38)] flex flex-col items-center">
-          {/* Metallic Pin Head (3D dome with luxury gold glint) */}
-          <div className="w-3.5 h-3.5 rounded-full bg-gradient-to-br from-amber-100 via-amber-400 to-amber-700 border border-amber-300/40 relative flex items-center justify-center">
-            {/* White light reflection */}
-            <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white/75 rounded-full blur-[0.2px]" />
-            {/* Inner tack pin core */}
-            <div className="w-1.5 h-1.5 rounded-full bg-amber-600/25" />
-          </div>
-          {/* Fine Pin shaft casting a realistic tiny shadow onto the paper */}
-          <div className="w-[1.5px] h-3 bg-gradient-to-b from-amber-600 via-stone-800 to-transparent -mt-[1px] transform rotate-[12deg]" />
+        {/* Custom detailed vintage brass flower bloom pushpin on the top-left */}
+        <div 
+          className="absolute top-2.5 left-2.5 z-50 pointer-events-none drop-shadow-[2.5px_4.5px_5px_rgba(50,35,20,0.5)] flex flex-col items-center"
+          style={{ transform: 'rotate(-5deg)' }}
+        >
+          {/* Flower bloom design using overlapping brass/gold circular petals */}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform rotate-[18deg]">
+            <defs>
+              {/* Antique Gold / Vintage Brass gradient */}
+              <radialGradient id="vintage-brass-light" cx="35%" cy="35%" r="65%">
+                <stop offset="0%" stopColor="#FFF1C2" />   {/* Light bronze sheen */}
+                <stop offset="25%" stopColor="#D9B46E" />  {/* Warm brass */}
+                <stop offset="65%" stopColor="#A3783D" />  {/* Aged bronze shadow */}
+                <stop offset="100%" stopColor="#5E431B" /> {/* Antique brown oxide */}
+              </radialGradient>
+              {/* Dark aged core gradient */}
+              <radialGradient id="brass-aged-core" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#B3894B" />
+                <stop offset="70%" stopColor="#6E4F22" />
+                <stop offset="100%" stopColor="#301F08" />
+              </radialGradient>
+            </defs>
+
+            {/* 8-Petal Rose Bloom Pin Assembly */}
+            {/* Outer Petals */}
+            <path d="M12 12 C10.5 5, 13.5 5, 12 12 Z" fill="url(#vintage-brass-light)" stroke="#5E431B" strokeWidth="0.35" />
+            <path d="M12 12 C19 10.5, 19 13.5, 12 12 Z" fill="url(#vintage-brass-light)" stroke="#5E431B" strokeWidth="0.35" />
+            <path d="M12 12 C13.5 19, 10.5 19, 12 12 Z" fill="url(#vintage-brass-light)" stroke="#5E431B" strokeWidth="0.35" />
+            <path d="M12 12 C5 13.5, 5 10.5, 12 12 Z" fill="url(#vintage-brass-light)" stroke="#5E431B" strokeWidth="0.35" />
+
+            {/* Inner Diagonal Petals */}
+            <path d="M12 12 C7.5 7.5, 10.5 6.5, 12 12 Z" fill="url(#vintage-brass-light)" stroke="#5E431B" strokeWidth="0.35" opacity="0.95" />
+            <path d="M12 12 C16.5 7.5, 17.5 10.5, 12 12 Z" fill="url(#vintage-brass-light)" stroke="#5E431B" strokeWidth="0.35" opacity="0.95" />
+            <path d="M12 12 C16.5 16.5, 13.5 17.5, 12 12 Z" fill="url(#vintage-brass-light)" stroke="#5E431B" strokeWidth="0.35" opacity="0.95" />
+            <path d="M12 12 C7.5 16.5, 6.5 13.5, 12 12 Z" fill="url(#vintage-brass-light)" stroke="#5E431B" strokeWidth="0.35" opacity="0.95" />
+
+            {/* Aged golden seed-bud core */}
+            <circle cx="12" cy="12" r="3" fill="url(#brass-aged-core)" stroke="#4A3415" strokeWidth="0.5" />
+            <circle cx="11.4" cy="11.4" r="0.75" fill="#FFF8DD" opacity="0.7" />
+          </svg>
+          
+          {/* Realistic angled pin shaft projecting shadow behind */}
+          <div className="w-[1.5px] h-3.5 bg-gradient-to-b from-[#4A3415]/80 via-stone-900 to-transparent -mt-[1px] transform rotate-[18deg] origin-top" />
         </div>
 
       </div>
