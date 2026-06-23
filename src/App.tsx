@@ -106,43 +106,45 @@ export default function App() {
       {/* 3D Isometric Desktop Desk Calendar Indicator with daily rotating quotes */}
       <DailyQuoteCalendar timeOffset={timeOffset} />
 
-      {/* Live Time Sync Subtle Indicator */}
-      <div className="fixed bottom-4 right-4 z-50 pointer-events-none select-none">
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-stone-900/90 text-white text-[10px] font-sans font-bold shadow-lg backdrop-blur-xs">
-          <Wifi className={`w-3 h-3 ${syncStatus === 'synced' ? 'text-emerald-400 animate-pulse' : syncStatus === 'syncing' ? 'text-amber-400 animate-spin' : 'text-stone-400'}`} />
-          <span>
-            {syncStatus === 'synced' ? 'שעון מסונכרן לשרת' : syncStatus === 'syncing' ? 'מסנכרן שעון...' : 'שעון מקומי פעיל (לא מקוון)'}
-          </span>
+      <div className="relative z-10 w-full">
+        {/* Live Time Sync Subtle Indicator */}
+        <div className="fixed bottom-4 right-4 z-50 pointer-events-none select-none">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-stone-900/90 text-white text-[10px] font-sans font-bold shadow-lg backdrop-blur-xs">
+            <Wifi className={`w-3 h-3 ${syncStatus === 'synced' ? 'text-emerald-400 animate-pulse' : syncStatus === 'syncing' ? 'text-amber-400 animate-spin' : 'text-stone-400'}`} />
+            <span>
+              {syncStatus === 'synced' ? 'שעון מסונכרן לשרת' : syncStatus === 'syncing' ? 'מסנכרן שעון...' : 'שעון מקומי פעיל (לא מקוון)'}
+            </span>
+          </div>
         </div>
-      </div>
 
-      {/* 1. Hero / Screen-Fill Top Section with live real-time countdown widget */}
-      <HeroSection 
-        weddingDate={weddingDate} 
-        timeOffset={timeOffset}
-        onScrollToCalendar={handleScrollToCalendar} 
-      />
-
-      {/* 2. Transition Divider Floral Accent */}
-      <div className="flex justify-center items-center py-10 opacity-60">
-        <span className="h-[1px] w-24 bg-gradient-to-r from-transparent to-gold-400"></span>
-        <Heart className="w-5 h-5 mx-4 text-gold-500 fill-gold-250 animate-pulse" />
-        <span className="h-[1px] w-24 bg-gradient-to-r from-gold-400 to-transparent"></span>
-      </div>
-
-      {/* 3. Interactive Progression Calendar Section (Below the fold / on scroll) */}
-      <div ref={calendarRef} className="scroll-mt-10">
-        <CalendarSection 
+        {/* 1. Hero / Screen-Fill Top Section with live real-time countdown widget */}
+        <HeroSection 
           weddingDate={weddingDate} 
           timeOffset={timeOffset}
+          onScrollToCalendar={handleScrollToCalendar} 
         />
-      </div>
 
-      {/* 4. Elegant, minimal Hebrew Footer */}
-      <footer className="text-center text-[11px] tracking-wider text-stone-500 pt-16 pb-8 pointer-events-none select-none border-t border-gold-200/10">
-        <p>© 2026 אתר החתונה של יוסף חיים &amp; ברכי</p>
-        <p className="text-[10px] text-stone-400 mt-1.5">כ"ז באב ה'תשפ"ו • 10.08.2026</p>
-      </footer>
+        {/* 2. Transition Divider Floral Accent */}
+        <div className="flex justify-center items-center py-10 opacity-60">
+          <span className="h-[1px] w-24 bg-gradient-to-r from-transparent to-gold-400"></span>
+          <Heart className="w-5 h-5 mx-4 text-gold-500 fill-gold-250 animate-pulse" />
+          <span className="h-[1px] w-24 bg-gradient-to-r from-gold-400 to-transparent"></span>
+        </div>
+
+        {/* 3. Interactive Progression Calendar Section (Below the fold / on scroll) */}
+        <div ref={calendarRef} className="scroll-mt-10">
+          <CalendarSection 
+            weddingDate={weddingDate} 
+            timeOffset={timeOffset}
+          />
+        </div>
+
+        {/* 4. Elegant, minimal Hebrew Footer */}
+        <footer className="text-center text-[11px] tracking-wider text-stone-500 pt-16 pb-8 pointer-events-none select-none border-t border-gold-200/10">
+          <p>© 2026 אתר החתונה של יוסף חיים &amp; ברכי</p>
+          <p className="text-[10px] text-stone-400 mt-1.5">כ"ז באב ה'תשפ"ו • 10.08.2026</p>
+        </footer>
+      </div>
     </BackgroundOverlay>
   );
 }

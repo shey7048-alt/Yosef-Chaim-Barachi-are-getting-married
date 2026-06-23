@@ -138,7 +138,7 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
   return (
     <motion.div 
       id="desktop-desk-calendar"
-      className="fixed top-6 left-6 md:top-8 md:left-8 z-[100] pointer-events-none select-none scale-90 sm:scale-100 origin-top-left"
+      className="fixed top-6 left-6 md:top-8 md:left-8 z-0 pointer-events-none select-none scale-90 sm:scale-100 origin-top-left"
       initial={{ opacity: 0, y: 15 }}
       animate={{ 
         opacity: 1, 
