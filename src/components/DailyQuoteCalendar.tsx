@@ -100,10 +100,10 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
     return todayMidnight;
   };
 
-  // Compute number of days passed since start date June 22, 2026
-  // This makes sure Day 1 starts precisely on June 22, 2026, and transitions cleanly, one day at a time!
+  // Compute number of days passed since start date June 23, 2026
+  // This makes sure Day 1 starts precisely on June 23, 2026, and transitions cleanly, one day at a time!
   const getDaysSinceStart = (date: Date): number => {
-    const start = (date.getFullYear() >= 2026) ? new Date(2026, 5, 22) : getFallbackStartDate(date);
+    const start = (date.getFullYear() >= 2026) ? new Date(2026, 5, 23) : getFallbackStartDate(date);
     const today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     const diffTime = today.getTime() - start.getTime();
     return Math.max(0, Math.floor(diffTime / (1000 * 60 * 60 * 24)));
