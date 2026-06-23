@@ -142,145 +142,137 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
       {/* Clean floating wrapper holding the beautiful handmade paper sheets (no outer grey halo/frosted backdrop) */}
       <div className="relative w-[265px] h-[225px] flex items-center justify-center overflow-visible">
         
-        {/* Underlayer 3: Warm deep clay/sand paper layer */}
+        {/* Underlayer 3: Deep charcoal black paper layer */}
         <div 
-          className="absolute inset-x-7 bottom-5 top-5 bg-[#E6DCC3] border border-stone-300/40 shadow-sm pointer-events-none opacity-60"
+          className="absolute inset-x-7 bottom-5 top-5 bg-[#0D0D0E] border border-white/5 shadow-sm pointer-events-none opacity-60"
           style={{
             borderRadius: '16px 12px 14px 18px / 14px 16px 13px 15px',
             transform: 'rotate(0.5deg) translate(0px, 4px)'
           }}
         />
 
-        {/* Underlayer 2: Warm antique cream handmade page */}
+        {/* Underlayer 2: Dark carbon black handmade page */}
         <div 
-          className="absolute inset-x-6 bottom-5 top-5 bg-[#EFE9D5]/90 border border-stone-300/50 shadow-md pointer-events-none opacity-90"
+          className="absolute inset-x-6 bottom-5 top-5 bg-[#121214] border border-white/5 shadow-md pointer-events-none opacity-90"
           style={{
             borderRadius: '13px 17px 12px 16px / 16px 13px 17px 12px',
             transform: 'rotate(-1deg) translate(1px, 2px)'
           }}
         />
 
-        {/* Underlayer 1: Soft tactile ivory paper layer */}
+        {/* Underlayer 1: Soft tactile onyx paper layer */}
         <div 
-          className="absolute inset-x-5 bottom-5 top-5 bg-[#F6F1E0] border border-stone-300/70 shadow-lg pointer-events-none"
+          className="absolute inset-x-5 bottom-5 top-5 bg-[#161619] border border-white/10 shadow-lg pointer-events-none"
           style={{
             borderRadius: '15px 13px 18px 14px / 12px 15px 14px 16px',
             transform: 'rotate(1.5deg) translate(-1px, 1px)'
           }}
         />
 
-        {/* Top Primary Keepsake Sheet: Warm ivory-cream handmade deckled-edge textured paper */}
+        {/* Top Primary Keepsake Sheet: Luxurious matte-black deckled-edge textured paper */}
         <div 
-          className="absolute inset-x-5 bottom-5 top-5 bg-[#FDF9EE] border border-[#E9DFCB]/90 shadow-[4px_12px_28px_rgba(45,30,15,0.22)] p-4 flex flex-col justify-between pointer-events-none overflow-hidden"
+          className="absolute inset-x-5 bottom-5 top-5 bg-[#1A1A1E] border border-white/15 shadow-[4px_12px_28px_rgba(0,0,0,0.7)] p-4 flex flex-col justify-between pointer-events-none overflow-hidden"
           style={{
             borderRadius: '14px 11px 16px 12px / 11px 16px 12px 15px',
             transform: 'rotate(-4deg) translate(-3px, -1px)',
-            backgroundImage: 'radial-gradient(#F5ECD2 0.7px, transparent 0.7px), radial-gradient(#F5ECD2 0.7px, #FDF9EE 0.7px)',
+            backgroundImage: 'radial-gradient(#2A2A30 0.8px, transparent 0.8px), radial-gradient(#2A2A30 0.8px, #1A1A1E 0.8px)',
             backgroundSize: '24px 24px',
             backgroundPosition: '0 0, 12px 12px'
           }}
         >
           {/* Deckled Edge Fibers/Fraying Overlay simulation on margins */}
-          <div className="absolute inset-y-0 left-0 w-[4px] bg-gradient-to-r from-stone-400/5 via-stone-300/10 to-transparent" />
-          <div className="absolute inset-y-0 right-0 w-[4px] bg-gradient-to-l from-stone-400/5 via-stone-300/10 to-transparent" />
-          <div className="absolute inset-x-0 top-0 h-[4px] bg-gradient-to-b from-stone-400/5 via-stone-300/10 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-[4px] bg-gradient-to-t from-stone-400/5 via-stone-300/10 to-transparent" />
+          <div className="absolute inset-y-0 left-0 w-[4px] bg-gradient-to-r from-white/5 via-white/10 to-transparent" />
+          <div className="absolute inset-y-0 right-0 w-[4px] bg-gradient-to-l from-white/5 via-white/10 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-[4px] bg-gradient-to-b from-white/5 via-white/10 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-[4px] bg-gradient-to-t from-white/5 via-white/10 to-transparent" />
 
-          {/* Top Row: Weekday Name (Soft Bronze/Copper) & Ornament (Vintage Heart/Sparkle) */}
-          <div className="flex justify-between items-center pb-2 border-b border-[#EADFC7]/60 w-full mt-0.5">
-            {/* Elegant, clean modern bronze-style weekday heading */}
+          {/* Top Row: Weekday Name (Brilliant Gold) & Ornament (Elegant Gold Heart/Sparkle) */}
+          <div className="flex justify-between items-center pb-2 border-b border-white/10 w-full mt-0.5">
+            {/* Elegant, clean modern gold weekday heading */}
             <span 
-              className="font-sans font-medium text-[11px] tracking-wider text-[#A37B5C] uppercase pl-1"
+              className="font-sans font-medium text-[11px] tracking-wider text-amber-400 uppercase pl-1"
               style={{ letterSpacing: '0.08em' }}
             >
               {dayNameRaw}
             </span>
 
-            {/* Micro Vintage Keepsake Ornament */}
+            {/* Micro Gold Keepsake Ornament */}
             <div className="flex items-center">
               {activeQuote.theme === 'love' ? (
-                <Heart className="w-3.5 h-3.5 text-[#B28264]/80 fill-[#B28264]/10" />
+                <Heart className="w-3.5 h-3.5 text-amber-400 fill-amber-400/10" />
               ) : (
-                <Sparkles className="w-3.5 h-3.5 text-[#B28264]/80" />
+                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
               )}
             </div>
           </div>
 
-          {/* Central Quote Body - Rendered in a Delicate Brushed Rose Gold / Soft Bronze */}
+          {/* Central Quote Body - Rendered in a Stunning Golden Foil hot-stamped look */}
           <div className="flex-1 flex flex-col justify-center py-2 relative">
-            <Quote className="w-4 h-4 text-[#C09A7F]/15 absolute -top-1 right-0" />
+            <Quote className="w-4 h-4 text-amber-400/10 absolute -top-1 right-0" />
             
             <p 
-              className="bg-gradient-to-br from-[#8C5239] via-[#C98E72] to-[#733F27] bg-clip-text text-transparent font-serif text-[13.5px] sm:text-[14.5px] font-bold leading-relaxed text-center px-1 max-h-[90px] overflow-hidden select-none" 
+              className="bg-gradient-to-br from-[#FFF3D1] via-[#E2B755] to-[#B88E2F] bg-clip-text text-transparent font-serif text-[13.5px] sm:text-[14.5px] font-bold leading-relaxed text-center px-1 max-h-[90px] overflow-hidden select-none" 
               dir="rtl"
               style={{
                 fontFamily: "'Playfair Display', 'Inter', serif",
-                filter: 'drop-shadow(0.5px 0.7px 0.7px rgba(255,255,255,0.55))'
+                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.9))'
               }}
             >
               {activeQuote.quote}
             </p>
           </div>
 
-          {/* Delicate Soft Bronze Central Footer Accent Divider */}
+          {/* Delicate Soft Gold Central Footer Accent Divider */}
           <div className="w-full flex justify-center items-center pb-1">
-            <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-[#C09A7F]/30 to-transparent" />
+            <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-amber-400/30 to-transparent" />
           </div>
 
         </div>
 
-        {/* Artisanal detailed vintage gold & pearl rose pushpin on the top-left */}
+        {/* Artisanal detailed glossy black office pushpin on the top-left */}
         <div 
-          className="absolute top-2 left-2 z-50 pointer-events-none drop-shadow-[2.5px_4px_4.5px_rgba(45,30,15,0.45)] flex flex-col items-center"
-          style={{ transform: 'rotate(-3deg)' }}
+          className="absolute -top-1 -left-1 z-50 pointer-events-none drop-shadow-[2px_4px_5px_rgba(0,0,0,0.65)] flex flex-col items-center"
+          style={{ transform: 'rotate(-10deg)' }}
         >
-          {/* Detailed romantic floral bloom design with layered golden petals and a central lustrous pearl */}
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform rotate-[12deg]">
+          {/* Detailed 3D glossy black map/office pushpin with specular high-contrast shine and reflections */}
+          <svg width="32" height="42" viewBox="0 0 32 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              {/* Luxury Brushed Gold/Rose Gold Gradient */}
-              <radialGradient id="rose-gold-petal" cx="35%" cy="35%" r="65%">
-                <stop offset="0%" stopColor="#FFF2E6" />   {/* Highlight glint */}
-                <stop offset="30%" stopColor="#E0B094" />  {/* Warm Rose Gold */}
-                <stop offset="70%" stopColor="#B37C5D" />  {/* Saturation shadow */}
-                <stop offset="100%" stopColor="#6E442D" /> {/* Antique copper depth */}
+              {/* Specular high-gloss black/charcoal gradient for plastic/metal cap */}
+              <radialGradient id="glossy-black-cap" cx="30%" cy="30%" r="70%">
+                <stop offset="0%" stopColor="#8A8A8F" />  {/* Sharp bright highlight core */}
+                <stop offset="12%" stopColor="#3A3A3D" /> {/* Smooth gradient transition */}
+                <stop offset="60%" stopColor="#111112" /> {/* Glossy black finish */}
+                <stop offset="100%" stopColor="#020202" />{/* Deep shadow ambient occlusion */}
               </radialGradient>
               
-              {/* Pearl Center Luster Gradient */}
-              <radialGradient id="pearl-luster" cx="30%" cy="30%" r="70%">
-                <stop offset="0%" stopColor="#FFFFFF" />
-                <stop offset="25%" stopColor="#FFF5F2" />
-                <stop offset="75%" stopColor="#EAD2C9" />
-                <stop offset="100%" stopColor="#CBB1A7" />
-              </radialGradient>
+              {/* Metal pin needle steel gradient */}
+              <linearGradient id="metal-needle" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#7F8C8D" />
+                <stop offset="50%" stopColor="#BDC3C7" />
+                <stop offset="100%" stopColor="#4A4F52" />
+              </linearGradient>
             </defs>
 
-            {/* Overlapping organic floral petals */}
-            {/* Outer Petals */}
-            <path d="M14 14 C12 4, 16 4, 14 14 Z" fill="url(#rose-gold-petal)" stroke="#59341E" strokeWidth="0.4" />
-            <path d="M14 14 C24 12, 24 16, 14 14 Z" fill="url(#rose-gold-petal)" stroke="#59341E" strokeWidth="0.4" />
-            <path d="M14 14 C16 24, 12 24, 14 14 Z" fill="url(#rose-gold-petal)" stroke="#59341E" strokeWidth="0.4" />
-            <path d="M14 14 C4 16, 4 12, 14 14 Z" fill="url(#rose-gold-petal)" stroke="#59341E" strokeWidth="0.4" />
+            {/* Sharp shiny metal needle shaft going straight into the dark page */}
+            <path d="M16 18 L16 38" stroke="url(#metal-needle)" strokeWidth="1.8" strokeLinecap="round" />
+            
+            {/* Puncture hole shadow on paper */}
+            <ellipse cx="16" cy="24" rx="1.6" ry="0.75" fill="#000000" opacity="0.95" />
 
-            {/* Intermediate Diagonal Petals (Off-center rotation for a highly organic, natural floral look) */}
-            <path d="M14 14 C7.5 7.5, 10.5 6, 14 14 Z" fill="url(#rose-gold-petal)" stroke="#59341E" strokeWidth="0.4" />
-            <path d="M14 14 C20.5 7.5, 22 10.5, 14 14 Z" fill="url(#rose-gold-petal)" stroke="#59341E" strokeWidth="0.4" />
-            <path d="M14 14 C20.5 20.5, 17.5 22, 14 14 Z" fill="url(#rose-gold-petal)" stroke="#59341E" strokeWidth="0.4" />
-            <path d="M14 14 C7.5 20.5, 6 17.5, 14 14 Z" fill="url(#rose-gold-petal)" stroke="#59341E" strokeWidth="0.4" />
+            {/* Glossy Black Pushpin head shape */}
+            {/* Base platform ring of the pushpin */}
+            <ellipse cx="16" cy="18" rx="7" ry="2.5" fill="url(#glossy-black-cap)" stroke="#111111" strokeWidth="0.45" />
+            
+            {/* Main body neck of the pushpin */}
+            <path d="M10 10 C10 14, 11 18, 16 18 C21 18, 22 14, 22 10 L20 7 C20 7, 12 7, 10 10 Z" fill="url(#glossy-black-cap)" stroke="#111111" strokeWidth="0.4" />
 
-            {/* Inner tiny rose bud ring */}
-            <path d="M14 14 C11 9, 17 9, 14 14 Z" fill="url(#rose-gold-petal)" opacity="0.9" stroke="#422413" strokeWidth="0.3" />
-            <path d="M14 14 C19 11, 19 17, 14 14 Z" fill="url(#rose-gold-petal)" opacity="0.9" stroke="#422413" strokeWidth="0.3" />
-            <path d="M14 14 C17 19, 11 19, 14 14 Z" fill="url(#rose-gold-petal)" opacity="0.9" stroke="#422413" strokeWidth="0.3" />
-            <path d="M14 14 C9 17, 9 11, 14 14 Z" fill="url(#rose-gold-petal)" opacity="0.9" stroke="#422413" strokeWidth="0.3" />
+            {/* Top rounded grip cap */}
+            <circle cx="16" cy="6" r="5" fill="url(#glossy-black-cap)" stroke="#111111" strokeWidth="0.4" />
 
-            {/* Central Romantic Pearl Jewel bead */}
-            <circle cx="14" cy="14" r="3.2" fill="url(#pearl-luster)" stroke="#6E5045" strokeWidth="0.45" />
-            {/* Luminous gloss highlight */}
-            <circle cx="12.8" cy="12.8" r="0.8" fill="#FFFFFF" opacity="0.8" />
+            {/* Glassy/Glossy white specular light reflections for authentic 3D gloss */}
+            <circle cx="14.5" cy="4.5" r="1.1" fill="#FFFFFF" opacity="0.9" />
+            <path d="M12.5 9.5 Q14 7.5, 15.5 9.5" stroke="#FFFFFF" strokeWidth="0.65" strokeLinecap="round" opacity="0.65" />
           </svg>
-          
-          {/* Detailed brass needle shaft casting a shadow beneath */}
-          <div className="w-[1.8px] h-4 bg-gradient-to-b from-[#59341E] via-stone-800 to-transparent -mt-[1.5px] transform rotate-[15deg] origin-top" />
         </div>
 
       </div>
