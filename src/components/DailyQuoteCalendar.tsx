@@ -198,11 +198,7 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
               <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-amber-500/15 to-transparent mx-auto mt-2" />
             </div>
 
-            {/* Aesthetic stationary bottom caption */}
-            <div className="w-full text-[8.5px] text-stone-500 font-sans border-t border-stone-800/70 pt-1.5 flex justify-between px-0.5">
-              <span>השראה זוגית</span>
-              <span>תשפ״ו 🤍</span>
-            </div>
+
           </div>
           
           {/* Subtle glossy layout reflection */}
