@@ -112,10 +112,29 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
   const [showModal, setShowModal] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
 
-  // Compute number of days passed since start date June 22, 2026
+  // Get or initialize start date in localStorage
+  const getStartDate = (now: Date): Date => {
+    // If the system year is 2026 or later, we default to the official start date June 22, 2026
+    if (now.getFullYear() >= 2026) {
+      return new Date(2026, 5, 22);
+    }
+    
+    // Otherwise, for development testing in 2024/2025, we use a dynamic localStorage start date
+    const stored = localStorage.getItem('wedding_quotes_start_date');
+    if (stored) {
+      const parsed = new Date(stored);
+      if (!isNaN(parsed.getTime())) {
+        return parsed;
+      }
+    }
+    const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    localStorage.setItem('wedding_quotes_start_date', todayMidnight.toISOString());
+    return todayMidnight;
+  };
+
+  // Compute number of days passed since start date
   const getDaysSinceStart = (date: Date): number => {
-    // Month 5 is June (0-indexed)
-    const start = new Date(2026, 5, 22);
+    const start = getStartDate(date);
     const today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     const diffTime = today.getTime() - start.getTime();
     return Math.floor(diffTime / (1000 * 60 * 60 * 24));
@@ -136,7 +155,7 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
     const resolvedDate = timeOffset ? new Date(initialNow.getTime() + timeOffset) : initialNow;
     setCurrentDate(resolvedDate);
 
-    // Starting from today (June 22, 2026), select 1 quote per day. Limit to max 17 quotes (index 16)
+    // Starting from today, select 1 quote per day. Limit to max 17 quotes (index 16)
     const diffDays = getDaysSinceStart(resolvedDate);
     const resolvedIndex = Math.min(Math.max(0, diffDays), 16);
     setActiveQuoteIndex(resolvedIndex);
@@ -144,7 +163,8 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
     return () => clearInterval(timer);
   }, [timeOffset]);
 
-  const maxUnlockedIndex = Math.min(Math.max(0, getDaysSinceStart(currentDate)), 16);
+  // Set maxUnlockedIndex to 16 so testing users can freely browse/preview all 17 pages of the desk calendar, while defaulting to today's active page on load!
+  const maxUnlockedIndex = 16;
 
   // Gentle synth flap sound using browser HTML5 web oscillators
   const playPageFlipSound = () => {
@@ -221,7 +241,7 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
         className="fixed top-5 left-5 z-[45] pointer-events-auto select-none"
       >
         {/* Responsive view for small/mobile devices: turns into a tiny responsive tab */}
-        <div className="block lg:hidden">
+        <div className="block md:hidden">
           <button
             id="mobile-calendar-badge"
             onClick={() => setShowModal(true)}
@@ -237,7 +257,7 @@ export default function DailyQuoteCalendar({ timeOffset = 0 }: DailyQuoteCalenda
         </div>
 
         {/* Premium Authentic 3D Isometric Desktop Desk Calendar */}
-        <div className="hidden lg:block relative group">
+        <div className="hidden md:block relative group transition-all duration-300 origin-top-left md:scale-90 lg:scale-100">
           
           {/* Real 3D physical support easel shadow casting back onto desk floor */}
           <div className="absolute -inset-x-2 bottom-0 top-3 bg-black/40 rounded-2xl filter blur-md transform translate-y-3 -translate-x-1 rotate-3 pointer-events-none" />
